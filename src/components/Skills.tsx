@@ -165,7 +165,7 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* 2. MOBILE INTERFACE */}
+        {/* 2. MOBILE INTERFACE - Blago povećana i prostranija kartica */}
         <div className="block lg:hidden">
           {/* Thumb tabs */}
           <div 
@@ -193,45 +193,39 @@ export const Skills = () => {
             })}
           </div>
 
-          {/* Glavna kartica */}
-          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5 sm:p-6 shadow-2xl min-h-[390px] flex flex-col justify-between">
-            <div>
-              {/* Header spec */}
-              <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
-                <div className="flex items-center gap-2">
-                  {getCategoryIcon(activeCategory.id)}
-                  <span className="font-bold text-white tracking-tight">{activeCategory.category}</span>
-                </div>
-                <span className="text-[10px] text-zinc-500 uppercase tracking-wider">DOMAIN SPEC</span>
+          {/* Glavna kartica: prostranija sa prirodnim komforom */}
+          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5.5 sm:p-6 shadow-2xl">
+            {/* Header sa brojem modula */}
+            <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
+              <div className="flex items-center gap-2">
+                {getCategoryIcon(activeCategory.id)}
+                <span className="font-bold text-white tracking-tight">{activeCategory.category}</span>
               </div>
-
-              {/* 2-kolonski raspored */}
-              <div className="grid grid-cols-2 gap-2.5">
-                {activeCategory.skills.map((skill: SkillItem) => (
-                  <div
-                    key={skill.name}
-                    className="p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800/70 flex flex-col justify-between min-h-[72px]"
-                  >
-                    <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="font-mono text-xs font-bold text-white truncate">
-                        {skill.name}
-                      </span>
-                      {skill.highlight && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" title="Primary Skill" />
-                      )}
-                    </div>
-                    <p className="text-[10px] text-zinc-400 font-sans leading-tight line-clamp-2">
-                      {skill.role}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <span className="text-[10px] text-emerald-400 font-mono uppercase tracking-wider">
+                {activeCategory.skills.length} CORE MODULES
+              </span>
             </div>
 
-            {/* Dno kartice */}
-            <div className="pt-4 mt-4 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
-              <span>{activeCategory.skills.length} core modules</span>
-              <span className="text-emerald-400/90 font-medium">Production Tested</span>
+            {/* 2-kolonski raspored: min-h-[82px] sa udobnim paddingom */}
+            <div className="grid grid-cols-2 gap-3">
+              {activeCategory.skills.map((skill: SkillItem) => (
+                <div
+                  key={skill.name}
+                  className="p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/70 flex flex-col justify-between min-h-[82px]"
+                >
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <span className="font-mono text-xs font-bold text-white truncate">
+                      {skill.name}
+                    </span>
+                    {skill.highlight && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" title="Primary Skill" />
+                    )}
+                  </div>
+                  <p className="text-[10px] text-zinc-400 font-sans leading-relaxed line-clamp-2">
+                    {skill.role}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
