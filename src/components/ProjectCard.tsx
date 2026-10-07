@@ -14,7 +14,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       }`}
     >
       <div>
-        {/* Header kartice: Tag + Linkovi */}
+        {/* Header */}
         <div className="flex items-center justify-between gap-4 mb-4">
           <div className="flex items-center gap-2">
             {project.featured && (
@@ -51,19 +51,19 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
         </div>
 
-        {/* Naslov projekta */}
+        {/* Project Title */}
         <h3 className="text-xl sm:text-2xl font-bold text-zinc-100 group-hover:text-emerald-300 transition-colors mb-2.5 flex items-center gap-1.5">
           <span>{project.title}</span>
           <ArrowUpRight className="w-4 h-4 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-200 text-emerald-400" />
         </h3>
 
-        {/* Opis */}
+        {/* Description */}
         <p className="text-sm text-zinc-400 leading-relaxed mb-6">
           {project.description}
         </p>
       </div>
 
-      {/* Tech Stack tagovi */}
+      {/* Tech Stack tags */}
       <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-800/60">
         {project.tags.map((tag) => (
           <span

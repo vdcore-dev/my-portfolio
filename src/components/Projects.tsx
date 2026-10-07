@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PROJECTS } from "../data/portfolioData";
-import { ExternalLink, Terminal, ChevronRight, Layers, Sparkles } from "lucide-react";
+import { ExternalLink, Terminal, ChevronRight, Layers, Sparkles, Code2 } from "lucide-react";
 import { GithubIcon } from "./Icons";
 import type { Project } from "../types";
 
@@ -9,24 +9,35 @@ export const Projects = () => {
   const activeProject: Project = PROJECTS.find((p) => p.id === selectedId) || PROJECTS[0];
 
   return (
-    <section id="projects" className="min-h-dvh w-full flex flex-col pt-28 lg:pt-32 pb-16 lg:pb-24 scroll-mt-0 relative">
-      <div className="max-w-6xl mx-auto w-full px-4">
-        {/* Sekcijski Header */}
-        <div className="mb-12 text-left">
-          <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider mb-2">
-            <span>// System Portfolio</span>
+    <section 
+      id="projects" 
+      className="w-full flex flex-col pt-24 pb-20 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-6 lg:scroll-mt-0"
+    >
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6">
+        
+        {/* HEADER */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              Featured Systems
+            </h2>
+            <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 ml-1">
+              {PROJECTS.length} Selected
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-            Featured Architecture & Projects
-          </h2>
-          <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-xl">
-            Production-grade applications, microservices, and platforms designed with a focus on clean APIs and resilience.
-          </p>
+
+          <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-zinc-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Architecture & Microservices</span>
+          </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE: Master-Detail Showcase (lg:grid) */}
-        <div className="hidden lg:grid grid-cols-12 gap-8 items-start">
-          <div className="col-span-5 flex flex-col gap-3">
+        {/* 1. DESKTOP INTERFACE */}
+        <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
+          
+          {/* Sections */}
+          <div className="col-span-5 flex flex-col gap-2.5">
             {PROJECTS.map((project, idx) => {
               const isSelected = project.id === selectedId;
               return (
@@ -35,13 +46,13 @@ export const Projects = () => {
                   onClick={() => setSelectedId(project.id)}
                   className={`w-full text-left p-4 rounded-2xl border transition-all duration-200 flex items-center justify-between group cursor-pointer ${
                     isSelected
-                      ? "bg-zinc-900/90 border-zinc-700/80 shadow-lg shadow-black/40"
-                      : "bg-zinc-950/40 border-zinc-800/60 hover:bg-zinc-900/40 hover:border-zinc-700/50"
+                      ? "bg-zinc-900/90 border-zinc-700 text-white shadow-xl shadow-black/50 ring-1 ring-emerald-500/20"
+                      : "bg-zinc-950/40 border-zinc-800/70 hover:bg-zinc-900/50 hover:border-zinc-700/60 text-zinc-400"
                   }`}
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     <span
-                      className={`font-mono text-xs px-2 py-1 rounded-md transition-colors ${
+                      className={`font-mono text-xs w-7 h-7 flex items-center justify-center rounded-lg transition-colors shrink-0 ${
                         isSelected
                           ? "bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30"
                           : "bg-zinc-900 text-zinc-500 group-hover:text-zinc-300"
@@ -49,16 +60,22 @@ export const Projects = () => {
                     >
                       0{idx + 1}
                     </span>
+
                     <div className="truncate">
-                      <h3
-                        className={`text-sm font-semibold truncate transition-colors ${
-                          isSelected ? "text-white" : "text-zinc-300 group-hover:text-white"
-                        }`}
-                      >
-                        {project.title}
-                      </h3>
-                      <p className="text-xs text-zinc-500 truncate mt-0.5 font-mono">
-                        {project.tags.slice(0, 2).join(" • ")}
+                      <div className="flex items-center gap-2">
+                        <h3
+                          className={`text-sm font-semibold truncate transition-colors ${
+                            isSelected ? "text-white" : "text-zinc-300 group-hover:text-white"
+                          }`}
+                        >
+                          {project.title}
+                        </h3>
+                        {project.featured && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                        )}
+                      </div>
+                      <p className="text-[11px] text-zinc-500 truncate mt-0.5 font-mono">
+                        {project.tags.slice(0, 3).join(" • ")}
                       </p>
                     </div>
                   </div>
@@ -75,162 +92,183 @@ export const Projects = () => {
             })}
           </div>
 
+          {/* Cards */}
           <div className="col-span-7">
-            <div className="rounded-3xl bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-xl p-7 shadow-2xl relative">
-              <div className="flex items-center justify-between pb-5 border-b border-zinc-800/70 mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/80" />
-                  <span className="font-mono text-xs text-zinc-400 tracking-wider">
-                    SYSTEM ARCHITECTURE SPEC
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  {activeProject.githubUrl && (
-                    <a
-                      href={activeProject.githubUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="View Source on GitHub"
-                      className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/80 transition-colors"
-                    >
-                      <GithubIcon className="w-4 h-4" />
-                    </a>
-                  )}
-                  {activeProject.liveUrl && (
-                    <a
-                      href={activeProject.liveUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="View Live Project"
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-800/80 border border-zinc-700/60 text-zinc-200 hover:text-white hover:border-zinc-500 text-xs font-mono font-medium transition-all"
-                    >
-                      <span>Demo</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">
-                {activeProject.title}
-              </h3>
-              <p className="text-zinc-400 text-sm leading-relaxed mb-6 font-sans">
-                {activeProject.description}
-              </p>
-
-              <div className="grid grid-cols-2 gap-3 mb-6 font-mono text-xs">
-                <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex flex-col justify-center">
-                  <span className="text-zinc-500 text-[10px] uppercase">Core Paradigm</span>
-                  <span className="text-zinc-200 font-semibold mt-0.5 flex items-center gap-1.5">
-                    <Terminal className="w-3.5 h-3.5 text-emerald-400" />
-                    Clean Architecture
-                  </span>
-                </div>
-                <div className="p-3 rounded-xl bg-zinc-950/60 border border-zinc-800/60 flex flex-col justify-center">
-                  <span className="text-zinc-500 text-[10px] uppercase">Deployment</span>
-                  <span className="text-zinc-200 font-semibold mt-0.5 flex items-center gap-1.5">
-                    <Layers className="w-3.5 h-3.5 text-sky-400" />
-                    Dockerized Stack
-                  </span>
-                </div>
-              </div>
-
+            <div className="rounded-3xl bg-zinc-950/70 border border-zinc-800/90 backdrop-blur-xl p-7 shadow-2xl relative flex flex-col justify-between min-h-[460px]">
+              
               <div>
-                <span className="text-zinc-500 font-mono text-xs uppercase block mb-2.5">
-                  Technologies & Tools
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {activeProject.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2.5 py-1 rounded-lg bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-xs"
-                    >
-                      {tag}
+                {/* Status Bar */}
+                <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-5">
+                  <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400 tracking-wider">
+                    <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>SYSTEM ARCHITECTURE SPECIFICATION</span>
+                  </div>
+
+                  {activeProject.featured && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px]">
+                      <Sparkles className="w-3 h-3" />
+                      Featured Production
                     </span>
-                  ))}
+                  )}
+                </div>
+
+                <h3 className="text-2xl font-bold text-white mb-3 tracking-tight">
+                  {activeProject.title}
+                </h3>
+
+                <p className="text-zinc-400 text-sm leading-relaxed mb-6 font-sans">
+                  {activeProject.description}
+                </p>
+
+                {/* Architecture Metrics */}
+                <div className="grid grid-cols-2 gap-3 mb-6 font-mono text-xs">
+                  <div className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800/60 flex flex-col">
+                    <span className="text-zinc-500 text-[10px] uppercase tracking-wider">Pattern & Design</span>
+                    <span className="text-zinc-200 font-medium mt-1 flex items-center gap-2">
+                      <Code2 className="w-4 h-4 text-emerald-400" />
+                      Clean Architecture
+                    </span>
+                  </div>
+                  
+                  <div className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800/60 flex flex-col">
+                    <span className="text-zinc-500 text-[10px] uppercase tracking-wider">Infrastructure</span>
+                    <span className="text-zinc-200 font-medium mt-1 flex items-center gap-2">
+                      <Layers className="w-4 h-4 text-sky-400" />
+                      Dockerized Services
+                    </span>
+                  </div>
+                </div>
+
+                {/* Tech Stack */}
+                <div className="mb-6">
+                  <span className="text-zinc-500 font-mono text-[11px] uppercase tracking-wider block mb-2.5">
+                    Integrated Stack
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {activeProject.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 rounded-lg bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-mono text-xs"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-4 border-t border-zinc-800/80">
+                {activeProject.githubUrl && (
+                  <a
+                    href={activeProject.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-white text-xs font-mono font-medium transition-all active:scale-[0.98]"
+                  >
+                    <GithubIcon className="w-4 h-4" />
+                    <span>Source Repository</span>
+                  </a>
+                )}
+
+                {activeProject.liveUrl && (
+                  <a
+                    href={activeProject.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-medium transition-all active:scale-[0.98]"
+                  >
+                    <span>Live Preview</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </div>
+
             </div>
           </div>
         </div>
 
-        {/* 2. MOBILNI INTERFACE: Swipe Snap Carousel (lg:hidden) */}
+        {/* 2. MOBILNE INTERFACE*/}
         <div className="block lg:hidden">
           <div className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth no-scrollbar -mx-4 px-4">
             {PROJECTS.map((project, idx) => (
               <div
                 key={project.id}
-                className="min-w-[85%] sm:min-w-[70%] snap-center rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-5 sm:p-6 flex flex-col justify-between shadow-xl"
+                className="min-w-[88%] sm:min-w-[70%] snap-center rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5 flex flex-col justify-between shadow-2xl"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-3.5 border-b border-zinc-800/70 mb-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-3.5">
                     <div className="flex items-center gap-2">
                       <span className="font-mono text-xs px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">
                         0{idx + 1}
                       </span>
                       {project.featured && (
-                        <span className="flex items-center gap-1 text-[11px] font-mono text-zinc-400">
-                          <Sparkles className="w-3 h-3 text-emerald-400" />
+                        <span className="flex items-center gap-1 text-[11px] font-mono text-emerald-400">
+                          <Sparkles className="w-3 h-3" />
                           Featured
                         </span>
                       )}
                     </div>
-
-                    <div className="flex items-center gap-1.5">
-                      {project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="p-1.5 rounded-lg text-zinc-400 hover:text-white"
-                          aria-label="GitHub"
-                        >
-                          <GithubIcon className="w-4 h-4" />
-                        </a>
-                      )}
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="p-1.5 rounded-lg text-zinc-400 hover:text-white"
-                          aria-label="Live Demo"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                        </a>
-                      )}
-                    </div>
+                    <span className="font-mono text-[10px] text-zinc-500 uppercase">SYS SPEC</span>
                   </div>
 
                   <h3 className="text-xl font-bold text-white mb-2 tracking-tight">
                     {project.title}
                   </h3>
-                  <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-5 font-sans">
+
+                  <p className="text-zinc-400 text-xs leading-relaxed mb-4 font-sans line-clamp-3">
                     {project.description}
                   </p>
+
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-[10px]"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flex flex-wrap gap-1.5 pt-3 border-t border-zinc-800/60">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 rounded-md bg-zinc-950/80 border border-zinc-800 text-zinc-300 font-mono text-[10px]"
+                {/* Mobile buttons */}
+                <div className="flex items-center gap-2 pt-3.5 border-t border-zinc-800/80">
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl bg-zinc-900 active:bg-zinc-800 border border-zinc-700/80 text-white font-mono text-xs font-medium active:scale-[0.97] transition-all"
                     >
-                      {tag}
-                    </span>
-                  ))}
+                      <GithubIcon className="w-4 h-4 text-zinc-300" />
+                      <span>Code</span>
+                    </a>
+                  )}
+
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl bg-emerald-500/10 active:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 font-mono text-xs font-medium active:scale-[0.97] transition-all"
+                    >
+                      <span>Live Demo</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
                 </div>
+
               </div>
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-1.5 mt-4">
-            <span className="text-[11px] font-mono text-zinc-500 tracking-wider">
-              Swipe to explore systems →
-            </span>
+          <div className="flex items-center justify-center gap-2 mt-4 font-mono text-[11px] text-zinc-500">
+            <span>Swipe for more</span>
+            <span>→</span>
           </div>
         </div>
+
       </div>
     </section>
   );

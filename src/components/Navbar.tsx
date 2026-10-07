@@ -40,38 +40,53 @@ export const Navbar = () => {
     };
   }, [mobileMenuOpen]);
 
+  // Optimized scroll handler
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-
-      if (isScrollingProgrammatically.current) return;
-
-      if (window.scrollY < 200) {
-        setActiveSection("");
-        return;
-      }
-
-      const isAtBottom =
-        window.innerHeight + Math.round(window.scrollY) >=
-        document.documentElement.scrollHeight - 60;
-
-      if (isAtBottom) {
-        setActiveSection("contact");
-        return;
-      }
-
-      const scrollTrigger = window.scrollY + window.innerHeight / 3;
-      
-      for (const link of desktopLinks) {
-        const element = document.getElementById(link.id);
-        if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollTrigger >= top && scrollTrigger < top + height) {
-            setActiveSection(link.id);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (isScrollingProgrammatically.current) {
+            ticking = false;
             return;
           }
-        }
+
+          const currentY = window.scrollY;
+          const scrolled = currentY > 20;
+          setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
+
+          if (currentY < 200) {
+            setActiveSection((prev) => (prev !== "" ? "" : prev));
+            ticking = false;
+            return;
+          }
+
+          const isAtBottom =
+            window.innerHeight + Math.round(currentY) >=
+            document.documentElement.scrollHeight - 60;
+
+          if (isAtBottom) {
+            setActiveSection((prev) => (prev !== "contact" ? "contact" : prev));
+            ticking = false;
+            return;
+          }
+
+          const scrollTrigger = currentY + window.innerHeight / 3;
+          for (const link of desktopLinks) {
+            const element = document.getElementById(link.id);
+            if (element) {
+              const top = element.offsetTop;
+              const height = element.offsetHeight;
+              if (scrollTrigger >= top && scrollTrigger < top + height) {
+                setActiveSection((prev) => (prev !== link.id ? link.id : prev));
+                break;
+              }
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -116,6 +131,7 @@ export const Navbar = () => {
 
   return (
     <>
+      {/* Background overlay */}
       <div
         onClick={() => setMobileMenuOpen(false)}
         className={`fixed inset-0 z-40 bg-black/75 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
@@ -124,11 +140,7 @@ export const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* 
-          Mobile menu:
-          - top-24
-          - bottom-8 
-      */}
+      {/* Mobile panel */}
       <aside
         className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 transition-all duration-300 ease-out md:hidden ${
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"

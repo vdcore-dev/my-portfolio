@@ -11,6 +11,8 @@ export const Skills = () => {
     SKILL_CATEGORIES.find((c) => (c.id ?? c.category) === activeCategoryId) ||
     SKILL_CATEGORIES[0];
 
+  const totalSkillsCount = SKILL_CATEGORIES.reduce((acc, cat) => acc + cat.skills.length, 0);
+
   const getCategoryIcon = (id?: string) => {
     switch (id) {
       case "backend":
@@ -25,25 +27,36 @@ export const Skills = () => {
   };
 
   return (
-    <section id="skills" className="min-h-dvh w-full flex flex-col pt-28 lg:pt-32 pb-16 lg:pb-24 relative border-t border-zinc-900/80 scroll-mt-0">
-      <div className="max-w-6xl mx-auto w-full px-4">
-        {/* Header */}
-        <div className="mb-12 text-left">
-          <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs uppercase tracking-wider mb-2">
-            <span>// Technical Toolkit</span>
+    <section 
+      id="skills" 
+      className="w-full flex flex-col pt-24 pb-20 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative border-t border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0 touch-pan-y"
+    >
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6">
+        
+        {/* HEADER */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
+          <div className="flex items-center gap-2.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+              Technical Stack
+            </h2>
+            <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 ml-1">
+              {totalSkillsCount} Tools & Competencies
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight font-sans">
-            Engineering Stack & Competencies
-          </h2>
-          <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-xl font-sans">
-            Production technologies and operational competencies used to construct resilient distributed systems.
-          </p>
+
+          <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-zinc-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Distributed Architecture & Ops</span>
+          </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE: Master-Detail Architecture Stack */}
-        <div className="hidden lg:grid grid-cols-12 gap-8 items-start">
-          <div className="col-span-4 flex flex-col gap-3">
-            {SKILL_CATEGORIES.map((cat) => {
+        {/* 1. DESKTOP INTERFACE */}
+        <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
+          
+          {/* Skill Categories */}
+          <div className="col-span-5 flex flex-col gap-2.5">
+            {SKILL_CATEGORIES.map((cat, idx) => {
               const catKey = cat.id ?? cat.category;
               const isSelected = catKey === activeCategoryId;
 
@@ -53,30 +66,33 @@ export const Skills = () => {
                   onClick={() => setActiveCategoryId(catKey)}
                   className={`w-full text-left p-4 rounded-2xl border transition-all duration-200 flex items-center justify-between group cursor-pointer ${
                     isSelected
-                      ? "bg-zinc-900/90 border-zinc-700/80 shadow-lg shadow-black/40"
-                      : "bg-zinc-950/40 border-zinc-800/60 hover:bg-zinc-900/40 hover:border-zinc-700/50"
+                      ? "bg-zinc-900/90 border-zinc-700 text-white shadow-xl shadow-black/50 ring-1 ring-emerald-500/20"
+                      : "bg-zinc-950/40 border-zinc-800/70 hover:bg-zinc-900/50 hover:border-zinc-700/60 text-zinc-400"
                   }`}
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
-                    <div
-                      className={`p-2 rounded-xl border transition-colors ${
+                    <span
+                      className={`font-mono text-xs w-7 h-7 flex items-center justify-center rounded-lg transition-colors shrink-0 ${
                         isSelected
-                          ? "bg-zinc-800 border-zinc-600 shadow-sm"
-                          : "bg-zinc-900/60 border-zinc-800"
+                          ? "bg-emerald-500/15 text-emerald-400 font-bold border border-emerald-500/30"
+                          : "bg-zinc-900 text-zinc-500 group-hover:text-zinc-300"
                       }`}
                     >
-                      {getCategoryIcon(cat.id)}
-                    </div>
+                      0{idx + 1}
+                    </span>
+
                     <div className="truncate">
-                      <h3
-                        className={`text-sm font-semibold truncate transition-colors font-sans ${
-                          isSelected ? "text-white" : "text-zinc-300 group-hover:text-white"
-                        }`}
-                      >
-                        {cat.category}
-                      </h3>
-                      <p className="text-xs text-zinc-500 font-mono mt-0.5">
-                        {cat.skills.length} core tools
+                      <div className="flex items-center gap-2">
+                        <h3
+                          className={`text-sm font-semibold truncate transition-colors ${
+                            isSelected ? "text-white" : "text-zinc-300 group-hover:text-white"
+                          }`}
+                        >
+                          {cat.category}
+                        </h3>
+                      </div>
+                      <p className="text-[11px] text-zinc-500 truncate mt-0.5 font-mono">
+                        {cat.skills.length} core technologies
                       </p>
                     </div>
                   </div>
@@ -93,55 +109,66 @@ export const Skills = () => {
             })}
           </div>
 
-          <div className="col-span-8">
-            <div className="rounded-3xl bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-xl p-7 shadow-2xl relative transition-all duration-300">
-              <div className="flex items-center justify-between pb-5 border-b border-zinc-800/70 mb-6">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="font-mono text-xs text-zinc-400 tracking-wider uppercase">
-                    {activeCategory.category}
+          {/* Skill Cards */}
+          <div className="col-span-7">
+            <div className="rounded-3xl bg-zinc-950/70 border border-zinc-800/90 backdrop-blur-xl p-7 shadow-2xl relative flex flex-col justify-between min-h-[460px]">
+              <div>
+                {/* Status Bar */}
+                <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-5">
+                  <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400 tracking-wider">
+                    {getCategoryIcon(activeCategory.id)}
+                    <span className="uppercase">{activeCategory.category} SPECIFICATION</span>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-[10px]">
+                    Verified Competencies
                   </span>
                 </div>
-                <span className="text-xs font-mono text-zinc-500">
-                  ACTIVE DOMAIN
-                </span>
+
+                {activeCategory.tagline && (
+                  <p className="text-zinc-300 text-sm font-sans mb-6 leading-relaxed">
+                    {activeCategory.tagline}
+                  </p>
+                )}
+
+                {/* Grid */}
+                <div className="grid grid-cols-2 gap-3 font-mono text-xs">
+                  {activeCategory.skills.map((skill: SkillItem) => (
+                    <div
+                      key={skill.name}
+                      className="p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/70 hover:border-zinc-700/90 transition-all flex flex-col justify-between"
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-bold text-sm text-white flex items-center gap-1.5">
+                          {skill.name}
+                        </span>
+                        {skill.highlight && (
+                          <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[10px] font-medium">
+                            Primary
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-zinc-400 font-sans mt-0.5 leading-snug">
+                        {skill.role}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {activeCategory.tagline && (
-                <p className="text-zinc-300 text-sm font-sans mb-6">
-                  {activeCategory.tagline}
-                </p>
-              )}
-
-              <div className="grid grid-cols-2 gap-3.5">
-                {activeCategory.skills.map((skill: SkillItem) => (
-                  <div
-                    key={skill.name}
-                    className="p-4 rounded-2xl bg-zinc-950/70 border border-zinc-800/70 hover:border-zinc-700 hover:bg-zinc-950 transition-all group"
-                  >
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="font-mono font-bold text-sm text-white group-hover:text-emerald-300 transition-colors flex items-center gap-1.5">
-                        {skill.name}
-                      </span>
-                      {skill.highlight && (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[10px] font-mono font-medium">
-                          Primary
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-                      {skill.role}
-                    </p>
-                  </div>
-                ))}
+              {/* Status footer */}
+              <div className="flex items-center justify-between pt-4 mt-6 border-t border-zinc-800/80 font-mono text-[11px] text-zinc-500">
+                <span>Domain: {activeCategory.category}</span>
+                <span className="text-emerald-400/90 font-medium">Production Tested</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* 2. MOBILNI INTERFACE */}
+        {/* 2. MOBILE INTERFACE */}
         <div className="block lg:hidden">
-          <div className="flex gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar">
+          {/* Thumb tabs */}
+          <div className="flex gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar -mx-4 px-4 overscroll-x-contain">
             {SKILL_CATEGORIES.map((cat) => {
               const catKey = cat.id ?? cat.category;
               const isSelected = catKey === activeCategoryId;
@@ -150,29 +177,34 @@ export const Skills = () => {
                 <button
                   key={catKey}
                   onClick={() => setActiveCategoryId(catKey)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-mono whitespace-nowrap transition-all border ${
+                  className={`h-10 px-4 rounded-xl text-xs font-mono whitespace-nowrap transition-colors border active:scale-95 cursor-pointer flex items-center gap-2 ${
                     isSelected
-                      ? "bg-zinc-800 border-zinc-600 text-white font-semibold shadow-sm"
-                      : "bg-zinc-900/60 border-zinc-800/80 text-zinc-400 hover:text-zinc-200"
+                      ? "bg-zinc-900 border-zinc-700 text-white font-medium shadow-md shadow-black/40 ring-1 ring-emerald-500/30"
+                      : "bg-zinc-950/60 border-zinc-800/80 text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
-                  {cat.category.split(" ")[0]}
+                  {getCategoryIcon(cat.id)}
+                  <span>{cat.category.split(" ")[0]}</span>
                 </button>
               );
             })}
           </div>
 
-          <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-5 shadow-xl">
-            <div className="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-800/70 text-xs font-mono text-zinc-400">
-              {getCategoryIcon(activeCategory.id)}
-              <span className="font-bold text-white">{activeCategory.category}</span>
+          {/* Skill Cards */}
+          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5 shadow-2xl">
+            <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
+              <div className="flex items-center gap-2">
+                {getCategoryIcon(activeCategory.id)}
+                <span className="font-bold text-white">{activeCategory.category}</span>
+              </div>
+              <span className="text-[10px] text-zinc-500 uppercase">DOMAIN SPEC</span>
             </div>
 
             <div className="space-y-2.5">
               {activeCategory.skills.map((skill: SkillItem) => (
                 <div
                   key={skill.name}
-                  className="p-3 rounded-xl bg-zinc-950/70 border border-zinc-800/60 flex items-start gap-3"
+                  className="p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/70 flex items-start gap-3"
                 >
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div className="min-w-0">
@@ -195,6 +227,7 @@ export const Skills = () => {
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );

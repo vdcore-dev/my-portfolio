@@ -24,13 +24,13 @@ export const StarField = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    // Detekcija da li uređaj ima pravi miš (hover podršku) ili je touch ekran
+    
     const isTouchDevice = 
       "ontouchstart" in window || 
       navigator.maxTouchPoints > 0 || 
       window.matchMedia("(hover: none)").matches;
 
-    // Praćenje kursora i inercija (koristi se samo na desktopu)
+    
     const mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2 };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -41,7 +41,7 @@ export const StarField = () => {
 
     const handleResize = () => {
       if (!canvas) return;
-      // Sprečavamo nepotrebni resize na telefonu ako se menja samo visina zbog URL bara
+      
       if (Math.abs(window.innerWidth - width) > 10 || Math.abs(window.innerHeight - height) > 120) {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
@@ -59,7 +59,7 @@ export const StarField = () => {
 
     const initStars = () => {
       const isMobile = width < 768;
-      // Dovoljno zvezda da nebo bude bogato
+      
       const count = isMobile ? 95 : Math.floor(Math.min(width, 1400) * 0.12);
 
       stars = [];
@@ -90,7 +90,7 @@ export const StarField = () => {
       let offsetX = 0;
       let offsetY = 0;
 
-      // Paralaksa se računa isključivo ako postoji miš
+      
       if (!isTouchDevice) {
         mouse.x += (mouse.targetX - mouse.x) * 0.05;
         mouse.y += (mouse.targetY - mouse.y) * 0.05;
@@ -101,11 +101,10 @@ export const StarField = () => {
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
 
-        // Smireno sinusno disanje
+      
         star.phase += star.twinkleSpeed;
         const currentAlpha = star.baseAlpha + Math.sin(star.phase) * 0.25;
 
-        // Na telefonu offsetX/Y su 0 pa zvezde stoje mirno kao pravo nebo dok skroluješ
         const renderX = isTouchDevice ? star.x : star.x - offsetX * star.speedFactor;
         const renderY = isTouchDevice ? star.y : star.y - offsetY * star.speedFactor;
 

@@ -1,30 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <!-- 1. UNIVERZALNI VIEWPORT -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    
-    <!-- 2. BOJA BROWSERA -->
-    <meta name="theme-color" content="#09090b" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- 3. PWA STANDARDI-->
-    <meta name="mobile-web-app-capable" content="yes" /> <!-- Android -->
-    <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- iOS -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    
-    <!-- 4. SEO & SOCIAL MEDIA (Open Graph)-->
-    <meta name="author" content="VDCore" />
-    <meta name="description" content="VDCore - Software Engineer Portfolio. Building scalable backends & resilient systems." />
-    <meta property="og:title" content="VDCore | Software Engineer" />
-    <meta property="og:description" content="Building scalable backends & resilient systems." />
-    <meta property="og:type" content="website" />
-    
+    <!-- 1. OSNOVNI IDENTITET & SEO -->
     <title>VDCore | Portfolio</title>
+    <meta name="title" content="VDCore | Software Engineer" />
+    <meta name="description" content="Software Engineer focused on scalable Java microservices, cloud infrastructure, and resilient distributed architectures." />
+    <meta name="author" content="VDCore" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://vdcore.com" />
+
+    <!-- 2. BOJE I SISTEMSKE TEME -->
+    <meta name="theme-color" content="#09090b" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- 3. IKONICE -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+
+    <!-- 4. OPEN GRAPH / FACEBOOK / LINKEDIN (1200x630 kartice) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vdcore.com" />
+    <meta property="og:title" content="VDCore | Software Engineer" />
+    <meta property="og:description" content="Building scalable backends, resilient distributed architectures, and cloud platforms." />
+    <meta property="og:image" content="https://vdcore.com/og-image.png" />
+    <meta property="og:site_name" content="VDCore Portfolio" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- 5. TWITTER / X KARTICA -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://vdcore.com" />
+    <meta name="twitter:title" content="VDCore | Software Engineer" />
+    <meta name="twitter:description" content="Building scalable backends, resilient distributed architectures, and cloud platforms." />
+    <meta name="twitter:image" content="https://vdcore.com/og-image.png" />
+
+    <!-- 6. SCHEMA.ORG STRUKTUIRANI PODACI ZA GOOGLE (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "VDCore",
+        "jobTitle": "Software Engineer",
+        "description": "Specialized in backend architecture, Java microservices, and resilient cloud systems.",
+        "url": "https://vdcore.com",
+        "knowsAbout": [
+          "Java",
+          "Spring Boot",
+          "Microservices",
+          "Docker",
+          "PostgreSQL",
+          "Redis",
+          "Distributed Systems"
+        ]
+      }
+    </script>
   </head>
-  <body>
+  <body class="bg-zinc-950 text-zinc-100 antialiased selection:bg-emerald-500/25 selection:text-emerald-200">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
