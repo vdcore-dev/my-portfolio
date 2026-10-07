@@ -9,38 +9,51 @@ const XIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
+const DESKTOP_LINKS = [
+  { name: "Projects", href: "#projects", id: "projects" },
+  { name: "Stack", href: "#skills", id: "skills" },
+  { name: "Connect", href: "#contact", id: "contact" },
+];
+
+const MOBILE_LINKS = [
+  { name: "Home", href: "#", id: "home", icon: Home },
+  { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
+  { name: "Stack", href: "#skills", id: "skills", icon: Layers },
+  { name: "Connect", href: "#contact", id: "contact", icon: Send },
+];
+
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
+
   const isScrollingProgrammatically = useRef(false);
+  const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const desktopLinks = [
-    { name: "Projects", href: "#projects", id: "projects" },
-    { name: "Stack", href: "#skills", id: "skills" },
-    { name: "Connect", href: "#contact", id: "contact" },
-  ];
-
-  const mobileLinks = [
-    { name: "Home", href: "#", id: "home", icon: Home },
-    { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
-    { name: "Stack", href: "#skills", id: "skills", icon: Layers },
-    { name: "Connect", href: "#contact", id: "contact", icon: Send },
-  ];
-
+  // Blokiranje skrola pozadine + zatvaranje na Escape taster
   useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [mobileMenuOpen]);
 
-  // Optimized scroll handler
+  useEffect(() => {
+    return () => {
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, []);
+
+  // Optimizovan scroll listener
   useEffect(() => {
     let ticking = false;
 
@@ -73,7 +86,7 @@ export const Navbar = () => {
           }
 
           const scrollTrigger = currentY + window.innerHeight / 3;
-          for (const link of desktopLinks) {
+          for (const link of DESKTOP_LINKS) {
             const element = document.getElementById(link.id);
             if (element) {
               const top = element.offsetTop;
@@ -95,15 +108,20 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const clearScrollTimeout = () => {
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+  };
+
   const scrollToTop = (e: React.MouseEvent) => {
     e.preventDefault();
+    clearScrollTimeout();
     isScrollingProgrammatically.current = true;
     setActiveSection("");
     setMobileMenuOpen(false);
-    
+
     window.scrollTo({ top: 0, behavior: "smooth" });
-    
-    setTimeout(() => {
+
+    scrollTimeoutRef.current = setTimeout(() => {
       isScrollingProgrammatically.current = false;
     }, 850);
   };
@@ -115,15 +133,16 @@ export const Navbar = () => {
       return;
     }
 
+    clearScrollTimeout();
     isScrollingProgrammatically.current = true;
     setActiveSection(id);
     setMobileMenuOpen(false);
-    
+
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
 
-      setTimeout(() => {
+      scrollTimeoutRef.current = setTimeout(() => {
         isScrollingProgrammatically.current = false;
       }, 850);
     }
@@ -140,9 +159,9 @@ export const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* Mobile panel */}
+      {/* Mobile panel sa zadržanim floating položajem */}
       <aside
-        className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 transition-all duration-300 ease-out md:hidden ${
+        className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 overflow-y-auto transition-all duration-300 ease-out md:hidden ${
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
         }`}
       >
@@ -155,7 +174,7 @@ export const Navbar = () => {
           </div>
 
           <div className="flex flex-col gap-2.5 mt-5">
-            {mobileLinks.map((link) => {
+            {MOBILE_LINKS.map((link) => {
               const isActive = link.id === "home" ? activeSection === "" : activeSection === link.id;
               const Icon = link.icon;
               return (
@@ -189,7 +208,7 @@ export const Navbar = () => {
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
           <nav
-            className={`flex items-center justify-between w-full gap-2 sm:gap-4 md:gap-5 px-3.5 sm:px-6 py-2.5 md:py-2.5 rounded-full border transition-all duration-300 ${
+            className={`flex items-center justify-between w-full gap-2 sm:gap-4 md:gap-5 px-3.5 sm:px-6 py-2.5 rounded-full border transition-all duration-300 ${
               isScrolled
                 ? "bg-zinc-950/90 border-zinc-800/90 backdrop-blur-xl shadow-2xl shadow-black/70"
                 : "bg-zinc-900/80 border-zinc-800/70 backdrop-blur-md shadow-lg shadow-black/30"
@@ -213,6 +232,7 @@ export const Navbar = () => {
               <span className="font-black text-base text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.85)]">.</span>
             </a>
 
+            {/* Home dugme - 18px sa naglašenijim stroke-om radi balansa sa punim ikonama */}
             <div className="hidden md:flex items-center">
               <a
                 href="#"
@@ -221,14 +241,14 @@ export const Navbar = () => {
                 onClick={scrollToTop}
                 className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all cursor-pointer"
               >
-                <Home className="w-4 h-4" />
+                <Home className="w-[18px] h-[18px]" strokeWidth={2.2} />
               </a>
             </div>
 
             <div className="hidden md:block w-px h-4 bg-zinc-800 shrink-0" />
             
             <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-              {desktopLinks.map((link) => {
+              {DESKTOP_LINKS.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
                   <a
@@ -252,7 +272,8 @@ export const Navbar = () => {
 
             <div className="w-px h-4 bg-zinc-800 hidden md:block shrink-0" />
 
-            <div className="hidden md:flex items-center gap-2 shrink-0">
+            {/* Social ikonice */}
+            <div className="hidden md:flex items-center gap-1.5 shrink-0">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
@@ -260,7 +281,7 @@ export const Navbar = () => {
                 aria-label="GitHub Profile"
                 className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
               >
-                <GithubIcon className="w-4 h-4" />
+                <GithubIcon className="w-[18px] h-[18px]" />
               </a>
 
               <a
@@ -270,7 +291,7 @@ export const Navbar = () => {
                 aria-label="LinkedIn Profile"
                 className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
               >
-                <LinkedinIcon className="w-4 h-4" />
+                <LinkedinIcon className="w-[18px] h-[18px]" />
               </a>
 
               <a
@@ -280,7 +301,7 @@ export const Navbar = () => {
                 aria-label="X Profile"
                 className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
               >
-                <XIcon className="w-3.5 h-3.5" />
+                <XIcon className="w-[17px] h-[17px]" />
               </a>
 
               <a
@@ -305,6 +326,7 @@ export const Navbar = () => {
                 <span>CV</span>
               </a>
 
+              {/* Hamburger sa pravilnim centriranjem u 'X' */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle Navigation Menu"
@@ -313,7 +335,7 @@ export const Navbar = () => {
                 <div className="flex flex-col items-center justify-center w-4 h-4 relative">
                   <span
                     className={`block absolute h-0.5 w-4 bg-current transform transition-all duration-300 ease-in-out ${
-                      mobileMenuOpen ? "rotate-45 text-zinc-200" : "-translate-y-1.5"
+                      mobileMenuOpen ? "rotate-45 translate-y-0 text-zinc-200" : "-translate-y-1.5"
                     }`}
                   />
                   <span
@@ -323,7 +345,7 @@ export const Navbar = () => {
                   />
                   <span
                     className={`block absolute h-0.5 w-4 bg-current transform transition-all duration-300 ease-in-out ${
-                      mobileMenuOpen ? "-rotate-45 text-zinc-200" : "translate-y-1.5"
+                      mobileMenuOpen ? "-rotate-45 translate-y-0 text-zinc-200" : "translate-y-1.5"
                     }`}
                   />
                 </div>

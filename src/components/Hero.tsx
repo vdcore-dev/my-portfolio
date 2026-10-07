@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowDown, Copy, Check, MapPin, Maximize2, X, Cpu, Server, Cloud, Bot, User } from "lucide-react";
 import { StarField } from "./StarField";
 import { PERSONAL_INFO } from "../data/portfolioData";
@@ -7,31 +7,43 @@ export const Hero = () => {
   const [copied, setCopied] = useState(false);
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
 
-  // Lokalna slika iz public/ foldera
   const avatarUrl = "/avatar2.jpg";
 
-  // Robusno kopiranje koje radi na svim mobilnim browserima
+  // Sprečavanje skrola pozadine i zatvaranje na Escape kada je slika otvorena
+  useEffect(() => {
+    if (!isPhotoOpen) return;
+    
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsPhotoOpen(false);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isPhotoOpen]);
+
+  // Pouzdano kopiranje
   const handleCopyEmail = async () => {
     try {
-      if (navigator.clipboard && window.isSecureContext) {
+      if (navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(PERSONAL_INFO.email);
       } else {
         const textArea = document.createElement("textarea");
         textArea.value = PERSONAL_INFO.email;
         textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
+        textArea.style.opacity = "0";
         document.body.appendChild(textArea);
-        textArea.focus();
         textArea.select();
         document.execCommand("copy");
-        textArea.remove();
+        document.body.removeChild(textArea);
       }
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     } catch {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2200);
+      setCopied(false);
     }
   };
 
@@ -42,36 +54,30 @@ export const Hero = () => {
   };
 
   return (
-    // IZMENJENO: min-h-dvh umesto lg:min-h-[92vh], flex-col justify-center, i pt-32 da se malčice spusti
     <section className="relative min-h-dvh flex flex-col justify-center pt-28 lg:pt-32 pb-16 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
-      {/* ========================================================
-          Pozadinsko zvezdano polje
-         ======================================================== */}
+      {/* Pozadinsko zvezdano polje */}
       <div className="absolute inset-0 pointer-events-none lg:pointer-events-auto touch-none z-0">
         <StarField />
       </div>
 
-      {/* 1. MOBILNE MAGLINE: Isključivo diskretan duboki noćni ton (bez zelene) */}
+      {/* Magline */}
       <div className="block lg:hidden absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full bg-indigo-950/25 blur-[120px] pointer-events-none z-0" />
-
-      {/* 2. PC MAGLINE: Identčne za desktop ekran */}
       <div className="hidden lg:block absolute top-1/4 -left-28 w-96 h-96 rounded-full bg-cyan-500/15 blur-[130px] pointer-events-none z-0" />
       <div className="hidden lg:block absolute top-1/3 -right-28 w-[420px] h-[420px] rounded-full bg-emerald-500/15 blur-[140px] pointer-events-none z-0" />
       <div className="hidden lg:block absolute bottom-10 left-1/2 -translate-x-1/2 w-[550px] h-72 rounded-full bg-indigo-600/15 blur-[150px] pointer-events-none z-0" />
 
-      {/* Fina mreža i donji fejd */}
+      {/* Grid i prelaz ka dnu */}
       <div className="absolute inset-0 bg-grid-pattern opacity-25 lg:opacity-30 pointer-events-none z-0" />
       <div className="absolute bottom-0 left-0 right-0 h-32 lg:h-48 bg-gradient-to-b from-transparent via-zinc-950/60 to-zinc-950 pointer-events-none z-0" />
 
       {/* ========================================================
-          1. MOBILNI HERO ŠABLON (Prikazuje se samo na telefonima: block lg:hidden)
+          1. MOBILNI HERO ŠABLON (block lg:hidden)
          ======================================================== */}
       <div className="block lg:hidden relative z-10 w-full max-w-lg mx-auto">
         
-        {/* KARTICA 1: Profil (Slika 80px + Ime + Rola + Lokacija) */}
+        {/* KARTICA 1: Profil */}
         <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-4 sm:p-5 shadow-2xl shadow-indigo-500/5 mb-6">
           <div className="flex items-center gap-4">
-            {/* Povećana slika profila (80px) */}
             <div 
               className="relative cursor-pointer shrink-0 group"
               onClick={() => setIsPhotoOpen(true)}
@@ -89,7 +95,6 @@ export const Hero = () => {
               </div>
             </div>
 
-            {/* Podaci o profilu */}
             <div className="flex-1 min-w-0">
               <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight truncate font-sans">
                 {PERSONAL_INFO.name}
@@ -110,7 +115,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* KARTICA 2: Naslov i Bio u Bento kartici */}
+        {/* KARTICA 2: Naslov i Bio */}
         <div className="rounded-3xl bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-8 shadow-xl shadow-black/40 text-left mb-8">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-[1.2]">
             Building scalable{" "}
@@ -124,7 +129,7 @@ export const Hero = () => {
           </p>
         </div>
 
-        {/* CTA DUGMAD: Ikona iza teksta */}
+        {/* CTA DUGMAD */}
         <div className="grid grid-cols-2 gap-3.5 w-full mt-10">
           <a
             href="#projects"
@@ -132,7 +137,7 @@ export const Hero = () => {
             className="inline-flex items-center justify-center gap-2 h-14 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-lg shadow-[#06d6a0]/25 active:scale-95 transition-transform"
           >
             <span>Explore Systems</span>
-            <ArrowDown className="w-4.5 h-4.5 animate-bounce" />
+            <ArrowDown className="w-4 h-4 animate-bounce" />
           </a>
 
           <button
@@ -147,17 +152,16 @@ export const Hero = () => {
             {copied ? (
               <>
                 <span className="font-semibold tracking-wide">Copied!</span>
-                <Check className="w-4.5 h-4.5 text-emerald-400 animate-in zoom-in-75 duration-150" />
+                <Check className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-150" />
               </>
             ) : (
               <>
                 <span>Get in touch</span>
-                <Copy className="w-4.5 h-4.5 text-emerald-400" />
+                <Copy className="w-4 h-4 text-emerald-400" />
               </>
             )}
           </button>
         </div>
-
       </div>
 
       {/* ========================================================
@@ -167,7 +171,6 @@ export const Hero = () => {
         
         {/* Leva strana PC */}
         <div className="col-span-7 flex flex-col items-start text-left">
-          {/* Status Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs font-mono text-emerald-400 mb-6 backdrop-blur-md shadow-inner shadow-emerald-500/10">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -176,7 +179,6 @@ export const Hero = () => {
             <span>{PERSONAL_INFO.availability}</span>
           </div>
 
-          {/* Naslov */}
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
             Building scalable{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">
@@ -185,12 +187,10 @@ export const Hero = () => {
             systems.
           </h1>
 
-          {/* Opis */}
           <p className="text-base sm:text-lg text-zinc-400 max-w-xl mb-8 leading-relaxed font-sans">
             Engineering robust Java microservices, streamlined DevOps pipelines, and intelligent AI-powered cloud integrations with an uncompromising focus on clean architecture and high availability.
           </p>
 
-          {/* Akcioni blok */}
           <div className="flex items-center gap-3.5">
             <a
               href="#projects"
@@ -212,7 +212,7 @@ export const Hero = () => {
             >
               {copied ? (
                 <>
-                  <span className="font-semibold tracking-wide">Email copied to clipboard!</span>
+                  <span className="font-semibold tracking-wide">Email copied!</span>
                   <Check className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-150" />
                 </>
               ) : (
@@ -229,7 +229,6 @@ export const Hero = () => {
         <div className="col-span-5 w-full">
           <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-7 shadow-2xl shadow-indigo-500/5 relative hover:border-zinc-700 transition-all duration-300">
             
-            {/* Čist About bar */}
             <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/70 text-xs font-mono text-zinc-400">
               <div className="flex items-center gap-2">
                 <div className="p-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -241,7 +240,7 @@ export const Hero = () => {
 
             <div className="flex items-center gap-4 pb-5 border-b border-zinc-800/70">
               <div 
-                className="relative group cursor-pointer flex-shrink-0"
+                className="relative group cursor-pointer shrink-0"
                 onClick={() => setIsPhotoOpen(true)}
                 title="Click to view full photo"
               >
@@ -270,7 +269,7 @@ export const Hero = () => {
                 </div>
 
                 <div className="flex items-center gap-1.5 mt-2.5 text-zinc-400 text-xs font-sans">
-                  <MapPin className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                  <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   <span>Remote • Worldwide</span>
                 </div>
               </div>
@@ -312,7 +311,6 @@ export const Hero = () => {
 
           </div>
         </div>
-
       </div>
 
       {/* Modal za uveličanu sliku */}

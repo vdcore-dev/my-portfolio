@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SKILL_CATEGORIES } from "../data/portfolioData";
-import { Server, Database, Layout, ChevronRight, Terminal, CheckCircle2 } from "lucide-react";
+import { Server, Database, Layout, ChevronRight, Terminal } from "lucide-react";
 import type { SkillCategory, SkillItem } from "../types";
 
 export const Skills = () => {
@@ -51,7 +51,7 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE */}
+        {/* 1. DESKTOP INTERFACE - NETAKNUT */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
           
           {/* Skill Categories */}
@@ -165,10 +165,13 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* 2. MOBILE INTERFACE */}
+        {/* 2. MOBILE INTERFACE - Usklađena visina (min-h-[390px]) i kompaktan 2-kolonski grid */}
         <div className="block lg:hidden">
-          {/* Thumb tabs */}
-          <div className="flex gap-2 overflow-x-auto pb-3 mb-4 no-scrollbar -mx-4 px-4 overscroll-x-contain">
+          {/* Thumb tabs bez sečenja */}
+          <div 
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="flex gap-2 overflow-x-auto pb-3 mb-4 [&::-webkit-scrollbar]:hidden -mx-4 px-4 overscroll-x-contain"
+          >
             {SKILL_CATEGORIES.map((cat) => {
               const catKey = cat.id ?? cat.category;
               const isSelected = catKey === activeCategoryId;
@@ -177,53 +180,58 @@ export const Skills = () => {
                 <button
                   key={catKey}
                   onClick={() => setActiveCategoryId(catKey)}
-                  className={`h-10 px-4 rounded-xl text-xs font-mono whitespace-nowrap transition-colors border active:scale-95 cursor-pointer flex items-center gap-2 ${
+                  className={`h-10 px-4 rounded-xl text-xs font-mono whitespace-nowrap transition-all border active:scale-95 cursor-pointer flex items-center gap-2 ${
                     isSelected
                       ? "bg-zinc-900 border-zinc-700 text-white font-medium shadow-md shadow-black/40 ring-1 ring-emerald-500/30"
                       : "bg-zinc-950/60 border-zinc-800/80 text-zinc-400 hover:text-zinc-200"
                   }`}
                 >
                   {getCategoryIcon(cat.id)}
-                  <span>{cat.category.split(" ")[0]}</span>
+                  <span>{cat.category}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* Skill Cards */}
-          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5 shadow-2xl">
-            <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
-              <div className="flex items-center gap-2">
-                {getCategoryIcon(activeCategory.id)}
-                <span className="font-bold text-white">{activeCategory.category}</span>
+          {/* Glavna kartica usklađena sa visinom Projects (min-h-[390px]) */}
+          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5 sm:p-6 shadow-2xl min-h-[390px] flex flex-col justify-between">
+            <div>
+              {/* Header spec */}
+              <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
+                <div className="flex items-center gap-2">
+                  {getCategoryIcon(activeCategory.id)}
+                  <span className="font-bold text-white tracking-tight">{activeCategory.category}</span>
+                </div>
+                <span className="text-[10px] text-zinc-500 uppercase tracking-wider">DOMAIN SPEC</span>
               </div>
-              <span className="text-[10px] text-zinc-500 uppercase">DOMAIN SPEC</span>
-            </div>
 
-            <div className="space-y-2.5">
-              {activeCategory.skills.map((skill: SkillItem) => (
-                <div
-                  key={skill.name}
-                  className="p-3.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/70 flex items-start gap-3"
-                >
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs font-bold text-white">
+              {/* 2-kolonski pregledan raspored veština */}
+              <div className="grid grid-cols-2 gap-2.5">
+                {activeCategory.skills.map((skill: SkillItem) => (
+                  <div
+                    key={skill.name}
+                    className="p-3 rounded-2xl bg-zinc-900/60 border border-zinc-800/70 flex flex-col justify-between min-h-[72px]"
+                  >
+                    <div className="flex items-center justify-between gap-1 mb-1">
+                      <span className="font-mono text-xs font-bold text-white truncate">
                         {skill.name}
                       </span>
                       {skill.highlight && (
-                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">
-                          Primary
-                        </span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 shadow-[0_0_6px_rgba(52,211,153,0.8)]" title="Primary Skill" />
                       )}
                     </div>
-                    <p className="text-[11px] text-zinc-400 font-sans mt-0.5 leading-snug">
+                    <p className="text-[10px] text-zinc-400 font-sans leading-tight line-clamp-2">
                       {skill.role}
                     </p>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+
+            {/* Dno kartice za simetriju */}
+            <div className="pt-4 mt-4 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
+              <span>{activeCategory.skills.length} core modules</span>
+              <span className="text-emerald-400/90 font-medium">Production Tested</span>
             </div>
           </div>
         </div>

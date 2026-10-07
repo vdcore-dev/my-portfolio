@@ -24,13 +24,11 @@ export const StarField = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    
     const isTouchDevice = 
       "ontouchstart" in window || 
       navigator.maxTouchPoints > 0 || 
       window.matchMedia("(hover: none)").matches;
 
-    
     const mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2 };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -41,7 +39,6 @@ export const StarField = () => {
 
     const handleResize = () => {
       if (!canvas) return;
-      
       if (Math.abs(window.innerWidth - width) > 10 || Math.abs(window.innerHeight - height) > 120) {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
@@ -59,7 +56,6 @@ export const StarField = () => {
 
     const initStars = () => {
       const isMobile = width < 768;
-      
       const count = isMobile ? 95 : Math.floor(Math.min(width, 1400) * 0.12);
 
       stars = [];
@@ -75,7 +71,7 @@ export const StarField = () => {
           size,
           baseAlpha,
           phase: Math.random() * Math.PI * 2,
-          twinkleSpeed: Math.random() * 0.006 + 0.003, // Lagano, smireno pulsiranje
+          twinkleSpeed: Math.random() * 0.006 + 0.003,
           color: colors[Math.floor(Math.random() * colors.length)],
           speedFactor: size * 0.015,
         });
@@ -90,7 +86,6 @@ export const StarField = () => {
       let offsetX = 0;
       let offsetY = 0;
 
-      
       if (!isTouchDevice) {
         mouse.x += (mouse.targetX - mouse.x) * 0.05;
         mouse.y += (mouse.targetY - mouse.y) * 0.05;
@@ -101,7 +96,6 @@ export const StarField = () => {
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
 
-      
         star.phase += star.twinkleSpeed;
         const currentAlpha = star.baseAlpha + Math.sin(star.phase) * 0.25;
 

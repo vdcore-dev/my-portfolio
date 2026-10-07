@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { PROJECTS } from "../data/portfolioData";
 import { ExternalLink, Terminal, ChevronRight, Layers, Sparkles, Code2 } from "lucide-react";
 import { GithubIcon } from "./Icons";
@@ -6,7 +6,28 @@ import type { Project } from "../types";
 
 export const Projects = () => {
   const [selectedId, setSelectedId] = useState<string | number>(PROJECTS[0]?.id ?? 1);
+  const [activeMobileIdx, setActiveMobileIdx] = useState(0);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
+
   const activeProject: Project = PROJECTS.find((p) => p.id === selectedId) || PROJECTS[0];
+
+  // Praćenje trenutnog slajda na telefonu
+  useEffect(() => {
+    const el = mobileScrollRef.current;
+    if (!el) return;
+
+    const handleScroll = () => {
+      const scrollPosition = el.scrollLeft;
+      const cardWidth = el.clientWidth * 0.88;
+      const newIdx = Math.round(scrollPosition / cardWidth);
+      if (newIdx !== activeMobileIdx && newIdx >= 0 && newIdx < PROJECTS.length) {
+        setActiveMobileIdx(newIdx);
+      }
+    };
+
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, [activeMobileIdx]);
 
   return (
     <section 
@@ -33,7 +54,7 @@ export const Projects = () => {
           </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE */}
+        {/* 1. DESKTOP INTERFACE - NETAKNUT */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
           
           {/* Sections */}
@@ -188,18 +209,22 @@ export const Projects = () => {
           </div>
         </div>
 
-        {/* 2. MOBILNE INTERFACE*/}
+        {/* 2. MOBILNI INTERFACE - Malo povećana kartica na dole, bez sistemskog scrollbara */}
         <div className="block lg:hidden">
-          <div className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scroll-smooth no-scrollbar -mx-4 px-4">
+          <div 
+            ref={mobileScrollRef}
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="flex gap-4 overflow-x-auto overflow-y-hidden pb-2 pt-1 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden -mx-4 px-4"
+          >
             {PROJECTS.map((project, idx) => (
               <div
                 key={project.id}
-                className="min-w-[88%] sm:min-w-[70%] snap-center rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5 flex flex-col justify-between shadow-2xl"
+                className="min-w-[88%] sm:min-w-[70%] min-h-[390px] snap-center rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 flex flex-col justify-between shadow-2xl"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-3.5">
+                  <div className="flex items-center justify-between pb-3.5 border-b border-zinc-800/80 mb-4">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-xs px-2 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">
+                      <span className="font-mono text-xs px-2.5 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-bold">
                         0{idx + 1}
                       </span>
                       {project.featured && (
@@ -209,22 +234,22 @@ export const Projects = () => {
                         </span>
                       )}
                     </div>
-                    <span className="font-mono text-[10px] text-zinc-500 uppercase">SYS SPEC</span>
+                    <span className="font-mono text-[10px] text-zinc-500 uppercase tracking-wider">SYS SPEC</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 tracking-tight">
+                  <h3 className="text-xl font-bold text-white mb-2.5 tracking-tight font-sans">
                     {project.title}
                   </h3>
 
-                  <p className="text-zinc-400 text-xs leading-relaxed mb-4 font-sans line-clamp-3">
+                  <p className="text-zinc-400 text-xs leading-relaxed mb-5 font-sans line-clamp-3">
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-1.5 mb-5">
+                  <div className="flex flex-wrap gap-1.5 mb-6">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-[10px]"
+                        className="px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-300 font-mono text-[10px]"
                       >
                         {tag}
                       </span>
@@ -233,7 +258,7 @@ export const Projects = () => {
                 </div>
 
                 {/* Mobile buttons */}
-                <div className="flex items-center gap-2 pt-3.5 border-t border-zinc-800/80">
+                <div className="flex items-center gap-2 pt-4 border-t border-zinc-800/80">
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
@@ -263,9 +288,18 @@ export const Projects = () => {
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-2 mt-4 font-mono text-[11px] text-zinc-500">
-            <span>Swipe for more</span>
-            <span>→</span>
+          {/* Dinamičke tačke/crtice */}
+          <div className="flex items-center justify-center gap-1.5 mt-5">
+            {PROJECTS.map((_, idx) => (
+              <span
+                key={idx}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  activeMobileIdx === idx
+                    ? "w-6 bg-emerald-400"
+                    : "w-2 bg-zinc-800"
+                }`}
+              />
+            ))}
           </div>
         </div>
 

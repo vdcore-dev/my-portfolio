@@ -3,7 +3,7 @@ import { Copy, Check, ArrowUp, ArrowUpRight, Send, Terminal, Mail } from "lucide
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
-const XIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+const XIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
@@ -31,8 +31,7 @@ export const Footer = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setCopied(false);
     }
   };
 
@@ -103,7 +102,7 @@ export const Footer = () => {
             <button
               onClick={handleCopyEmail}
               type="button"
-              className={`inline-flex items-center justify-center gap-2 h-14 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-lg active:scale-95 transition-all ${
+              className={`inline-flex items-center justify-center gap-2 h-14 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-lg active:scale-95 transition-all cursor-pointer ${
                 copied
                   ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-emerald-500/20"
                   : "bg-zinc-900/80 border-zinc-800 text-zinc-200 hover:text-white hover:border-zinc-700"
@@ -243,7 +242,7 @@ export const Footer = () => {
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-10"
         style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
       >
-        {/* Mobile bottom bar */}
+        {/* Mobile bottom bar - samo čisto dugme sa animiranom strelicom */}
         <div className="flex lg:hidden items-center justify-center w-full">
           <button
             onClick={scrollToTop}
