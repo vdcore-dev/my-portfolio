@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { PROJECTS } from "../data/portfolioData";
-import { ExternalLink, Terminal, ChevronRight, Layers, Sparkles, Code2 } from "lucide-react";
+import { ExternalLink, Terminal, ChevronRight, Layers, Sparkles, Code2, FolderKanban } from "lucide-react";
 import { GithubIcon } from "./Icons";
 import type { Project } from "../types";
 
@@ -36,10 +36,10 @@ export const Projects = () => {
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6">
         
-        {/* HEADER */}
+        {/* HEADER: FolderKanban (fascikla sa tri uspravne crte unutra) */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <FolderKanban className="w-4 h-4 text-emerald-400 shrink-0" />
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
               Featured Systems
             </h2>
@@ -209,7 +209,7 @@ export const Projects = () => {
           </div>
         </div>
 
-        {/* 2. MOBILNI INTERFACE - Malo povećana kartica na dole, bez sistemskog scrollbara */}
+        {/* 2. MOBILNI INTERFACE */}
         <div className="block lg:hidden">
           <div 
             ref={mobileScrollRef}

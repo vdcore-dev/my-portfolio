@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SKILL_CATEGORIES } from "../data/portfolioData";
-import { Server, Database, Layout, ChevronRight, Terminal } from "lucide-react";
+import { Server, Database, Layout, ChevronRight, Terminal, Layers } from "lucide-react";
 import type { SkillCategory, SkillItem } from "../types";
 
 export const Skills = () => {
@@ -33,10 +33,10 @@ export const Skills = () => {
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6">
         
-        {/* HEADER */}
+        {/* HEADER - Čist moderni Layers simbol umesto tačke */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <Layers className="w-4 h-4 text-emerald-400 shrink-0" />
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
               Technical Stack
             </h2>
@@ -165,9 +165,9 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* 2. MOBILE INTERFACE - Usklađena visina (min-h-[390px]) i kompaktan 2-kolonski grid */}
+        {/* 2. MOBILE INTERFACE */}
         <div className="block lg:hidden">
-          {/* Thumb tabs bez sečenja */}
+          {/* Thumb tabs */}
           <div 
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             className="flex gap-2 overflow-x-auto pb-3 mb-4 [&::-webkit-scrollbar]:hidden -mx-4 px-4 overscroll-x-contain"
@@ -193,7 +193,7 @@ export const Skills = () => {
             })}
           </div>
 
-          {/* Glavna kartica usklađena sa visinom Projects (min-h-[390px]) */}
+          {/* Glavna kartica */}
           <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5 sm:p-6 shadow-2xl min-h-[390px] flex flex-col justify-between">
             <div>
               {/* Header spec */}
@@ -205,7 +205,7 @@ export const Skills = () => {
                 <span className="text-[10px] text-zinc-500 uppercase tracking-wider">DOMAIN SPEC</span>
               </div>
 
-              {/* 2-kolonski pregledan raspored veština */}
+              {/* 2-kolonski raspored */}
               <div className="grid grid-cols-2 gap-2.5">
                 {activeCategory.skills.map((skill: SkillItem) => (
                   <div
@@ -228,7 +228,7 @@ export const Skills = () => {
               </div>
             </div>
 
-            {/* Dno kartice za simetriju */}
+            {/* Dno kartice */}
             <div className="pt-4 mt-4 border-t border-zinc-800/80 flex items-center justify-between font-mono text-[10px] text-zinc-500">
               <span>{activeCategory.skills.length} core modules</span>
               <span className="text-emerald-400/90 font-medium">Production Tested</span>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, ArrowUp, ArrowUpRight, Send, Terminal, Mail } from "lucide-react";
+import { Copy, Check, ArrowUp, ArrowUpRight, Send, Terminal, Mail, MessageSquare } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -46,11 +46,11 @@ export const Footer = () => {
     >
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-center">
         
-        {/* SECTION HEADER */}
+        {/* SECTION HEADER: Čist moderni simbol bez okvira */}
         <div className="flex items-center justify-between pb-4 mb-8 sm:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">
+            <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
+            <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight font-sans">
               Get in Touch
             </h2>
           </div>
@@ -242,7 +242,7 @@ export const Footer = () => {
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-10"
         style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
       >
-        {/* Mobile bottom bar - samo čisto dugme sa animiranom strelicom */}
+        {/* Mobile bottom bar */}
         <div className="flex lg:hidden items-center justify-center w-full">
           <button
             onClick={scrollToTop}

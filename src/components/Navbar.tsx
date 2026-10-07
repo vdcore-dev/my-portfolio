@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, FolderGit2, Layers, Send, ChevronRight } from "lucide-react";
+import { Home, FileText, FolderKanban, Layers, MessageSquare, ChevronRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -17,9 +17,9 @@ const DESKTOP_LINKS = [
 
 const MOBILE_LINKS = [
   { name: "Home", href: "#", id: "home", icon: Home },
-  { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
+  { name: "Projects", href: "#projects", id: "projects", icon: FolderKanban },
   { name: "Stack", href: "#skills", id: "skills", icon: Layers },
-  { name: "Connect", href: "#contact", id: "contact", icon: Send },
+  { name: "Connect", href: "#contact", id: "contact", icon: MessageSquare },
 ];
 
 export const Navbar = () => {
@@ -232,7 +232,7 @@ export const Navbar = () => {
               <span className="font-black text-base text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.85)]">.</span>
             </a>
 
-            {/* Home dugme - 18px sa naglašenijim stroke-om radi balansa sa punim ikonama */}
+            {/* Home dugme */}
             <div className="hidden md:flex items-center">
               <a
                 href="#"
@@ -326,7 +326,7 @@ export const Navbar = () => {
                 <span>CV</span>
               </a>
 
-              {/* Hamburger sa pravilnim centriranjem u 'X' */}
+              {/* Hamburger dugme */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle Navigation Menu"
