@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, FolderGit2, Layers, ChevronRight } from "lucide-react";
+import { Home, FileText, FolderGit2, Layers, Send, ChevronRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -14,13 +14,19 @@ export const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  // REFERENCA KOJA SPREČAVA "GLITCH" ZELENE LINIJE PRI KLIKU
   const isScrollingProgrammatically = useRef(false);
 
-  const navLinks = [
+  const desktopLinks = [
+    { name: "Projects", href: "#projects", id: "projects" },
+    { name: "Stack", href: "#skills", id: "skills" },
+    { name: "Connect", href: "#contact", id: "contact" },
+  ];
+
+  const mobileLinks = [
+    { name: "Home", href: "#", id: "home", icon: Home },
     { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
     { name: "Stack", href: "#skills", id: "skills", icon: Layers },
-    { name: "Connect", href: "#contact", id: "contact", icon: ChevronRight },
+    { name: "Connect", href: "#contact", id: "contact", icon: Send },
   ];
 
   useEffect(() => {
@@ -38,17 +44,16 @@ export const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // AKO SE TRENUTNO IZVRŠAVA KLIK-SKROL, IGNORIŠI OVAJ DEO DA NE BI BILO GLITCH-A
       if (isScrollingProgrammatically.current) return;
 
-      if (window.scrollY < 180) {
+      if (window.scrollY < 200) {
         setActiveSection("");
         return;
       }
 
       const isAtBottom =
         window.innerHeight + Math.round(window.scrollY) >=
-        document.documentElement.scrollHeight - 50;
+        document.documentElement.scrollHeight - 60;
 
       if (isAtBottom) {
         setActiveSection("contact");
@@ -56,20 +61,18 @@ export const Navbar = () => {
       }
 
       const scrollTrigger = window.scrollY + window.innerHeight / 3;
-      let currentSection = "";
       
-      for (const link of navLinks) {
+      for (const link of desktopLinks) {
         const element = document.getElementById(link.id);
         if (element) {
           const top = element.offsetTop;
           const height = element.offsetHeight;
           if (scrollTrigger >= top && scrollTrigger < top + height) {
-            currentSection = link.id;
+            setActiveSection(link.id);
+            return;
           }
         }
       }
-
-      setActiveSection(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -87,29 +90,27 @@ export const Navbar = () => {
     
     setTimeout(() => {
       isScrollingProgrammatically.current = false;
-    }, 1000);
+    }, 850);
   };
 
   const scrollTo = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    
-    // ZAKLJUČAVAMO SCROLL DETEKCIJU DA ZELENA LINIJA NE BI SE BAGOVALA
+    if (id === "home") {
+      scrollToTop(e);
+      return;
+    }
+
     isScrollingProgrammatically.current = true;
     setActiveSection(id);
     setMobileMenuOpen(false);
     
     const element = document.getElementById(id);
     if (element) {
-      // NAJSTABILNIJI NATIVE SCROLL BEZ SECKANJA
-      window.scrollTo({
-        top: element.offsetTop,
-        behavior: "smooth"
-      });
+      element.scrollIntoView({ behavior: "smooth" });
 
-      // VRAĆAMO DETEKCIJU NAKON ŠTO SE ANIMACIJA ZAVRŠI (1 sekunda)
       setTimeout(() => {
         isScrollingProgrammatically.current = false;
-      }, 1000);
+      }, 850);
     }
   };
 
@@ -117,55 +118,61 @@ export const Navbar = () => {
     <>
       <div
         onClick={() => setMobileMenuOpen(false)}
-        className={`fixed inset-0 z-40 bg-black/65 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 bg-black/75 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
           mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
       />
 
+      {/* 
+          Mobile menu:
+          - top-24
+          - bottom-8 
+      */}
       <aside
-        className={`fixed top-20 right-0 bottom-5 z-50 w-[82%] max-w-[300px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.8)] flex flex-col justify-between p-5 transition-all duration-300 ease-out md:hidden ${
+        className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 transition-all duration-300 ease-out md:hidden ${
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
         }`}
       >
         <div>
-          <div className="flex items-center justify-between pb-4 border-b border-zinc-800/70">
-            <span className="font-mono text-zinc-400 font-semibold text-xs tracking-widest uppercase">
+          <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80">
+            <span className="font-mono text-zinc-500 font-medium text-[11px] tracking-widest uppercase">
               Navigation
             </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           </div>
 
           <div className="flex flex-col gap-2.5 mt-5">
-            {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
+            {mobileLinks.map((link) => {
+              const isActive = link.id === "home" ? activeSection === "" : activeSection === link.id;
               const Icon = link.icon;
               return (
                 <button
                   key={link.id}
                   onClick={(e) => scrollTo(e, link.id)}
-                  className={`flex items-center justify-between w-full p-4 rounded-2xl text-left text-base font-sans transition-all active:scale-[0.98] cursor-pointer ${
+                  className={`flex items-center justify-between w-full px-4 py-3.5 rounded-2xl text-left text-sm font-sans transition-all active:scale-[0.98] cursor-pointer ${
                     isActive
-                      ? "bg-zinc-800/80 border border-zinc-700 text-white font-semibold shadow-inner"
-                      : "text-zinc-300 hover:bg-zinc-900/80 hover:text-white border border-transparent"
+                      ? "bg-zinc-900 border border-zinc-700/80 text-white font-medium shadow-md shadow-black/40"
+                      : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/40 border border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3.5">
-                    <Icon className={`w-5 h-5 ${isActive ? "text-white" : "text-zinc-400"}`} />
+                    <Icon className={`w-4 h-4 transition-colors ${isActive ? "text-emerald-400" : "text-zinc-500"}`} />
                     <span className="tracking-tight">{link.name}</span>
                   </div>
-                  <ChevronRight className={`w-4 h-4 ${isActive ? "text-white" : "text-zinc-600"}`} />
+                  <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isActive ? "text-emerald-400 translate-x-0.5" : "text-zinc-700"}`} />
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* OVDE SMO UBACILI COPYRIGHT TEKST PO TVOJOJ ŽELJI! */}
-        <div className="pt-4 border-t border-zinc-800/70 text-center text-[10px] font-mono text-zinc-500 tracking-wider">
-          © 2026 • Designed and built by VDCore.
+        <div className="pt-4 border-t border-zinc-900 text-center text-[10px] font-mono text-zinc-500 tracking-wider">
+          © 2026 VDCore. All rights reserved.
         </div>
       </aside>
 
+      {/* Desktop & Main Header */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
@@ -207,8 +214,9 @@ export const Navbar = () => {
             </div>
 
             <div className="hidden md:block w-px h-4 bg-zinc-800 shrink-0" />
+            
             <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-              {navLinks.map((link) => {
+              {desktopLinks.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
                   <a
