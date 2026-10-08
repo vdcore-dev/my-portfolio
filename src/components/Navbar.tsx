@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, FolderKanban, Layers, MessageSquare, ChevronRight } from "lucide-react";
+import { Home, FileText, FolderKanban, Layers, MessageSquare, ChevronRight, Share2, Check } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -26,6 +26,7 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -148,6 +149,44 @@ export const Navbar = () => {
     }
   };
 
+  const handleShare = async () => {
+    const shareUrl = window.location.origin || window.location.href;
+    const shareData = {
+      title: `${PERSONAL_INFO.name} | Software Engineer`,
+      text: "Check out this software engineer portfolio.",
+      url: shareUrl,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch {
+        // Korisnik je zatvorio native share modal bez slanja
+      }
+    } else {
+      // Fallback ako Web Share nije podržan: kopira link
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(shareUrl);
+        } else {
+          const textArea = document.createElement("textarea");
+          textArea.value = shareUrl;
+          textArea.style.position = "fixed";
+          textArea.style.left = "-999999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          document.execCommand("copy");
+          textArea.remove();
+        }
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch {
+        setShared(false);
+      }
+    }
+  };
+
   return (
     <>
       {/* Background overlay */}
@@ -198,12 +237,37 @@ export const Navbar = () => {
           </div>
         </div>
 
-        <div className="pt-4 border-t border-zinc-900 text-center text-[10px] font-mono text-zinc-500 tracking-wider">
-          © 2026 VDCore. All rights reserved.
+        {/* DNO FIOKE: Share Portfolio dugme umesto copyright-a */}
+        <div className="pt-4 border-t border-zinc-900/90 flex items-center justify-between">
+          <span className="font-mono text-[11px] text-zinc-500 tracking-wide">
+            Portfolio
+          </span>
+
+          <button
+            onClick={handleShare}
+            type="button"
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-mono transition-all active:scale-95 cursor-pointer ${
+              shared
+                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-300"
+                : "bg-zinc-900/90 border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-700"
+            }`}
+          >
+            {shared ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-[11px]">Link copied!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-[11px]">Share</span>
+              </>
+            )}
+          </button>
         </div>
       </aside>
 
-      {/* Desktop & Main Header */}
+      {/* Desktop & Main Header (100% Netaknut) */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           

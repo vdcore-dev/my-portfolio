@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, ArrowUp, ArrowUpRight, Send, Terminal, Mail, MessageSquare } from "lucide-react";
+import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, Mail, MessageSquare } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -42,12 +42,12 @@ export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="min-h-svh lg:min-h-dvh w-full flex flex-col justify-between pt-24 pb-8 lg:pt-32 lg:pb-8 bg-zinc-950 relative overflow-hidden border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0"
+      className="w-full flex flex-col justify-between pt-24 pb-4 min-h-dvh lg:pt-32 lg:pb-10 bg-zinc-950 relative overflow-hidden border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0"
     >
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 flex flex-col flex-1 lg:justify-center">
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 lg:justify-between">
         
-        {/* SECTION HEADER: Identično poravnat kao Projects i Skills */}
-        <div className="flex items-center justify-between pb-4 mb-6 sm:mb-8 border-b border-zinc-800/80">
+        {/* HEADER: Usklađen sa Projects i Skills sekcijama */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
             <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight font-sans">
@@ -55,7 +55,7 @@ export const Footer = () => {
             </h2>
           </div>
 
-          <div className="hidden lg:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-emerald-500/30 text-xs font-mono text-emerald-400 shadow-sm">
+          <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-emerald-500/30 text-xs font-mono text-emerald-400 shadow-sm">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -64,11 +64,10 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* 1. MOBILE INTERFACE - Pomaknuto gore bez viška lufta */}
-        <div className="block lg:hidden w-full max-w-lg mx-auto flex flex-col gap-5">
-          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 sm:p-7 shadow-2xl text-left">
-            
-            {/* Status */}
+        {/* 1. MOBILNI PRIKAZ (100% netaknuta unutrašnjost i razmaci) */}
+        <div className="block lg:hidden w-full max-w-lg mx-auto">
+          {/* Kartica sa opisom */}
+          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 sm:p-7 shadow-2xl text-left mb-8">
             <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wide mb-3">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -85,24 +84,24 @@ export const Footer = () => {
             </h3>
 
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
-              Direct communication channel for backend engineering roles, microservices, and distributed architecture.
+              Open for backend engineering roles, high-concurrency microservices, and distributed cloud architecture.
             </p>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="grid grid-cols-2 gap-3.5 w-full">
+          {/* CTA Dugmad */}
+          <div className="grid grid-cols-2 gap-3.5 w-full mb-6">
             <a
               href={`mailto:${PERSONAL_INFO.email}`}
-              className="inline-flex items-center justify-center gap-2 h-14 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-lg shadow-[#06d6a0]/25 active:scale-95 transition-transform"
+              className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-md shadow-[#06d6a0]/20 active:scale-95 transition-transform"
             >
               <span>Send Email</span>
-              <Send className="w-4 h-4 text-zinc-950" />
+              <Send className="w-4 h-4 text-zinc-950 shrink-0" />
             </a>
 
             <button
               onClick={handleCopyEmail}
               type="button"
-              className={`inline-flex items-center justify-center gap-2 h-14 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-lg active:scale-95 transition-all cursor-pointer ${
+              className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-md active:scale-95 transition-all cursor-pointer ${
                 copied
                   ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-emerald-500/20"
                   : "bg-zinc-900/80 border-zinc-800 text-zinc-200 hover:text-white hover:border-zinc-700"
@@ -111,20 +110,20 @@ export const Footer = () => {
               {copied ? (
                 <>
                   <span className="font-semibold tracking-wide">Copied!</span>
-                  <Check className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-150" />
+                  <Check className="w-4 h-4 text-emerald-400 shrink-0 animate-in zoom-in-75 duration-150" />
                 </>
               ) : (
                 <>
                   <span>Copy Email</span>
-                  <Copy className="w-4 h-4 text-emerald-400" />
+                  <Copy className="w-4 h-4 text-emerald-400 shrink-0" />
                 </>
               )}
             </button>
           </div>
 
-          {/* Social Networks */}
+          {/* Mreže */}
           <div className="w-full">
-            <span className="text-zinc-500 text-[10px] font-mono tracking-widest uppercase block text-center mb-2">
+            <span className="text-zinc-500 text-[10px] font-mono tracking-widest uppercase block text-center mb-2.5">
               Network Platforms
             </span>
 
@@ -162,10 +161,9 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* 2. DESKTOP VIEW - NETAKNUT */}
-        <div className="hidden lg:grid grid-cols-12 gap-8 items-center">
+        {/* 2. DESKTOP PRIKAZ (100% netaknut) */}
+        <div className="hidden lg:grid grid-cols-12 gap-8 items-center lg:my-auto">
           <div className="col-span-8 flex flex-col items-start">
-            
             <h3 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15] mb-4 font-sans">
               Let’s engineer your next{" "}
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400 mt-1">
@@ -236,25 +234,28 @@ export const Footer = () => {
 
       </div>
 
-      {/* BASELINE FOOTER BAR */}
+      {/* BASELINE FOOTER BAR: Prilagođen ergonomiji palca i sa prijatnim luftom */}
       <div 
-        className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-5"
-        style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
+        className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-4 lg:pt-10 shrink-0"
+        style={{ paddingBottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.5rem))" }}
       >
-        {/* Mobile bottom bar */}
-        <div className="flex lg:hidden items-center justify-center w-full">
+        {/* Mobilna donja linija - w-11 h-11 (44px touch target) za udoban dodir */}
+        <div className="flex lg:hidden items-center justify-between w-full pt-4 border-t border-zinc-900/80">
+          <span className="text-[11px] font-mono text-zinc-600 tracking-wider">
+            © 2026 VDCore.
+          </span>
+
           <button
             onClick={scrollToTop}
             type="button"
             aria-label="Back to top"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 hover:text-emerald-400 active:scale-95 transition-all cursor-pointer shadow-md"
+            className="w-11 h-11 rounded-full flex items-center justify-center bg-zinc-900/90 border border-zinc-800 text-emerald-400 active:scale-90 transition-transform shadow-md cursor-pointer"
           >
-            <span className="text-xs font-medium font-sans tracking-wide">Back to Top</span>
-            <ArrowUp className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
+            <ChevronUp className="w-5 h-5 animate-bounce" />
           </button>
         </div>
 
-        {/* Desktop bottom bar */}
+        {/* Desktop donja linija (100% netaknuta) */}
         <div className="hidden lg:flex pt-6 border-t border-zinc-900/80 items-center justify-between text-xs font-mono text-zinc-500">
           <div className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -286,10 +287,10 @@ export const Footer = () => {
               onClick={scrollToTop}
               type="button"
               aria-label="Back to top"
-              className="flex items-center gap-1.5 text-zinc-400 hover:text-emerald-400 transition-colors active:scale-95 cursor-pointer"
+              className="flex items-center gap-1 text-zinc-400 hover:text-emerald-400 transition-colors active:scale-95 cursor-pointer group"
             >
-              <span>Top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
+              <span className="group-hover:text-zinc-200">Top</span>
+              <ChevronUp className="w-4 h-4 text-emerald-400 animate-bounce" />
             </button>
           </div>
         </div>
