@@ -29,11 +29,11 @@ export const Skills = () => {
   return (
     <section 
       id="skills" 
-      className="w-full flex flex-col pt-24 pb-20 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative border-t border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0 touch-pan-y"
+      className="w-full flex flex-col pt-24 pb-20 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0 touch-pan-y"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6">
         
-        {/* HEADER - Čist moderni Layers simbol umesto tačke */}
+        {/* HEADER */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
             <Layers className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -51,10 +51,8 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE - NETAKNUT */}
+        {/* 1. DESKTOP INTERFACE */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
-          
-          {/* Skill Categories */}
           <div className="col-span-5 flex flex-col gap-2.5">
             {SKILL_CATEGORIES.map((cat, idx) => {
               const catKey = cat.id ?? cat.category;
@@ -109,11 +107,9 @@ export const Skills = () => {
             })}
           </div>
 
-          {/* Skill Cards */}
           <div className="col-span-7">
             <div className="rounded-3xl bg-zinc-950/70 border border-zinc-800/90 backdrop-blur-xl p-7 shadow-2xl relative flex flex-col justify-between min-h-[460px]">
               <div>
-                {/* Status Bar */}
                 <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-5">
                   <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400 tracking-wider">
                     {getCategoryIcon(activeCategory.id)}
@@ -131,7 +127,6 @@ export const Skills = () => {
                   </p>
                 )}
 
-                {/* Grid */}
                 <div className="grid grid-cols-2 gap-3 font-mono text-xs">
                   {activeCategory.skills.map((skill: SkillItem) => (
                     <div
@@ -156,7 +151,6 @@ export const Skills = () => {
                 </div>
               </div>
 
-              {/* Status footer */}
               <div className="flex items-center justify-between pt-4 mt-6 border-t border-zinc-800/80 font-mono text-[11px] text-zinc-500">
                 <span>Domain: {activeCategory.category}</span>
                 <span className="text-emerald-400/90 font-medium">Production Tested</span>
@@ -165,9 +159,8 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* 2. MOBILE INTERFACE - Blago povećana i prostranija kartica */}
+        {/* 2. MOBILE INTERFACE */}
         <div className="block lg:hidden">
-          {/* Thumb tabs */}
           <div 
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             className="flex gap-2 overflow-x-auto pb-3 mb-4 [&::-webkit-scrollbar]:hidden -mx-4 px-4 overscroll-x-contain"
@@ -193,9 +186,7 @@ export const Skills = () => {
             })}
           </div>
 
-          {/* Glavna kartica: prostranija sa prirodnim komforom */}
           <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-5.5 sm:p-6 shadow-2xl">
-            {/* Header sa brojem modula */}
             <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
               <div className="flex items-center gap-2">
                 {getCategoryIcon(activeCategory.id)}
@@ -206,7 +197,6 @@ export const Skills = () => {
               </span>
             </div>
 
-            {/* 2-kolonski raspored: min-h-[82px] sa udobnim paddingom */}
             <div className="grid grid-cols-2 gap-3">
               {activeCategory.skills.map((skill: SkillItem) => (
                 <div

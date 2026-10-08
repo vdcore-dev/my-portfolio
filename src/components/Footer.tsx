@@ -42,12 +42,12 @@ export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="min-h-dvh w-full flex flex-col justify-between pt-24 lg:pt-28 pb-6 bg-zinc-950 relative overflow-hidden border-t border-zinc-900/80"
+      className="min-h-svh lg:min-h-dvh w-full flex flex-col justify-between pt-24 pb-8 lg:pt-32 lg:pb-8 bg-zinc-950 relative overflow-hidden border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0"
     >
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-center">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 flex flex-col flex-1 lg:justify-center">
         
-        {/* SECTION HEADER: Čist moderni simbol bez okvira */}
-        <div className="flex items-center justify-between pb-4 mb-8 sm:mb-10 border-b border-zinc-800/80">
+        {/* SECTION HEADER: Identično poravnat kao Projects i Skills */}
+        <div className="flex items-center justify-between pb-4 mb-6 sm:mb-8 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
             <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight font-sans">
@@ -64,12 +64,12 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* 1. MOBILE */}
-        <div className="block lg:hidden w-full max-w-lg mx-auto flex flex-col gap-6">
+        {/* 1. MOBILE INTERFACE - Pomaknuto gore bez viška lufta */}
+        <div className="block lg:hidden w-full max-w-lg mx-auto flex flex-col gap-5">
           <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 sm:p-7 shadow-2xl text-left">
             
             {/* Status */}
-            <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wide mb-4">
+            <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wide mb-3">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
@@ -77,7 +77,7 @@ export const Footer = () => {
               <span>Available for work</span>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-2.5 leading-snug">
+            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-2 leading-snug">
               Let’s engineer your next{" "}
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">
                 core system.
@@ -124,7 +124,7 @@ export const Footer = () => {
 
           {/* Social Networks */}
           <div className="w-full">
-            <span className="text-zinc-500 text-[10px] font-mono tracking-widest uppercase block text-center mb-2.5">
+            <span className="text-zinc-500 text-[10px] font-mono tracking-widest uppercase block text-center mb-2">
               Network Platforms
             </span>
 
@@ -162,7 +162,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* 2. DESKTOP view */}
+        {/* 2. DESKTOP VIEW - NETAKNUT */}
         <div className="hidden lg:grid grid-cols-12 gap-8 items-center">
           <div className="col-span-8 flex flex-col items-start">
             
@@ -177,7 +177,6 @@ export const Footer = () => {
               Available for full-time backend development, microservices design, and mission-critical cloud integrations.
             </p>
 
-            {/* Desktop CTA buttons */}
             <div className="flex items-center gap-3.5">
               <a
                 href={`mailto:${PERSONAL_INFO.email}`}
@@ -239,8 +238,8 @@ export const Footer = () => {
 
       {/* BASELINE FOOTER BAR */}
       <div 
-        className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-10"
-        style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+        className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-5"
+        style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
       >
         {/* Mobile bottom bar */}
         <div className="flex lg:hidden items-center justify-center w-full">
@@ -248,7 +247,7 @@ export const Footer = () => {
             onClick={scrollToTop}
             type="button"
             aria-label="Back to top"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 hover:text-emerald-400 active:scale-95 transition-all cursor-pointer shadow-md"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 hover:text-emerald-400 active:scale-95 transition-all cursor-pointer shadow-md"
           >
             <span className="text-xs font-medium font-sans tracking-wide">Back to Top</span>
             <ArrowUp className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />

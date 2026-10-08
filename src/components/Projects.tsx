@@ -11,7 +11,6 @@ export const Projects = () => {
 
   const activeProject: Project = PROJECTS.find((p) => p.id === selectedId) || PROJECTS[0];
 
-  // Praćenje trenutnog slajda na telefonu
   useEffect(() => {
     const el = mobileScrollRef.current;
     if (!el) return;
@@ -32,11 +31,11 @@ export const Projects = () => {
   return (
     <section 
       id="projects" 
-      className="w-full flex flex-col pt-24 pb-20 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-6 lg:scroll-mt-0"
+      className="w-full flex flex-col pt-24 pb-20 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-6 lg:scroll-mt-0 border-t border-zinc-950 lg:border-zinc-900/80"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6">
         
-        {/* HEADER: FolderKanban (fascikla sa tri uspravne crte unutra) */}
+        {/* HEADER */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
             <FolderKanban className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -54,10 +53,8 @@ export const Projects = () => {
           </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE - NETAKNUT */}
+        {/* 1. DESKTOP INTERFACE */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
-          
-          {/* Sections */}
           <div className="col-span-5 flex flex-col gap-2.5">
             {PROJECTS.map((project, idx) => {
               const isSelected = project.id === selectedId;
@@ -113,12 +110,9 @@ export const Projects = () => {
             })}
           </div>
 
-          {/* Cards */}
           <div className="col-span-7">
             <div className="rounded-3xl bg-zinc-950/70 border border-zinc-800/90 backdrop-blur-xl p-7 shadow-2xl relative flex flex-col justify-between min-h-[460px]">
-              
               <div>
-                {/* Status Bar */}
                 <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-5">
                   <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400 tracking-wider">
                     <Terminal className="w-3.5 h-3.5 text-emerald-400" />
@@ -141,7 +135,6 @@ export const Projects = () => {
                   {activeProject.description}
                 </p>
 
-                {/* Architecture Metrics */}
                 <div className="grid grid-cols-2 gap-3 mb-6 font-mono text-xs">
                   <div className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800/60 flex flex-col">
                     <span className="text-zinc-500 text-[10px] uppercase tracking-wider">Pattern & Design</span>
@@ -160,7 +153,6 @@ export const Projects = () => {
                   </div>
                 </div>
 
-                {/* Tech Stack */}
                 <div className="mb-6">
                   <span className="text-zinc-500 font-mono text-[11px] uppercase tracking-wider block mb-2.5">
                     Integrated Stack
@@ -178,7 +170,6 @@ export const Projects = () => {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="flex items-center gap-3 pt-4 border-t border-zinc-800/80">
                 {activeProject.githubUrl && (
                   <a
@@ -204,7 +195,6 @@ export const Projects = () => {
                   </a>
                 )}
               </div>
-
             </div>
           </div>
         </div>
@@ -257,7 +247,6 @@ export const Projects = () => {
                   </div>
                 </div>
 
-                {/* Mobile buttons */}
                 <div className="flex items-center gap-2 pt-4 border-t border-zinc-800/80">
                   {project.githubUrl && (
                     <a
@@ -283,12 +272,10 @@ export const Projects = () => {
                     </a>
                   )}
                 </div>
-
               </div>
             ))}
           </div>
 
-          {/* Dinamičke tačke/crtice */}
           <div className="flex items-center justify-center gap-1.5 mt-5">
             {PROJECTS.map((_, idx) => (
               <span

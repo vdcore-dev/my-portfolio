@@ -6,7 +6,7 @@ import { Footer } from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="min-h-dvh flex flex-col relative overflow-x-hidden">
+    <div className="min-h-svh lg:min-h-screen flex flex-col relative overflow-x-hidden bg-zinc-950">
       <Navbar />
 
       <main className="flex-1 flex flex-col">

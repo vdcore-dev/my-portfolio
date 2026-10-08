@@ -9,7 +9,6 @@ export const Hero = () => {
 
   const avatarUrl = "/avatar2.jpg";
 
-  // Sprečavanje skrola pozadine i zatvaranje na Escape kada je slika otvorena
   useEffect(() => {
     if (!isPhotoOpen) return;
     
@@ -25,7 +24,6 @@ export const Hero = () => {
     };
   }, [isPhotoOpen]);
 
-  // Pouzdano kopiranje
   const handleCopyEmail = async () => {
     try {
       if (navigator?.clipboard?.writeText) {
@@ -54,7 +52,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-dvh flex flex-col justify-center pt-28 lg:pt-32 pb-16 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
+    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-28 lg:pt-32 pb-16 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
       {/* Pozadinsko zvezdano polje */}
       <div className="absolute inset-0 pointer-events-none lg:pointer-events-auto touch-none z-0">
         <StarField />
@@ -71,7 +69,7 @@ export const Hero = () => {
       <div className="absolute bottom-0 left-0 right-0 h-32 lg:h-48 bg-gradient-to-b from-transparent via-zinc-950/60 to-zinc-950 pointer-events-none z-0" />
 
       {/* ========================================================
-          1. MOBILNI HERO ŠABLON (block lg:hidden)
+          1. MOBILNI HERO ŠABLON (Tvoj originalni raspored i veličine)
          ======================================================== */}
       <div className="block lg:hidden relative z-10 w-full max-w-lg mx-auto">
         
@@ -165,11 +163,9 @@ export const Hero = () => {
       </div>
 
       {/* ========================================================
-          2. PC DESKTOP HERO
+          2. PC DESKTOP HERO - NETAKNUT
          ======================================================== */}
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
-        
-        {/* Leva strana PC */}
         <div className="col-span-7 flex flex-col items-start text-left">
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs font-mono text-emerald-400 mb-6 backdrop-blur-md shadow-inner shadow-emerald-500/10">
             <span className="relative flex h-2 w-2">
@@ -225,10 +221,8 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Desna strana PC */}
         <div className="col-span-5 w-full">
           <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-7 shadow-2xl shadow-indigo-500/5 relative hover:border-zinc-700 transition-all duration-300">
-            
             <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/70 text-xs font-mono text-zinc-400">
               <div className="flex items-center gap-2">
                 <div className="p-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
@@ -313,7 +307,6 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* Modal za uveličanu sliku */}
       {isPhotoOpen && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-pointer"
