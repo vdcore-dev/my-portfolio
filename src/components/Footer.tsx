@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, Mail, MessageSquare } from "lucide-react";
+import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, Mail, MessageSquare, Share2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -11,6 +11,7 @@ const XIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
 
 export const Footer = () => {
   const [copied, setCopied] = useState(false);
+  const [shared, setShared] = useState(false);
 
   const handleCopyEmail = async () => {
     try {
@@ -32,6 +33,46 @@ export const Footer = () => {
       setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
+    }
+  };
+
+  const handleShare = async () => {
+    const shareUrl = window.location.origin || window.location.href;
+    const isMobile = typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    // Na mobilnom: Nativni sistemski Share meni (WhatsApp, LinkedIn, itd.)
+    if (isMobile && navigator.share) {
+      try {
+        await navigator.share({
+          title: `${PERSONAL_INFO.name} | Software Engineer`,
+          text: "Check out this software engineer portfolio.",
+          url: shareUrl,
+        });
+      } catch {
+        // Korisnik je otkazao share prozor
+      }
+    } else {
+      // Na PC-ju: Direktno i pouzdano kopiranje linka u clipboard
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(shareUrl);
+        } else {
+          const textArea = document.createElement("textarea");
+          textArea.value = shareUrl;
+          textArea.style.position = "fixed";
+          textArea.style.left = "-999999px";
+          textArea.style.top = "-999999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          document.execCommand("copy");
+          textArea.remove();
+        }
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch {
+        setShared(false);
+      }
     }
   };
 
@@ -234,28 +275,47 @@ export const Footer = () => {
 
       </div>
 
-      {/* BASELINE FOOTER BAR: Prilagođen ergonomiji palca i sa prijatnim luftom */}
+      {/* BASELINE FOOTER BAR */}
       <div 
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-4 lg:pt-10 shrink-0"
         style={{ paddingBottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.5rem))" }}
       >
-        {/* Mobilna donja linija - w-11 h-11 (44px touch target) za udoban dodir */}
+        {/* Mobilna donja linija - Dva ergonomična tastera (44x44px - standard za palac) */}
         <div className="flex lg:hidden items-center justify-between w-full pt-4 border-t border-zinc-900/80">
           <span className="text-[11px] font-mono text-zinc-600 tracking-wider">
             © 2026 VDCore.
           </span>
 
-          <button
-            onClick={scrollToTop}
-            type="button"
-            aria-label="Back to top"
-            className="w-11 h-11 rounded-full flex items-center justify-center bg-zinc-900/90 border border-zinc-800 text-emerald-400 active:scale-90 transition-transform shadow-md cursor-pointer"
-          >
-            <ChevronUp className="w-5 h-5 animate-bounce" />
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={handleShare}
+              type="button"
+              aria-label="Share portfolio"
+              className={`w-11 h-11 rounded-full flex items-center justify-center border transition-all active:scale-90 shadow-md cursor-pointer ${
+                shared
+                  ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
+                  : "bg-zinc-900/90 border-zinc-800 text-zinc-300 hover:text-white"
+              }`}
+            >
+              {shared ? (
+                <Check className="w-4 h-4 text-emerald-400" />
+              ) : (
+                <Share2 className="w-4 h-4 text-zinc-300" />
+              )}
+            </button>
+
+            <button
+              onClick={scrollToTop}
+              type="button"
+              aria-label="Back to top"
+              className="w-11 h-11 rounded-full flex items-center justify-center bg-zinc-900/90 border border-zinc-800 text-emerald-400 active:scale-90 transition-transform shadow-md cursor-pointer"
+            >
+              <ChevronUp className="w-5 h-5 animate-bounce" />
+            </button>
+          </div>
         </div>
 
-        {/* Desktop donja linija (100% netaknuta) */}
+        {/* Desktop donja linija - Čist inženjerski niz alata */}
         <div className="hidden lg:flex pt-6 border-t border-zinc-900/80 items-center justify-between text-xs font-mono text-zinc-500">
           <div className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -282,6 +342,24 @@ export const Footer = () => {
               <span>LinkedIn</span>
               <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
+
+            <button
+              onClick={handleShare}
+              type="button"
+              className="group flex items-center gap-1.5 hover:text-emerald-400 transition-colors cursor-pointer"
+            >
+              {shared ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span className="text-emerald-400">Link Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 transition-colors" />
+                  <span className="group-hover:text-zinc-200">Share</span>
+                </>
+              )}
+            </button>
 
             <button
               onClick={scrollToTop}

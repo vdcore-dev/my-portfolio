@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, FolderKanban, Layers, MessageSquare, ChevronRight, Share2, Check } from "lucide-react";
+import { Home, FileText, FolderKanban, Layers, MessageSquare, ChevronRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -26,7 +26,6 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [shared, setShared] = useState(false);
 
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -149,44 +148,6 @@ export const Navbar = () => {
     }
   };
 
-  const handleShare = async () => {
-    const shareUrl = window.location.origin || window.location.href;
-    const shareData = {
-      title: `${PERSONAL_INFO.name} | Software Engineer`,
-      text: "Check out this software engineer portfolio.",
-      url: shareUrl,
-    };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch {
-        // Korisnik je zatvorio native share modal bez slanja
-      }
-    } else {
-      // Fallback ako Web Share nije podržan: kopira link
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(shareUrl);
-        } else {
-          const textArea = document.createElement("textarea");
-          textArea.value = shareUrl;
-          textArea.style.position = "fixed";
-          textArea.style.left = "-999999px";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          document.execCommand("copy");
-          textArea.remove();
-        }
-        setShared(true);
-        setTimeout(() => setShared(false), 2000);
-      } catch {
-        setShared(false);
-      }
-    }
-  };
-
   return (
     <>
       {/* Background overlay */}
@@ -198,7 +159,7 @@ export const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* Mobile panel sa zadržanim floating položajem */}
+      {/* Mobile panel: TAČNO originalni top-24 i bottom-8 floating razmaci */}
       <aside
         className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 overflow-y-auto transition-all duration-300 ease-out md:hidden ${
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
@@ -237,37 +198,19 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* DNO FIOKE: Share Portfolio dugme umesto copyright-a */}
-        <div className="pt-4 border-t border-zinc-900/90 flex items-center justify-between">
-          <span className="font-mono text-[11px] text-zinc-500 tracking-wide">
-            Portfolio
-          </span>
-
-          <button
-            onClick={handleShare}
-            type="button"
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-mono transition-all active:scale-95 cursor-pointer ${
-              shared
-                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-300"
-                : "bg-zinc-900/90 border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-700"
-            }`}
-          >
-            {shared ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-[11px]">Link copied!</span>
-              </>
-            ) : (
-              <>
-                <Share2 className="w-3.5 h-3.5 text-emerald-400" />
-                <span className="text-[11px]">Share</span>
-              </>
-            )}
-          </button>
+        {/* DNO FIOKE: Diskretan ton kao u footeru (text-zinc-600) sa skladnim razmakom */}
+        <div className="pt-4 border-t border-zinc-900/90 flex items-center justify-center gap-2.5 sm:gap-3 font-mono text-[11px] text-zinc-600 tracking-wider">
+          <span>Java</span>
+          <span className="text-emerald-500/60 font-bold">•</span>
+          <span>Spring</span>
+          <span className="text-emerald-500/60 font-bold">•</span>
+          <span>DevOps</span>
+          <span className="text-emerald-500/60 font-bold">•</span>
+          <span>Cloud</span>
         </div>
       </aside>
 
-      {/* Desktop & Main Header (100% Netaknut) */}
+      {/* Desktop & Main Header (Originalni py-2.5 100% netaknut) */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
