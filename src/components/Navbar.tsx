@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, FolderKanban, Layers, MessageSquare, ChevronRight } from "lucide-react";
+import { Home, FileText, FolderKanban, Layers, MessageSquare } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -30,7 +30,6 @@ export const Navbar = () => {
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Blokiranje skrola pozadine + zatvaranje na Escape taster
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
 
@@ -53,7 +52,6 @@ export const Navbar = () => {
     };
   }, []);
 
-  // Optimizovan scroll listener
   useEffect(() => {
     let ticking = false;
 
@@ -159,7 +157,7 @@ export const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* Mobile panel: Originalna mat tamna podloga kartice */}
+      {/* Mobile panel: Potpuno čist heder bez ikakvog šuma */}
       <aside
         className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 overflow-y-auto transition-all duration-300 ease-out md:hidden ${
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
@@ -170,10 +168,9 @@ export const Navbar = () => {
             <span className="font-mono text-zinc-500 font-medium text-[11px] tracking-widest uppercase">
               Navigation
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           </div>
 
-          <div className="flex flex-col gap-2.5 mt-5">
+          <div className="flex flex-col gap-2 mt-5">
             {MOBILE_LINKS.map((link) => {
               const isActive = link.id === "home" ? activeSection === "" : activeSection === link.id;
               const Icon = link.icon;
@@ -181,7 +178,7 @@ export const Navbar = () => {
                 <button
                   key={link.id}
                   onClick={(e) => scrollTo(e, link.id)}
-                  className={`flex items-center justify-between w-full px-4 py-3.5 rounded-2xl text-left text-sm font-sans transition-all active:scale-[0.98] cursor-pointer ${
+                  className={`flex items-center justify-between w-full px-4 py-3 rounded-2xl text-left text-sm font-sans transition-all active:scale-[0.98] cursor-pointer ${
                     isActive
                       ? "bg-zinc-900 border border-zinc-700/80 text-white font-medium shadow-md shadow-black/40"
                       : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/40 border border-transparent"
@@ -191,7 +188,12 @@ export const Navbar = () => {
                     <Icon className={`w-4 h-4 transition-colors ${isActive ? "text-emerald-400" : "text-zinc-500"}`} />
                     <span className="tracking-tight">{link.name}</span>
                   </div>
-                  <ChevronRight className={`w-3.5 h-3.5 transition-transform ${isActive ? "text-emerald-400 translate-x-0.5" : "text-zinc-700"}`} />
+                  
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                      isActive ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" : "bg-transparent"
+                    }`}
+                  />
                 </button>
               );
             })}
@@ -210,7 +212,7 @@ export const Navbar = () => {
         </div>
       </aside>
 
-      {/* Desktop & Main Header */}
+      {/* Desktop & Main Header (100% netaknuto) */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
