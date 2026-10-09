@@ -159,7 +159,7 @@ export const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* Mobile panel: TAČNO originalni top-24 i bottom-8 floating razmaci */}
+      {/* Mobile panel: Originalna mat tamna podloga kartice */}
       <aside
         className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 overflow-y-auto transition-all duration-300 ease-out md:hidden ${
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
@@ -198,7 +198,7 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* DNO FIOKE: Diskretan ton kao u footeru (text-zinc-600) sa skladnim razmakom */}
+        {/* DNO FIOKE */}
         <div className="pt-4 border-t border-zinc-900/90 flex items-center justify-center gap-2.5 sm:gap-3 font-mono text-[11px] text-zinc-600 tracking-wider">
           <span>Java</span>
           <span className="text-emerald-500/60 font-bold">•</span>
@@ -210,7 +210,7 @@ export const Navbar = () => {
         </div>
       </aside>
 
-      {/* Desktop & Main Header (Originalni py-2.5 100% netaknut) */}
+      {/* Desktop & Main Header: Boja se menja iz zinc-900/80 (u Hero-u) u zinc-950/90 (pri skrolu) */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           

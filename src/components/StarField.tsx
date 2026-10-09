@@ -8,7 +8,7 @@ interface Star {
   phase: number;
   twinkleSpeed: number;
   color: string;
-  speedFactor: number;
+  depth: number;
 }
 
 export const StarField = () => {
@@ -21,59 +21,71 @@ export const StarField = () => {
     if (!ctx) return;
 
     let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    const dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
 
-    const isTouchDevice = 
+    const setupDimensions = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    setupDimensions();
+
+    const isTouch = 
       "ontouchstart" in window || 
       navigator.maxTouchPoints > 0 || 
       window.matchMedia("(hover: none)").matches;
 
-    const mouse = { x: width / 2, y: height / 2, targetX: width / 2, targetY: height / 2 };
+    const mouse = { x: width / 2, y: height / 2, tx: width / 2, ty: height / 2 };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (isTouchDevice) return;
-      mouse.targetX = e.clientX;
-      mouse.targetY = e.clientY;
+    const onMouseMove = (e: MouseEvent) => {
+      if (isTouch) return;
+      mouse.tx = e.clientX;
+      mouse.ty = e.clientY;
     };
 
-    const handleResize = () => {
+    const onResize = () => {
       if (!canvas) return;
       if (Math.abs(window.innerWidth - width) > 10 || Math.abs(window.innerHeight - height) > 120) {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
+        setupDimensions();
         initStars();
       }
     };
 
-    if (!isTouchDevice) {
-      window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    }
-    window.addEventListener("resize", handleResize);
+    if (!isTouch) window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("resize", onResize);
 
-    const colors = ["#ffffff", "#ffffff", "#ffffff", "#a7f3d0", "#c7d2fe"];
+    // Čisti astronomski spektar: bela svetlost uz diskretne cyan i emerald tonove
+    const colors = ["#ffffff", "#ffffff", "#ffffff", "#f1f5f9", "#a7f3d0", "#67e8f9"];
     let stars: Star[] = [];
 
     const initStars = () => {
       const isMobile = width < 768;
-      const count = isMobile ? 95 : Math.floor(Math.min(width, 1400) * 0.12);
-
+      const count = isMobile ? 110 : Math.floor(Math.min(width, 1400) * 0.16);
       stars = [];
-      for (let i = 0; i < count; i++) {
-        const size = Math.random() < 0.75 
-          ? Math.random() * 0.9 + 0.6 
-          : Math.random() * 1.4 + 1.1;
 
-        const baseAlpha = Math.random() * 0.4 + 0.35;
+      for (let i = 0; i < count; i++) {
+        const depth = Math.random() * 0.8 + 0.2;
+        const isSharp = Math.random() > 0.8;
+        const size = isSharp 
+          ? Math.random() * 0.6 + 1.1 
+          : Math.random() * 0.5 + 0.5;
+
         stars.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          size,
-          baseAlpha,
+          size: size * (depth > 0.6 ? 1 : 0.85),
+          baseAlpha: Math.random() * 0.35 + 0.35,
           phase: Math.random() * Math.PI * 2,
           twinkleSpeed: Math.random() * 0.006 + 0.003,
           color: colors[Math.floor(Math.random() * colors.length)],
-          speedFactor: size * 0.015,
+          depth,
         });
       }
     };
@@ -86,26 +98,26 @@ export const StarField = () => {
       let offsetX = 0;
       let offsetY = 0;
 
-      if (!isTouchDevice) {
-        mouse.x += (mouse.targetX - mouse.x) * 0.05;
-        mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      if (!isTouch) {
+        mouse.x += (mouse.tx - mouse.x) * 0.05;
+        mouse.y += (mouse.ty - mouse.y) * 0.05;
         offsetX = mouse.x - width / 2;
         offsetY = mouse.y - height / 2;
       }
 
       for (let i = 0; i < stars.length; i++) {
-        const star = stars[i];
+        const s = stars[i];
 
-        star.phase += star.twinkleSpeed;
-        const currentAlpha = star.baseAlpha + Math.sin(star.phase) * 0.25;
+        s.phase += s.twinkleSpeed;
+        const currentAlpha = s.baseAlpha + Math.sin(s.phase) * 0.22;
 
-        const renderX = isTouchDevice ? star.x : star.x - offsetX * star.speedFactor;
-        const renderY = isTouchDevice ? star.y : star.y - offsetY * star.speedFactor;
+        const renderX = isTouch ? s.x : s.x - offsetX * s.depth * 0.018;
+        const renderY = isTouch ? s.y : s.y - offsetY * s.depth * 0.018;
 
-        ctx.globalAlpha = Math.max(0.2, Math.min(0.9, currentAlpha));
-        ctx.fillStyle = star.color;
+        ctx.globalAlpha = Math.max(0.15, Math.min(0.9, currentAlpha));
+        ctx.fillStyle = s.color;
         ctx.beginPath();
-        ctx.arc(renderX, renderY, star.size, 0, Math.PI * 2);
+        ctx.arc(renderX, renderY, s.size, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -115,10 +127,8 @@ export const StarField = () => {
     render();
 
     return () => {
-      if (!isTouchDevice) {
-        window.removeEventListener("mousemove", handleMouseMove);
-      }
-      window.removeEventListener("resize", handleResize);
+      if (!isTouch) window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("resize", onResize);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
@@ -126,7 +136,7 @@ export const StarField = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 pointer-events-none z-0 opacity-85"
+      className="absolute inset-0 pointer-events-none z-0 opacity-90"
     />
   );
 };

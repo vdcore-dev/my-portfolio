@@ -49,11 +49,3 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #27272a #09090b;
 }
-
-/* Suptilna mrežasta pozadina (Modern Grid) */
-.bg-grid-pattern {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}

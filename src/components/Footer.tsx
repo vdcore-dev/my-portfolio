@@ -40,7 +40,6 @@ export const Footer = () => {
     const shareUrl = window.location.origin || window.location.href;
     const isMobile = typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    // Na mobilnom: Nativni sistemski Share meni (WhatsApp, LinkedIn, itd.)
     if (isMobile && navigator.share) {
       try {
         await navigator.share({
@@ -52,7 +51,6 @@ export const Footer = () => {
         // Korisnik je otkazao share prozor
       }
     } else {
-      // Na PC-ju: Direktno i pouzdano kopiranje linka u clipboard
       try {
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(shareUrl);
@@ -61,7 +59,6 @@ export const Footer = () => {
           textArea.value = shareUrl;
           textArea.style.position = "fixed";
           textArea.style.left = "-999999px";
-          textArea.style.top = "-999999px";
           document.body.appendChild(textArea);
           textArea.focus();
           textArea.select();
@@ -87,7 +84,7 @@ export const Footer = () => {
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 lg:justify-between">
         
-        {/* HEADER: Usklađen sa Projects i Skills sekcijama */}
+        {/* HEADER */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
             <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -105,9 +102,8 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* 1. MOBILNI PRIKAZ (100% netaknuta unutrašnjost i razmaci) */}
+        {/* 1. MOBILNI PRIKAZ */}
         <div className="block lg:hidden w-full max-w-lg mx-auto">
-          {/* Kartica sa opisom */}
           <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 sm:p-7 shadow-2xl text-left mb-8">
             <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wide mb-3">
               <span className="relative flex h-2 w-2">
@@ -129,7 +125,6 @@ export const Footer = () => {
             </p>
           </div>
 
-          {/* CTA Dugmad */}
           <div className="grid grid-cols-2 gap-3.5 w-full mb-6">
             <a
               href={`mailto:${PERSONAL_INFO.email}`}
@@ -162,7 +157,6 @@ export const Footer = () => {
             </button>
           </div>
 
-          {/* Mreže */}
           <div className="w-full">
             <span className="text-zinc-500 text-[10px] font-mono tracking-widest uppercase block text-center mb-2.5">
               Network Platforms
@@ -202,7 +196,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* 2. DESKTOP PRIKAZ (100% netaknut) */}
+        {/* 2. DESKTOP PRIKAZ */}
         <div className="hidden lg:grid grid-cols-12 gap-8 items-center lg:my-auto">
           <div className="col-span-8 flex flex-col items-start">
             <h3 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15] mb-4 font-sans">
@@ -237,7 +231,7 @@ export const Footer = () => {
               >
                 {copied ? (
                   <>
-                    <span className="font-semibold tracking-wide">Email copied to clipboard!</span>
+                    <span className="font-semibold tracking-wide">Email copied!</span>
                     <Check className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-150" />
                   </>
                 ) : (
@@ -280,7 +274,6 @@ export const Footer = () => {
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-4 lg:pt-10 shrink-0"
         style={{ paddingBottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.5rem))" }}
       >
-        {/* Mobilna donja linija - Dva ergonomična tastera (44x44px - standard za palac) */}
         <div className="flex lg:hidden items-center justify-between w-full pt-4 border-t border-zinc-900/80">
           <span className="text-[11px] font-mono text-zinc-600 tracking-wider">
             © 2026 VDCore.
@@ -315,7 +308,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Desktop donja linija - Čist inženjerski niz alata */}
         <div className="hidden lg:flex pt-6 border-t border-zinc-900/80 items-center justify-between text-xs font-mono text-zinc-500">
           <div className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
