@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Cpu, Server, Cloud, Bot, User } from "lucide-react";
+import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Database, Server, Cloud, Bot, User } from "lucide-react";
 import { StarField } from "./StarField";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -51,6 +51,21 @@ export const Hero = () => {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
+  const renderFocusIcon = (id: string) => {
+    switch (id) {
+      case "backend":
+        return <Server className="w-3.5 h-3.5 text-emerald-400 shrink-0" />;
+      case "devops":
+        return <Cloud className="w-3.5 h-3.5 text-sky-400 shrink-0" />;
+      case "data":
+        return <Database className="w-3.5 h-3.5 text-indigo-400 shrink-0" />;
+      case "ai":
+        return <Bot className="w-3.5 h-3.5 text-teal-400 shrink-0" />;
+      default:
+        return <Server className="w-3.5 h-3.5 text-emerald-400 shrink-0" />;
+    }
+  };
+
   return (
     <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-28 lg:pt-32 pb-16 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
       {/* 1. Background Starfield */}
@@ -58,7 +73,7 @@ export const Hero = () => {
         <StarField />
       </div>
 
-      {/* 2. Asimetrični periferni sjaj (Nema fleke u centru, centar je čist) */}
+      {/* 2. Asimetrični periferni sjaj */}
       <div 
         className="absolute top-0 right-0 w-[550px] lg:w-[750px] h-[550px] pointer-events-none z-0 opacity-40"
         style={{
@@ -72,7 +87,7 @@ export const Hero = () => {
         }}
       />
 
-      {/* 3. Originalni donji fade koji spaja nebo sa projektima */}
+      {/* 3. Donji fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 lg:h-48 bg-gradient-to-b from-transparent via-zinc-950/60 to-zinc-950 pointer-events-none z-0" />
 
       {/* ========================================================
@@ -107,14 +122,14 @@ export const Hero = () => {
 
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-emerald-400 font-mono font-bold text-xs">|</span>
-                <p className="text-xs sm:text-sm font-sans text-zinc-300 font-medium">
-                  Software Engineer
+                <p className="text-xs sm:text-sm font-sans text-zinc-300 font-medium truncate">
+                  {PERSONAL_INFO.role}
                 </p>
               </div>
 
               <div className="flex items-center gap-1.5 mt-2 text-zinc-400 text-xs font-sans">
                 <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Remote • Worldwide</span>
+                <span>{PERSONAL_INFO.location}</span>
               </div>
             </div>
           </div>
@@ -130,7 +145,7 @@ export const Hero = () => {
             systems.
           </h1>
           <p className="text-sm text-zinc-400 leading-relaxed font-sans mt-2">
-            Engineering robust Java microservices, streamlined DevOps pipelines, and intelligent AI-powered cloud integrations with high availability.
+            {PERSONAL_INFO.bio}
           </p>
         </div>
 
@@ -170,7 +185,7 @@ export const Hero = () => {
       </div>
 
       {/* ========================================================
-          2. DESKTOP INTERFACE (100% Netaknut)
+          2. DESKTOP INTERFACE (Optimalan prelom, podaci iz data fajla)
          ======================================================== */}
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
         <div className="col-span-7 flex flex-col items-start text-left">
@@ -182,16 +197,16 @@ export const Hero = () => {
             <span>{PERSONAL_INFO.availability}</span>
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
-            Building scalable{" "}
+          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
+            Building scalable <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">
               backends & resilient
-            </span>{" "}
+            </span> <br />
             systems.
           </h1>
 
           <p className="text-base sm:text-lg text-zinc-400 max-w-xl mb-8 leading-relaxed font-sans">
-            Engineering robust Java microservices, streamlined DevOps pipelines, and intelligent AI-powered cloud integrations with an uncompromising focus on clean architecture and high availability.
+            {PERSONAL_INFO.bio}
           </p>
 
           <div className="flex items-center gap-3.5">
@@ -230,11 +245,10 @@ export const Hero = () => {
 
         <div className="col-span-5 w-full">
           <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-7 shadow-2xl shadow-indigo-500/5 relative hover:border-zinc-700 transition-all duration-300">
+            {/* Header sekcija kartice - Čist simbol bez dugme-okvira */}
             <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/70 text-xs font-mono text-zinc-400">
               <div className="flex items-center gap-2">
-                <div className="p-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <User className="w-3.5 h-3.5" />
-                </div>
+                <User className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span className="font-semibold tracking-wider uppercase text-[11px] text-zinc-300">About</span>
               </div>
             </div>
@@ -264,50 +278,32 @@ export const Hero = () => {
                 
                 <div className="flex items-center gap-2 mt-1">
                   <span className="text-emerald-400 font-mono font-bold text-xs">|</span>
-                  <p className="text-xs font-sans text-zinc-300 font-medium tracking-normal">
-                    Software Engineer
+                  <p className="text-xs font-sans text-zinc-300 font-medium tracking-normal truncate">
+                    {PERSONAL_INFO.role}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-1.5 mt-2.5 text-zinc-400 text-xs font-sans">
                   <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span>Remote • Worldwide</span>
+                  <span>{PERSONAL_INFO.location}</span>
                 </div>
               </div>
             </div>
 
+            {/* 4 Tehnička stuba dinamički mapirana iz PERSONAL_INFO.focusAreas */}
             <div className="pt-5 space-y-2.5 font-mono text-xs">
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 hover:border-zinc-700/80 transition-colors">
-                <span className="text-zinc-500 flex items-center gap-2">
-                  <Server className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  Core Backend
-                </span>
-                <span className="text-zinc-200 font-medium">Java • Spring Boot</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 hover:border-zinc-700/80 transition-colors">
-                <span className="text-zinc-500 flex items-center gap-2">
-                  <Cloud className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                  DevOps & Cloud
-                </span>
-                <span className="text-zinc-200 font-medium">Docker • CI/CD Pipelines</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 hover:border-zinc-700/80 transition-colors">
-                <span className="text-zinc-500 flex items-center gap-2">
-                  <Cpu className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
-                  Persistence
-                </span>
-                <span className="text-zinc-200 font-medium">PostgreSQL • Redis</span>
-              </div>
-
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 hover:border-zinc-700/80 transition-colors">
-                <span className="text-zinc-500 flex items-center gap-2">
-                  <Bot className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                  AI & Integrations
-                </span>
-                <span className="text-zinc-200 font-medium">LLM APIs • Spring AI</span>
-              </div>
+              {PERSONAL_INFO.focusAreas.map((area) => (
+                <div
+                  key={area.id}
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 hover:border-zinc-700/80 transition-colors"
+                >
+                  <span className="text-zinc-500 flex items-center gap-2">
+                    {renderFocusIcon(area.id)}
+                    {area.label}
+                  </span>
+                  <span className="text-zinc-200 font-medium">{area.stack}</span>
+                </div>
+              ))}
             </div>
 
           </div>
@@ -337,7 +333,7 @@ export const Hero = () => {
             />
             <div className="p-4 text-center">
               <h3 className="text-white font-bold text-lg font-sans">{PERSONAL_INFO.name}</h3>
-              <p className="text-emerald-400 text-xs font-mono">Software Engineer</p>
+              <p className="text-emerald-400 text-xs font-mono">{PERSONAL_INFO.role}</p>
             </div>
           </div>
         </div>

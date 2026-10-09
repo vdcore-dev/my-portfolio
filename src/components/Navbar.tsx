@@ -210,7 +210,7 @@ export const Navbar = () => {
         </div>
       </aside>
 
-      {/* Desktop & Main Header: Boja se menja iz zinc-900/80 (u Hero-u) u zinc-950/90 (pri skrolu) */}
+      {/* Desktop & Main Header */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
@@ -239,16 +239,23 @@ export const Navbar = () => {
               <span className="font-black text-base text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.85)]">.</span>
             </a>
 
-            {/* Home dugme */}
+            {/* Home dugme - Samo ikonica svetli bez donje linije */}
             <div className="hidden md:flex items-center">
               <a
                 href="#"
                 title="Scroll to Top"
                 aria-label="Home"
                 onClick={scrollToTop}
-                className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all cursor-pointer"
+                className="p-1.5 rounded-full transition-all cursor-pointer"
               >
-                <Home className="w-[18px] h-[18px]" strokeWidth={2.2} />
+                <Home
+                  className={`w-[18px] h-[18px] transition-colors duration-200 ${
+                    activeSection === ""
+                      ? "text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                      : "text-zinc-400 hover:text-white"
+                  }`}
+                  strokeWidth={2.2}
+                />
               </a>
             </div>
 

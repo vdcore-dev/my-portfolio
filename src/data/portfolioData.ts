@@ -2,12 +2,35 @@ import type { PersonalInfo, Project, SkillCategory } from "../types";
 
 export const PERSONAL_INFO: PersonalInfo = {
   name: "Vladimir Dejanovic",
-  role: "Full-Stack & Backend Engineer",
+  role: "Java Backend & DevOps Engineer",
   availability: "Available for work",
-  bio: "Engineering robust Java microservices, streamlined DevOps pipelines, and intelligent AI-powered cloud integrations with an uncompromising focus on clean architecture and high availability.",
+  location: "Remote • Worldwide",
+  bio: "Specialized in Java and the Spring Boot ecosystem, automating cloud infrastructure through modern DevOps, and integrating intelligent AI workflows into scalable services.",
   email: "your.email@example.com",
   github: "https://github.com/your-username",
   linkedin: "https://linkedin.com/in/your-username",
+  focusAreas: [
+    {
+      id: "backend",
+      label: "Core Backend",
+      stack: "Java • Spring Boot",
+    },
+    {
+      id: "devops",
+      label: "DevOps & Cloud",
+      stack: "Docker • CI/CD",
+    },
+    {
+      id: "data",
+      label: "Data & Storage",
+      stack: "PostgreSQL • Redis",
+    },
+    {
+      id: "ai",
+      label: "AI & Integrations",
+      stack: "Spring AI • LLM APIs",
+    },
+  ],
 };
 
 export const PROJECTS: Project[] = [

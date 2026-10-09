@@ -31,12 +31,20 @@ export interface SkillCategory {
   skills: SkillItem[];
 }
 
+export interface FocusArea {
+  id: "backend" | "devops" | "data" | "ai";
+  label: string;
+  stack: string;
+}
+
 export interface PersonalInfo {
   name: string;
   role: string;
   availability: string;
+  location: string;
   bio: string;
   email: string;
   github: string;
   linkedin: string;
+  focusAreas: FocusArea[];
 }
