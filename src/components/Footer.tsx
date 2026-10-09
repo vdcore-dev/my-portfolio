@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, Mail, MessageSquare, Share2 } from "lucide-react";
+import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, MessageSquare, Share2, Radio } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -48,7 +48,7 @@ export const Footer = () => {
           url: shareUrl,
         });
       } catch {
-        // Korisnik je otkazao share prozor
+        // Korisnik je otkazao prozor za deljenje
       }
     } else {
       try {
@@ -93,16 +93,13 @@ export const Footer = () => {
             </h2>
           </div>
 
-          <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-emerald-500/30 text-xs font-mono text-emerald-400 shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-            </span>
-            <span>Available for work</span>
+          <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-zinc-500">
+            <span className="text-zinc-600">//</span>
+            <span>Direct Channel</span>
           </div>
         </div>
 
-        {/* 1. MOBILNI PRIKAZ */}
+        {/* 1. MOBILNI PRIKAZ (Vraćen status "Available for work" sa pulsirajućim dot-om) */}
         <div className="block lg:hidden w-full max-w-lg mx-auto">
           <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 sm:p-7 shadow-2xl text-left mb-8">
             <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wide mb-3">
@@ -113,7 +110,7 @@ export const Footer = () => {
               <span>Available for work</span>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-2 leading-snug">
+            <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-2.5 leading-snug">
               Let’s engineer your next{" "}
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">
                 core system.
@@ -121,7 +118,7 @@ export const Footer = () => {
             </h3>
 
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
-              Open for backend engineering roles, high-concurrency microservices, and distributed cloud architecture.
+              Available for backend engineering roles, high-throughput APIs, and distributed cloud services.
             </p>
           </div>
 
@@ -207,7 +204,7 @@ export const Footer = () => {
             </h3>
 
             <p className="text-zinc-400 text-sm sm:text-base max-w-xl font-sans mb-8 leading-relaxed">
-              Available for full-time backend development, microservices design, and mission-critical cloud integrations.
+              Available for backend engineering roles, high-throughput APIs, and distributed cloud services.
             </p>
 
             <div className="flex items-center gap-3.5">
@@ -246,22 +243,25 @@ export const Footer = () => {
 
           <div className="col-span-4 rounded-3xl bg-zinc-950/70 border border-zinc-800/90 backdrop-blur-xl p-6 shadow-2xl">
             <div className="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-800/80 font-mono text-xs text-zinc-400">
-              <Mail className="w-3.5 h-3.5 text-emerald-400" />
-              <span>SYSTEM DIRECTORY</span>
+              <Radio className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="tracking-wider uppercase">Overview</span>
             </div>
 
             <div className="space-y-3 font-mono text-xs">
               <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/60">
                 <span className="text-zinc-500">Location</span>
-                <span className="text-zinc-200">Remote / Worldwide</span>
+                <span className="text-zinc-200">Remote • Worldwide</span>
               </div>
               <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/60">
-                <span className="text-zinc-500">Timezone</span>
-                <span className="text-zinc-200">CET / UTC+1</span>
+                <span className="text-zinc-500">Schedule</span>
+                <span className="text-zinc-200">Flexible</span>
               </div>
               <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/60">
                 <span className="text-zinc-500">Status</span>
-                <span className="text-emerald-400 font-semibold">Immediate Availability</span>
+                <span className="text-emerald-400 font-medium flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+                  Open to Offers
+                </span>
               </div>
             </div>
           </div>

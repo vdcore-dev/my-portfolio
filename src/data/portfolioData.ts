@@ -3,7 +3,7 @@ import type { PersonalInfo, Project, SkillCategory } from "../types";
 export const PERSONAL_INFO: PersonalInfo = {
   name: "Vladimir Dejanovic",
   role: "Java Backend & DevOps Engineer",
-  availability: "Available for work",
+  availability: "Open to Offers",
   location: "Remote • Worldwide",
   bio: "Specialized in Java and the Spring Boot ecosystem, automating cloud infrastructure through modern DevOps, and integrating intelligent AI workflows into scalable services.",
   email: "your.email@example.com",
