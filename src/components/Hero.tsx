@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Database, Server, Cloud, Bot, User } from "lucide-react";
 import { StarField } from "./StarField";
 import { PERSONAL_INFO } from "../data/portfolioData";
+import { copySecureEmail } from "../utils/security";
 
 export const Hero = () => {
   const [copied, setCopied] = useState(false);
@@ -25,23 +26,10 @@ export const Hero = () => {
   }, [isPhotoOpen]);
 
   const handleCopyEmail = async () => {
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(PERSONAL_INFO.email);
-      } else {
-        const textArea = document.createElement("textarea");
-        textArea.value = PERSONAL_INFO.email;
-        textArea.style.position = "fixed";
-        textArea.style.opacity = "0";
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-      }
+    const success = await copySecureEmail();
+    if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
-    } catch {
-      setCopied(false);
     }
   };
 
@@ -68,12 +56,12 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-28 lg:pt-32 pb-16 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
-      {/* 1. Background Starfield */}
+      {/* Background Starfield */}
       <div className="absolute inset-0 pointer-events-none lg:pointer-events-auto touch-none z-0">
         <StarField />
       </div>
 
-      {/* 2. Asimetrični periferni sjaj */}
+      {/* Asymmetric ambient glows */}
       <div 
         className="absolute top-0 right-0 w-[550px] lg:w-[750px] h-[550px] pointer-events-none z-0 opacity-40"
         style={{
@@ -87,12 +75,10 @@ export const Hero = () => {
         }}
       />
 
-      {/* 3. Donji fade */}
+      {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 lg:h-48 bg-gradient-to-b from-transparent via-zinc-950/60 to-zinc-950 pointer-events-none z-0" />
 
-      {/* ========================================================
-          1. MOBILE INTERFACE (100% Netaknute dimenzije i raspored)
-         ======================================================== */}
+      {/* 1. Mobile Interface */}
       <div className="block lg:hidden relative z-10 w-full max-w-lg mx-auto">
         
         {/* Profile Card */}
@@ -135,7 +121,7 @@ export const Hero = () => {
           </div>
         </div>
 
-        {/* Headline & Value Proposition Card */}
+        {/* Headline Card */}
         <div className="rounded-3xl bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-8 shadow-xl shadow-black/40 text-left mb-8">
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-[1.2]">
             Building scalable{" "}
@@ -149,7 +135,7 @@ export const Hero = () => {
           </p>
         </div>
 
-        {/* CTA Buttons */}
+        {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3.5 w-full mt-10">
           <a
             href="#projects"
@@ -184,9 +170,7 @@ export const Hero = () => {
         </div>
       </div>
 
-      {/* ========================================================
-          2. DESKTOP INTERFACE (Optimalan prelom, podaci iz data fajla)
-         ======================================================== */}
+      {/* 2. Desktop Interface */}
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
         <div className="col-span-7 flex flex-col items-start text-left">
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs font-mono text-emerald-400 mb-6 backdrop-blur-md shadow-inner shadow-emerald-500/10">
@@ -245,7 +229,6 @@ export const Hero = () => {
 
         <div className="col-span-5 w-full">
           <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-7 shadow-2xl shadow-indigo-500/5 relative hover:border-zinc-700 transition-all duration-300">
-            {/* Header sekcija kartice - Čist simbol bez dugme-okvira */}
             <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/70 text-xs font-mono text-zinc-400">
               <div className="flex items-center gap-2">
                 <User className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -290,7 +273,6 @@ export const Hero = () => {
               </div>
             </div>
 
-            {/* 4 Tehnička stuba dinamički mapirana iz PERSONAL_INFO.focusAreas */}
             <div className="pt-5 space-y-2.5 font-mono text-xs">
               {PERSONAL_INFO.focusAreas.map((area) => (
                 <div

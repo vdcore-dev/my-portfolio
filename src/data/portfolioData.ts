@@ -6,9 +6,10 @@ export const PERSONAL_INFO: PersonalInfo = {
   availability: "Open to Offers",
   location: "Remote • Worldwide",
   bio: "Specialized in Java and the Spring Boot ecosystem, automating cloud infrastructure through modern DevOps, and integrating intelligent AI workflows into scalable services.",
-  email: "your.email@example.com",
-  github: "https://github.com/your-username",
-  linkedin: "https://linkedin.com/in/your-username",
+  email: "", // Obfuscated via security utility
+  github: "https://github.com/vdcore-dev",
+  linkedin: "https://linkedin.com/in/vladimir-dejanovic-16700238b",
+  x: "https://x.com/vdcore_dev",
   focusAreas: [
     {
       id: "backend",

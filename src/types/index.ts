@@ -46,5 +46,6 @@ export interface PersonalInfo {
   email: string;
   github: string;
   linkedin: string;
+  x?: string;
   focusAreas: FocusArea[];
 }

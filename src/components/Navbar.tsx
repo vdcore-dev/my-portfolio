@@ -30,6 +30,7 @@ export const Navbar = () => {
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Prevent background scroll and attach Escape key listener
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
 
@@ -52,6 +53,7 @@ export const Navbar = () => {
     };
   }, []);
 
+  // Optimized scroll position tracking
   useEffect(() => {
     let ticking = false;
 
@@ -157,7 +159,7 @@ export const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* Mobile panel: Potpuno čist heder bez ikakvog šuma */}
+      {/* Mobile Drawer Panel */}
       <aside
         className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 overflow-y-auto transition-all duration-300 ease-out md:hidden ${
           mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
@@ -200,7 +202,7 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* DNO FIOKE */}
+        {/* Drawer Baseline Stack Indicators */}
         <div className="pt-4 border-t border-zinc-900/90 flex items-center justify-center gap-2.5 sm:gap-3 font-mono text-[11px] text-zinc-600 tracking-wider">
           <span>Java</span>
           <span className="text-emerald-500/60 font-bold">•</span>
@@ -212,7 +214,7 @@ export const Navbar = () => {
         </div>
       </aside>
 
-      {/* Desktop & Main Header (100% netaknuto) */}
+      {/* Desktop & Main Header */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
@@ -241,7 +243,7 @@ export const Navbar = () => {
               <span className="font-black text-base text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.85)]">.</span>
             </a>
 
-            {/* Home dugme - Samo ikonica svetli bez donje linije */}
+            {/* Desktop Home Anchor Button */}
             <div className="hidden md:flex items-center">
               <a
                 href="#"
@@ -288,7 +290,7 @@ export const Navbar = () => {
 
             <div className="w-px h-4 bg-zinc-800 hidden md:block shrink-0" />
 
-            {/* Social ikonice */}
+            {/* Social Network Platforms */}
             <div className="hidden md:flex items-center gap-1.5 shrink-0">
               <a
                 href={PERSONAL_INFO.github}
@@ -310,15 +312,17 @@ export const Navbar = () => {
                 <LinkedinIcon className="w-[18px] h-[18px]" />
               </a>
 
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="X Profile"
-                className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
-              >
-                <XIcon className="w-[17px] h-[17px]" />
-              </a>
+              {PERSONAL_INFO.x && (
+                <a
+                  href={PERSONAL_INFO.x}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="X Profile"
+                  className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
+                >
+                  <XIcon className="w-[17px] h-[17px]" />
+                </a>
+              )}
 
               <a
                 href="/cv.pdf"
@@ -342,7 +346,7 @@ export const Navbar = () => {
                 <span>CV</span>
               </a>
 
-              {/* Hamburger dugme */}
+              {/* Hamburger Toggle Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle Navigation Menu"

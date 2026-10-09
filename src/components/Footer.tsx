@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, MessageSquare, Share2, Radio } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
+import { triggerSecureMail, copySecureEmail } from "../utils/security";
 
 const XIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -13,26 +14,11 @@ export const Footer = () => {
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
 
-  const handleCopyEmail = async () => {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(PERSONAL_INFO.email);
-      } else {
-        const textArea = document.createElement("textarea");
-        textArea.value = PERSONAL_INFO.email;
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        document.execCommand("copy");
-        textArea.remove();
-      }
+  const handleCopy = async () => {
+    const success = await copySecureEmail();
+    if (success) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
     }
   };
 
@@ -48,7 +34,7 @@ export const Footer = () => {
           url: shareUrl,
         });
       } catch {
-        // Korisnik je otkazao prozor za deljenje
+        // User canceled share action
       }
     } else {
       try {
@@ -84,7 +70,7 @@ export const Footer = () => {
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 lg:justify-between">
         
-        {/* HEADER */}
+        {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
             <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
@@ -99,7 +85,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* 1. MOBILNI PRIKAZ (Vraćen status "Available for work" sa pulsirajućim dot-om) */}
+        {/* 1. Mobile Interface */}
         <div className="block lg:hidden w-full max-w-lg mx-auto">
           <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 sm:p-7 shadow-2xl text-left mb-8">
             <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wide mb-3">
@@ -123,16 +109,17 @@ export const Footer = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-3.5 w-full mb-6">
-            <a
-              href={`mailto:${PERSONAL_INFO.email}`}
-              className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-md shadow-[#06d6a0]/20 active:scale-95 transition-transform"
+            <button
+              onClick={triggerSecureMail}
+              type="button"
+              className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-md shadow-[#06d6a0]/20 active:scale-95 transition-transform cursor-pointer"
             >
               <span>Send Email</span>
               <Send className="w-4 h-4 text-zinc-950 shrink-0" />
-            </a>
+            </button>
 
             <button
-              onClick={handleCopyEmail}
+              onClick={handleCopy}
               type="button"
               className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-md active:scale-95 transition-all cursor-pointer ${
                 copied
@@ -180,20 +167,22 @@ export const Footer = () => {
                 <LinkedinIcon className="w-4 h-4" />
               </a>
 
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="X Profile"
-                className="flex items-center justify-center h-12 rounded-2xl bg-zinc-950/80 border border-zinc-800 text-zinc-300 hover:text-emerald-400 hover:border-zinc-700 active:scale-95 transition-all"
-              >
-                <XIcon className="w-4 h-4" />
-              </a>
+              {PERSONAL_INFO.x && (
+                <a
+                  href={PERSONAL_INFO.x}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="X Profile"
+                  className="flex items-center justify-center h-12 rounded-2xl bg-zinc-950/80 border border-zinc-800 text-zinc-300 hover:text-emerald-400 hover:border-zinc-700 active:scale-95 transition-all"
+                >
+                  <XIcon className="w-4 h-4" />
+                </a>
+              )}
             </div>
           </div>
         </div>
 
-        {/* 2. DESKTOP PRIKAZ */}
+        {/* 2. Desktop Interface */}
         <div className="hidden lg:grid grid-cols-12 gap-8 items-center lg:my-auto">
           <div className="col-span-8 flex flex-col items-start">
             <h3 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15] mb-4 font-sans">
@@ -208,16 +197,17 @@ export const Footer = () => {
             </p>
 
             <div className="flex items-center gap-3.5">
-              <a
-                href={`mailto:${PERSONAL_INFO.email}`}
+              <button
+                onClick={triggerSecureMail}
+                type="button"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-sm tracking-tight hover:brightness-110 transition-all duration-200 shadow-lg shadow-[#06d6a0]/25 active:scale-95 cursor-pointer"
               >
                 <span>Send Direct Email</span>
                 <Send className="w-4 h-4 text-zinc-950" />
-              </a>
+              </button>
 
               <button
-                onClick={handleCopyEmail}
+                onClick={handleCopy}
                 type="button"
                 className={`inline-flex items-center gap-2.5 px-5 py-3 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md shadow-lg active:scale-95 cursor-pointer ${
                   copied
@@ -269,7 +259,7 @@ export const Footer = () => {
 
       </div>
 
-      {/* BASELINE FOOTER BAR */}
+      {/* Baseline Footer Bar */}
       <div 
         className="w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-4 lg:pt-10 shrink-0"
         style={{ paddingBottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.5rem))" }}
@@ -335,6 +325,18 @@ export const Footer = () => {
               <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
 
+            {PERSONAL_INFO.x && (
+              <a
+                href={PERSONAL_INFO.x}
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center gap-1 hover:text-emerald-400 transition-colors"
+              >
+                <span>X</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+            )}
+
             <button
               onClick={handleShare}
               type="button"
@@ -343,7 +345,7 @@ export const Footer = () => {
               {shared ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Link Copied!</span>
+                  <span className="text-emerald-400">Copied!</span>
                 </>
               ) : (
                 <>
