@@ -33,11 +33,11 @@ export const Skills = () => {
   return (
     <section 
       id="skills" 
-      className="w-full flex flex-col pt-20 pb-16 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-6 lg:scroll-mt-0 touch-pan-y"
+      className="w-full flex flex-col min-h-svh lg:min-h-dvh pt-24 pb-16 mb-16 lg:mb-0 lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-0 touch-pan-y"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
         
-        {/* HEADER: Minimalistički i oštar */}
+        {/* Section Header */}
         <div className="flex items-center justify-between gap-3 pb-3 mb-5 lg:pb-4 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
             <Layers className="w-5 h-5 text-sky-400 shrink-0" />
@@ -50,9 +50,9 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE */}
+        {/* 1. Desktop Interface */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
-          {/* Sidebar lista tastera - Čiste raznobojne ikonice bez okvira */}
+          {/* Sidebar category navigation buttons */}
           <div className="col-span-5 flex flex-col gap-2.5">
             {SKILL_CATEGORIES.map((cat) => {
               const catKey = cat.id ?? cat.category;
@@ -99,31 +99,34 @@ export const Skills = () => {
             })}
           </div>
 
-          {/* Desni glavni Show Box */}
+          {/* Category showcase display card */}
           <div className="col-span-7">
             <div
               key={activeCategoryId}
-              className="rounded-3xl glass-panel glass-panel-hover p-7 relative flex flex-col h-[445px] animate-panel-switch"
+              className="rounded-3xl glass-panel p-6 sm:p-7 relative flex flex-col justify-between h-[445px] animate-panel-switch"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-4">
-                <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400 tracking-wider">
-                  {getCategoryIcon(activeCategory.id)}
-                  <span className="uppercase text-zinc-300 font-semibold">{activeCategory.category}</span>
+              <div>
+                <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-zinc-800/80 mb-3.5">
+                  <div className="flex items-center gap-3 min-w-0">
+                    {getCategoryIcon(activeCategory.id, "w-5 h-5")}
+                    <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight font-sans truncate">
+                      {activeCategory.category}
+                    </h3>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 font-mono text-[10px] shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]" />
+                    {activeCategory.skills.length} Technologies
+                  </span>
                 </div>
 
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-400 font-mono text-[10px]">
-                  {activeCategory.skills.length} Technologies
-                </span>
-              </div>
-
-              {/* Tagline */}
-              <div className="h-10 mb-5 flex items-center">
-                <p className="text-zinc-300 text-sm font-sans leading-relaxed line-clamp-2">
+                {/* Tagline */}
+                <p className="text-zinc-300 text-sm font-sans leading-relaxed mb-4 line-clamp-2">
                   {activeCategory.tagline || ""}
                 </p>
               </div>
 
-              {/* Grid 2x3 sa veštinama */}
+              {/* 2x3 skills grid */}
               <div className="grid grid-cols-2 gap-3 font-mono text-xs">
                 {activeCategory.skills.map((skill: SkillItem) => (
                   <div
@@ -139,20 +142,14 @@ export const Skills = () => {
                         <span
                           className={`w-1.5 h-1.5 rounded-full shrink-0 ${
                             skill.highlight
-                              ? "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]"
-                              : "bg-zinc-600"
+                              ? "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)]"
+                              : "bg-sky-400/75 shadow-[0_0_5px_rgba(56,189,248,0.6)]"
                           }`}
                         />
                         <span className="truncate">{skill.name}</span>
                       </span>
                       {skill.highlight && (
-                        <span 
-                          title="Core Skill"
-                          className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-sky-500/10 border border-sky-500/25 text-sky-400 text-[10px] font-mono shrink-0 ml-1"
-                        >
-                          <Star className="w-2.5 h-2.5 text-sky-400 fill-sky-400/30" />
-                          <span>Core</span>
-                        </span>
+                        <Star className="w-3.5 h-3.5 text-sky-400 fill-sky-400/35 shrink-0 ml-1" />
                       )}
                     </div>
                     <p className="text-[11px] text-zinc-400 font-sans mt-0.5 leading-snug line-clamp-2">
@@ -196,18 +193,21 @@ export const Skills = () => {
             key={activeCategoryId}
             className="rounded-3xl glass-panel p-5 sm:p-6 animate-panel-switch"
           >
-            <div className="flex items-center justify-between pb-3 mb-3 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
-              <div className="flex items-center gap-2">
-                {getCategoryIcon(activeCategory.id)}
-                <span className="font-bold text-white tracking-tight font-sans">{activeCategory.category}</span>
+            <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-zinc-800/80">
+              <div className="flex items-center gap-2.5 min-w-0">
+                {getCategoryIcon(activeCategory.id, "w-4 h-4")}
+                <h3 className="text-base sm:text-lg font-bold text-white tracking-tight font-sans truncate">
+                  {activeCategory.category}
+                </h3>
               </div>
-              <span className="text-[10px] text-zinc-400 font-mono tracking-wider px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800">
+              <span className="inline-flex items-center gap-1.5 text-[10px] text-zinc-300 font-mono px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_5px_rgba(56,189,248,0.85)]" />
                 {activeCategory.skills.length} Tech
               </span>
             </div>
 
             {activeCategory.tagline && (
-              <p className="text-zinc-400 text-xs font-sans leading-relaxed mb-3.5 line-clamp-2">
+              <p className="text-zinc-300 text-xs font-sans leading-relaxed mb-3.5 line-clamp-2">
                 {activeCategory.tagline}
               </p>
             )}
@@ -226,13 +226,15 @@ export const Skills = () => {
                     <span className="font-sans text-xs font-bold text-white truncate flex items-center gap-1.5">
                       <span
                         className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                          skill.highlight ? "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]" : "bg-zinc-600"
+                          skill.highlight
+                            ? "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]"
+                            : "bg-sky-400/75 shadow-[0_0_4px_rgba(56,189,248,0.6)]"
                         }`}
                       />
                       <span className="truncate">{skill.name}</span>
                     </span>
                     {skill.highlight && (
-                      <Star className="w-3 h-3 text-sky-400 fill-sky-400/30 shrink-0" />
+                      <Star className="w-3 h-3 text-sky-400 fill-sky-400/35 shrink-0" />
                     )}
                   </div>
                   <p className="text-[10px] text-zinc-400 font-sans leading-relaxed line-clamp-2">

@@ -15,7 +15,6 @@ export interface Project {
   liveUrl?: string;
   featured?: boolean;
   specs?: ProjectSpecs;
-  highlights?: string[];
 }
 
 export interface SkillItem {

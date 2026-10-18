@@ -51,11 +51,6 @@ export const PROJECTS: Project[] = [
       performance: "Sub-50ms API Latency",
       security: "JWT + Role-Based Access Control",
     },
-    highlights: [
-      "ACID-compliant subscription state transitions with optimistic locking",
-      "Asynchronous webhook dispatcher with retry backoff strategy",
-      "Cached usage counters in Redis for real-time quota evaluation",
-    ],
   },
   {
     id: "payment-gateway",
@@ -72,11 +67,6 @@ export const PROJECTS: Project[] = [
       performance: "Idempotent <30ms Responses",
       security: "HMAC Signatures & Encryption",
     },
-    highlights: [
-      "Distributed locks to eliminate duplicate transaction execution",
-      "Dead Letter Queue (DLQ) integration for resilient failure handling",
-      "Configurable network delay simulation for realistic chaos testing",
-    ],
   },
   {
     id: "task-orchestrator",
@@ -93,11 +83,6 @@ export const PROJECTS: Project[] = [
       performance: "10,000+ Tasks Dispatched/sec",
       security: "Internal Service-to-Service mTLS",
     },
-    highlights: [
-      "Distributed leader election using Redis lease TTL mechanics",
-      "Graceful degradation and automatic worker failover routing",
-      "Prometheus metrics endpoint for latency and queue saturation monitoring",
-    ],
   },
   {
     id: "modern-portfolio",
@@ -115,11 +100,6 @@ export const PROJECTS: Project[] = [
       performance: "100 Lighthouse Performance",
       security: "Content Security Policy (CSP)",
     },
-    highlights: [
-      "Glassmorphic floating dock with device-specific accessibility targets",
-      "Bespoke SVG hardware-inspired monogram with zero raster asset dependencies",
-      "Responsive console showcase with native CSS touch snapping",
-    ],
   },
 ];
 

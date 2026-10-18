@@ -1,25 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Home, FileText, FolderKanban, Layers, MessageSquare } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "./Icons";
+import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
-
-const XIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-  </svg>
-);
 
 const DESKTOP_LINKS = [
   { name: "Projects", href: "#projects", id: "projects" },
-  { name: "Stack", href: "#skills", id: "skills" },
-  { name: "Connect", href: "#contact", id: "contact" },
+  { name: "Skills", href: "#skills", id: "skills" },
+  { name: "Contact", href: "#contact", id: "contact" },
 ];
 
 const MOBILE_LINKS = [
   { name: "Home", href: "#", id: "home", icon: Home },
   { name: "Projects", href: "#projects", id: "projects", icon: FolderKanban },
-  { name: "Stack", href: "#skills", id: "skills", icon: Layers },
-  { name: "Connect", href: "#contact", id: "contact", icon: MessageSquare },
+  { name: "Skills", href: "#skills", id: "skills", icon: Layers },
+  { name: "Contact", href: "#contact", id: "contact", icon: MessageSquare },
 ];
 
 export const Navbar = () => {
@@ -206,17 +200,17 @@ export const Navbar = () => {
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
           <nav
-            className={`flex items-center justify-between w-full gap-2 sm:gap-3.5 md:gap-4 px-3.5 sm:px-5 py-2 rounded-full border transition-colors duration-300 ${
+            className={`relative flex items-center justify-between w-full gap-2 sm:gap-3.5 md:gap-3.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-all duration-300 ${
               isScrolled
-                ? "bg-zinc-950/90 border-zinc-700/75 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_20px_40px_-10px_rgba(0,0,0,0.85)]"
-                : "bg-zinc-900/80 border-zinc-800/80 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07),0_12px_28px_-8px_rgba(0,0,0,0.5)]"
+                ? "bg-zinc-950/90 border-zinc-700/75 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_40px_-10px_rgba(0,0,0,0.85)]"
+                : "bg-zinc-900/80 border-zinc-800/85 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_28px_-8px_rgba(0,0,0,0.55)]"
             }`}
           >
-            {/* Desktop Static Brand Wordmark - Optically centered with refined 4px dot */}
-            <div className="hidden md:flex items-center pl-1.5 pr-0.5 font-sans tracking-tight select-none cursor-default translate-y-[1px]">
+            {/* Desktop Static Brand Wordmark - Optically aligned with 13px nav links & icons */}
+            <div className="hidden md:flex items-center h-8 pl-2.5 pr-1 font-sans tracking-tight select-none cursor-default translate-y-[2.5px]">
               <span className="font-extrabold text-[15px] text-white leading-none">VD</span>
               <span className="font-medium text-[15px] text-zinc-400 leading-none">Core</span>
-              <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[4px] shrink-0" />
+              <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[3.5px] shrink-0" />
             </div>
 
             {/* Mobile Clickable Brand Wordmark */}
@@ -232,30 +226,44 @@ export const Navbar = () => {
               <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[4.5px] shrink-0" />
             </a>
 
-            {/* Desktop Home Anchor Button */}
-            <div className="hidden md:flex items-center">
+            <div className="hidden md:block w-px h-4 bg-zinc-800/90 shrink-0" />
+            
+            {/* Zero-Shift Raycast/Linear Style Capsule Navigation (including Home) */}
+            <div className="hidden md:flex items-center gap-1 text-[13px] font-medium">
+              {/* Home Capsule Button */}
               <a
                 href="#"
-                title="Scroll to Top"
+                title="Home"
                 aria-label="Home"
                 onClick={scrollToTop}
-                className="p-1.5 rounded-full transition-colors cursor-pointer"
+                className={`group/home relative h-8 px-3 rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer select-none ${
+                  activeSection === ""
+                    ? "text-sky-400"
+                    : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
+                }`}
               >
-                <Home
-                  className={`w-[18px] h-[18px] transition-colors duration-200 ${
+                <span
+                  className={`absolute inset-0 rounded-full transition-all duration-250 ease-out -z-10 ${
                     activeSection === ""
-                      ? "text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"
-                      : "text-zinc-400 hover:text-white"
+                      ? "bg-zinc-800/90 border border-zinc-700/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] opacity-100 scale-100"
+                      : "opacity-0 scale-95"
+                  }`}
+                />
+                <Home
+                  className={`w-[16px] h-[16px] transition-transform duration-200 group-hover/home:scale-110 ${
+                    activeSection === ""
+                      ? "text-sky-400 drop-shadow-[0_0_6px_rgba(56,189,248,0.5)]"
+                      : ""
                   }`}
                   strokeWidth={2.2}
                 />
+                <span
+                  className={`absolute bottom-0 left-0 right-0 mx-auto w-3.5 h-[1.5px] rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.95)] transition-all duration-250 ease-out ${
+                    activeSection === "" ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
+                  }`}
+                />
               </a>
-            </div>
 
-            <div className="hidden md:block w-px h-4 bg-zinc-800 shrink-0" />
-            
-            {/* Zero-Shift Raycast/Linear Style Capsule Navigation */}
-            <div className="hidden md:flex items-center gap-1 text-[13px] font-medium">
               {DESKTOP_LINKS.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -263,8 +271,10 @@ export const Navbar = () => {
                     key={link.id}
                     href={link.href}
                     onClick={(e) => scrollTo(e, link.id)}
-                    className={`relative px-3.5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer select-none ${
-                      isActive ? "text-white" : "text-zinc-400 hover:text-zinc-200"
+                    className={`relative h-8 px-3.5 rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer select-none ${
+                      isActive
+                        ? "text-white"
+                        : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
                     }`}
                   >
                     {/* Background Pill Indicator (Absolute so width NEVER shifts) */}
@@ -287,18 +297,18 @@ export const Navbar = () => {
               })}
             </div>
 
-            <div className="w-px h-4 bg-zinc-800 hidden md:block shrink-0" />
+            <div className="w-px h-4 bg-zinc-800/90 hidden md:block shrink-0" />
 
-            {/* Social Network Platforms */}
+            {/* Social Network Platforms & CV Button */}
             <div className="hidden md:flex items-center gap-1 shrink-0">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub Profile"
-                className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
+                className="group/soc w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/65 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] transition-all duration-200"
               >
-                <GithubIcon className="w-[17px] h-[17px]" />
+                <GithubIcon className="w-[17px] h-[17px] transition-transform duration-200 group-hover/soc:scale-110" />
               </a>
 
               <a
@@ -306,9 +316,9 @@ export const Navbar = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn Profile"
-                className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
+                className="group/soc w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/65 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] transition-all duration-200"
               >
-                <LinkedinIcon className="w-[17px] h-[17px]" />
+                <LinkedinIcon className="w-[17px] h-[17px] transition-transform duration-200 group-hover/soc:scale-110" />
               </a>
 
               {PERSONAL_INFO.x && (
@@ -317,9 +327,9 @@ export const Navbar = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="X Profile"
-                  className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
+                  className="group/soc w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/65 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] transition-all duration-200"
                 >
-                  <XIcon className="w-4 h-4" />
+                  <XIcon className="w-4 h-4 transition-transform duration-200 group-hover/soc:scale-110" />
                 </a>
               )}
 
@@ -327,9 +337,9 @@ export const Navbar = () => {
                 href="/cv.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="group/cv flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-700/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 font-mono font-medium text-xs hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-300 transition-all ml-1 active:scale-95"
+                className="group/cv h-8 px-3.5 rounded-full flex items-center gap-1.5 bg-zinc-900/90 border border-zinc-700/75 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 font-mono font-medium text-xs hover:bg-zinc-800/90 hover:border-sky-500/40 hover:text-white transition-all duration-200 ml-0.5 active:scale-95"
               >
-                <FileText className="w-3.5 h-3.5 text-sky-400 transition-transform group-hover/cv:scale-110" />
+                <FileText className="w-3.5 h-3.5 text-sky-400 transition-transform duration-200 group-hover/cv:scale-110" />
                 <span>CV</span>
               </a>
             </div>
@@ -339,18 +349,20 @@ export const Navbar = () => {
                 href="/cv.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full bg-zinc-900 border border-zinc-700/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 text-xs font-mono font-medium active:scale-95 hover:text-white transition-all"
+                className="flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full bg-zinc-900/90 border border-zinc-700/75 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 text-xs font-mono font-medium active:scale-95 hover:text-white transition-all"
               >
                 <FileText className="w-3.5 h-3.5 text-sky-400" />
                 <span>CV</span>
               </a>
 
-              {/* Hamburger Toggle Button */}
+              {/* Hamburger Toggle Button - Matched border & glass surface with CV button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle Navigation Menu"
                 aria-expanded={mobileMenuOpen}
-                className="relative w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/80 border border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors focus:outline-none shrink-0 cursor-pointer"
+                className={`relative w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/90 border shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 hover:text-white hover:bg-zinc-800/90 transition-all focus:outline-none shrink-0 cursor-pointer active:scale-95 ${
+                  mobileMenuOpen ? "border-sky-500/40" : "border-zinc-700/75"
+                }`}
               >
                 <div className="flex flex-col items-center justify-center w-4 h-4 relative">
                   <span

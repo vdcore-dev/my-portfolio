@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { PROJECTS } from "../data/portfolioData";
-import { ArrowUpRight, Terminal, Layers, Code2, FolderKanban, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Code2, FolderKanban, ShieldCheck, Database, Zap, Globe } from "lucide-react";
 import { GithubIcon } from "./Icons";
 import type { Project } from "../types";
 
@@ -9,7 +9,8 @@ export const Projects = () => {
   const [activeMobileIdx, setActiveMobileIdx] = useState(0);
   const mobileScrollRef = useRef<HTMLDivElement>(null);
 
-  const activeProject: Project = PROJECTS.find((p) => p.id === selectedId) || PROJECTS[0];
+  const activeIdx = Math.max(0, PROJECTS.findIndex((p) => p.id === selectedId));
+  const activeProject: Project = PROJECTS[activeIdx] || PROJECTS[0];
 
   useEffect(() => {
     const el = mobileScrollRef.current;
@@ -49,7 +50,7 @@ export const Projects = () => {
   return (
     <section 
       id="projects" 
-      className="w-full flex flex-col pt-20 pb-16 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-6 lg:scroll-mt-0"
+      className="w-full flex flex-col min-h-svh lg:min-h-dvh pt-24 pb-16 mb-16 lg:mb-0 lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-0"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
         
@@ -66,9 +67,9 @@ export const Projects = () => {
           </div>
         </div>
 
-        {/* 1. DESKTOP INTERFACE */}
+        {/* 1. Desktop Interface */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
-          {/* Leva lista sistema - Čiste raznobojne cifre bez okvira */}
+          {/* Left system list with color-accented index digits */}
           <div className="col-span-5 flex flex-col gap-2.5">
             {PROJECTS.map((project, idx) => {
               const isSelected = project.id === selectedId;
@@ -120,97 +121,107 @@ export const Projects = () => {
             })}
           </div>
 
-          {/* Desni detaljni Showcase Box - FIKSNA VISINA h-[445px] u Apple-Glass Hero stilu */}
+          {/* Right detail showcase card with fixed height */}
           <div className="col-span-7">
             <div
               key={activeProject.id}
               className="rounded-3xl glass-panel p-6 sm:p-7 relative flex flex-col justify-between h-[445px] animate-panel-switch"
             >
               <div>
-                <div className="flex items-center justify-between pb-3.5 border-b border-zinc-800/80 mb-3.5">
-                  <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-400 tracking-wider">
-                    <Terminal className="w-4 h-4 text-sky-400 shrink-0" />
-                    <span className="uppercase text-zinc-300 font-semibold">
-                      {activeProject.category || "SYSTEM ARCHITECTURE"}
+                {/* Card header: Index + Title + Status badge */}
+                <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-zinc-800/80 mb-3.5">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span
+                      className={`font-sans text-base font-bold tabular-nums tracking-tight shrink-0 ${getProjectIndexColor(
+                        activeIdx,
+                        true
+                      )}`}
+                    >
+                      0{activeIdx + 1}
                     </span>
+                    <h3 className="text-lg sm:text-xl font-bold text-white tracking-tight font-sans truncate">
+                      {activeProject.title}
+                    </h3>
                   </div>
 
-                  {activeProject.featured ? (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-300 font-mono text-[10px]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]" />
-                      Core System
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-400 font-mono text-[10px]">
-                      Production Ready
-                    </span>
-                  )}
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 font-mono text-[10px] shrink-0">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]" />
+                    {activeProject.featured ? "Core System" : "Production Ready"}
+                  </span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-1.5 tracking-tight font-sans">
-                  {activeProject.title}
-                </h3>
-
-                <p className="text-zinc-400 text-sm leading-relaxed mb-4 font-sans line-clamp-2">
+                {/* Project description */}
+                <p className="text-zinc-300 text-sm leading-relaxed mb-4 font-sans line-clamp-2">
                   {activeProject.description}
                 </p>
 
-                {/* 3 Sleek Hero-Style Apple-Glass Architecture Capsules */}
-                <div className="space-y-2 mb-4">
-                  <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
-                    <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
+                {/* 2x2 specification grid */}
+                <div className="grid grid-cols-2 gap-2.5 mb-3.5">
+                  <div className="p-3 rounded-2xl glass-subcard flex flex-col justify-between">
+                    <span className="text-zinc-400 font-sans text-[11px] font-medium flex items-center gap-2 mb-1">
                       <Code2 className="w-4 h-4 text-sky-400 shrink-0" />
                       <span>Architecture</span>
                     </span>
-                    <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
+                    <span className="text-white font-mono text-xs font-semibold tracking-tight truncate">
                       {activeProject.specs?.architecture || "Clean Architecture"}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
-                    <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
-                      <Layers className="w-4 h-4 text-cyan-400 shrink-0" />
-                      <span>Storage & State</span>
+                  <div className="p-3 rounded-2xl glass-subcard flex flex-col justify-between">
+                    <span className="text-zinc-400 font-sans text-[11px] font-medium flex items-center gap-2 mb-1">
+                      <Database className="w-4 h-4 text-cyan-400 shrink-0" />
+                      <span>Data & State</span>
                     </span>
-                    <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
+                    <span className="text-white font-mono text-xs font-semibold tracking-tight truncate">
                       {activeProject.specs?.database || "PostgreSQL + Redis"}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
-                    <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
-                      <ShieldCheck className="w-4 h-4 text-indigo-400 shrink-0" />
-                      <span>SLA & Security</span>
+                  <div className="p-3 rounded-2xl glass-subcard flex flex-col justify-between">
+                    <span className="text-zinc-400 font-sans text-[11px] font-medium flex items-center gap-2 mb-1">
+                      <Zap className="w-4 h-4 text-indigo-400 shrink-0" />
+                      <span>Performance & SLA</span>
                     </span>
-                    <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
-                      {[activeProject.specs?.performance, activeProject.specs?.security].filter(Boolean).join(" • ")}
+                    <span className="text-white font-mono text-xs font-semibold tracking-tight truncate">
+                      {activeProject.specs?.performance || "High Throughput"}
+                    </span>
+                  </div>
+
+                  <div className="p-3 rounded-2xl glass-subcard flex flex-col justify-between">
+                    <span className="text-zinc-400 font-sans text-[11px] font-medium flex items-center gap-2 mb-1">
+                      <ShieldCheck className="w-4 h-4 text-violet-400 shrink-0" />
+                      <span>Security & Auth</span>
+                    </span>
+                    <span className="text-white font-mono text-xs font-semibold tracking-tight truncate">
+                      {activeProject.specs?.security || "Zero-Trust Security"}
                     </span>
                   </div>
                 </div>
 
-                {/* Tagovi */}
-                <div className="flex flex-wrap gap-1.5">
+                {/* Tech stack badges with glowing indicators */}
+                <div className="flex flex-wrap gap-2">
                   {activeProject.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] text-zinc-300 font-mono text-[11px]"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] text-zinc-200 font-mono text-[11px] font-medium"
                     >
+                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400/90 shadow-[0_0_5px_rgba(56,189,248,0.8)] shrink-0" />
                       {tag}
                     </span>
                   ))}
                 </div>
               </div>
 
-              {/* Akcioni dugmići */}
-              <div className="flex items-center gap-3 pt-3.5 border-t border-zinc-800/80">
+              {/* Action CTA buttons */}
+              <div className="flex items-center gap-3.5 pt-3.5 border-t border-zinc-800/80">
                 {activeProject.githubUrl && (
                   <a
                     href={activeProject.githubUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="group/code flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl glass-subcard text-zinc-200 hover:text-white text-xs font-mono font-medium transition-all hover:-translate-y-0.5 active:scale-[0.98]"
+                    className="group/code inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard text-zinc-200 hover:text-white text-sm font-sans font-medium transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
                   >
-                    <GithubIcon className="w-4 h-4 text-zinc-400 group-hover/code:text-white group-hover/code:scale-110 transition-all duration-200" />
+                    <GithubIcon className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/code:scale-110 group-hover/code:-translate-y-0.5" />
                     <span>Source Code</span>
                   </a>
                 )}
@@ -220,11 +231,11 @@ export const Projects = () => {
                     href={activeProject.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="group/demo flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-sky-500/10 hover:bg-sky-500/15 border border-sky-500/35 hover:border-sky-400/60 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-100 hover:text-white text-xs font-mono font-medium transition-all hover:-translate-y-0.5 active:scale-[0.98]"
+                    className="group/demo inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-sm tracking-tight hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_10px_22px_-4px_rgba(56,189,248,0.35)] transition-all duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_18px_-4px_rgba(56,189,248,0.25)] active:scale-95"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]" />
+                    <Globe className="w-4 h-4 text-zinc-950 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:rotate-12" />
                     <span>Live Preview</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-sky-400 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5" />
+                    <ArrowUpRight className="w-4 h-4 text-zinc-950 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5" />
                   </a>
                 )}
               </div>
@@ -232,7 +243,7 @@ export const Projects = () => {
           </div>
         </div>
 
-        {/* 2. MOBILNI INTERFACE - Apple-Glass kartice sa Hero kapsulama */}
+        {/* 2. Mobile Interface - Horizontal snap cards */}
         <div className="block lg:hidden">
           <div 
             ref={mobileScrollRef}
@@ -242,60 +253,85 @@ export const Projects = () => {
             {PROJECTS.map((project, idx) => (
               <div
                 key={project.id}
-                className="min-w-[88%] sm:min-w-[70%] min-h-[420px] snap-center rounded-3xl glass-panel p-5.5 sm:p-6 flex flex-col justify-between"
+                className="min-w-[88%] sm:min-w-[70%] min-h-[445px] snap-center rounded-3xl glass-panel px-5 py-5.5 sm:p-6 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-3 border-b border-zinc-800/80 mb-3.5">
-                    <span className="font-mono text-[11px] text-zinc-300 font-semibold tracking-wider uppercase flex items-center gap-2">
-                      <span className="text-sky-400 font-mono">0{idx + 1}</span>
-                      <span className="text-zinc-700">•</span>
-                      <span className="truncate max-w-[170px]">{project.category || "System"}</span>
-                    </span>
-                    {project.featured && (
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-sky-500/10 border border-sky-500/25 text-[10px] font-mono text-sky-300">
-                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                        Core
+                  {/* Mobile header: Index + Title */}
+                  <div className="flex items-center justify-between gap-2 pb-3.5 border-b border-zinc-800/80 mb-3.5">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span
+                        className={`font-sans text-sm font-bold tabular-nums shrink-0 ${getProjectIndexColor(
+                          idx,
+                          true
+                        )}`}
+                      >
+                        0{idx + 1}
                       </span>
-                    )}
+                      <h3 className="text-base sm:text-lg font-bold text-white tracking-tight font-sans truncate">
+                        {project.title}
+                      </h3>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 text-[10px] text-zinc-300 font-mono px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 shrink-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_5px_rgba(56,189,248,0.85)]" />
+                      {project.featured ? "Core" : "Ready"}
+                    </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-white mb-2 tracking-tight font-sans">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-zinc-400 text-xs leading-relaxed mb-4 font-sans line-clamp-3">
+                  <p className="text-zinc-300 text-xs leading-relaxed mb-4 font-sans line-clamp-2">
                     {project.description}
                   </p>
 
-                  {/*Hero style capsule*/}
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
-                      <span className="text-zinc-400 font-sans text-[11px] font-medium flex items-center gap-2">
+                  {/* 2x2 mobile spec grid */}
+                  <div className="grid grid-cols-2 gap-2.5 mb-4">
+                    <div className="p-3 rounded-xl glass-subcard flex flex-col justify-between">
+                      <span className="text-zinc-400 font-sans text-[10px] font-medium flex items-center gap-1.5 mb-1">
                         <Code2 className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                         <span>Architecture</span>
                       </span>
-                      <span className="text-zinc-200 font-mono text-[10px] font-medium tracking-tight truncate max-w-[145px]">
-                        {project.specs?.architecture || "Clean Architecture"}
+                      <span className="text-white font-mono text-[11px] font-semibold tracking-tight truncate">
+                        {project.specs?.architecture || "Clean Arch"}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
-                      <span className="text-zinc-400 font-sans text-[11px] font-medium flex items-center gap-2">
-                        <Layers className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                        <span>Storage</span>
+                    <div className="p-3 rounded-xl glass-subcard flex flex-col justify-between">
+                      <span className="text-zinc-400 font-sans text-[10px] font-medium flex items-center gap-1.5 mb-1">
+                        <Database className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                        <span>Data & State</span>
                       </span>
-                      <span className="text-zinc-200 font-mono text-[10px] font-medium tracking-tight truncate max-w-[145px]">
-                        {project.specs?.database || "PostgreSQL + Redis"}
+                      <span className="text-white font-mono text-[11px] font-semibold tracking-tight truncate">
+                        {project.specs?.database || "PostgreSQL"}
+                      </span>
+                    </div>
+
+                    <div className="p-3 rounded-xl glass-subcard flex flex-col justify-between">
+                      <span className="text-zinc-400 font-sans text-[10px] font-medium flex items-center gap-1.5 mb-1">
+                        <Zap className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                        <span>Performance</span>
+                      </span>
+                      <span className="text-white font-mono text-[11px] font-semibold tracking-tight truncate">
+                        {project.specs?.performance || "Low Latency"}
+                      </span>
+                    </div>
+
+                    <div className="p-3 rounded-xl glass-subcard flex flex-col justify-between">
+                      <span className="text-zinc-400 font-sans text-[10px] font-medium flex items-center gap-1.5 mb-1">
+                        <ShieldCheck className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                        <span>Security</span>
+                      </span>
+                      <span className="text-white font-mono text-[11px] font-semibold tracking-tight truncate">
+                        {project.specs?.security || "JWT & RBAC"}
                       </span>
                     </div>
                   </div>
 
+                  {/* Tech stack badges */}
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-0.5 rounded-lg bg-zinc-900/90 border border-zinc-800/90 text-zinc-300 font-mono text-[10px]"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800/90 text-zinc-200 font-mono text-[10px] font-medium"
                       >
+                        <span className="w-1 h-1 rounded-full bg-sky-400 shrink-0" />
                         {tag}
                       </span>
                     ))}
@@ -308,10 +344,10 @@ export const Projects = () => {
                       href={project.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl glass-subcard text-zinc-200 font-mono text-xs font-medium active:scale-[0.97] transition-all"
+                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-full glass-subcard text-zinc-200 font-sans text-xs font-medium active:scale-95 transition-all"
                     >
-                      <GithubIcon className="w-4 h-4 text-zinc-400" />
-                      <span>Code</span>
+                      <GithubIcon className="w-4 h-4 text-sky-400" />
+                      <span>Source Code</span>
                     </a>
                   )}
 
@@ -320,11 +356,11 @@ export const Projects = () => {
                       href={project.liveUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 h-11 rounded-xl bg-sky-500/10 border border-sky-500/35 text-zinc-100 font-mono text-xs font-medium active:scale-[0.97] transition-all"
+                      className="flex-1 flex items-center justify-center gap-1.5 h-11 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-sans font-bold text-xs shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_16px_-4px_rgba(56,189,248,0.22)] active:scale-95 transition-all"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shrink-0" />
-                      <span>Live</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-sky-400" />
+                      <Globe className="w-3.5 h-3.5 text-zinc-950 shrink-0" />
+                      <span>Live Preview</span>
+                      <ArrowUpRight className="w-3.5 h-3.5 text-zinc-950 shrink-0" />
                     </a>
                   )}
                 </div>

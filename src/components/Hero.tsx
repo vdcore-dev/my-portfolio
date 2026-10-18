@@ -41,20 +41,20 @@ export const Hero = () => {
   const renderFocusIcon = (id: string) => {
     switch (id) {
       case "backend":
-        return <Server className="w-4 h-4 text-sky-400 shrink-0" />;
+        return <Server className="w-[18px] h-[18px] text-sky-400 shrink-0" />;
       case "devops":
-        return <Cloud className="w-4 h-4 text-cyan-400 shrink-0" />;
+        return <Cloud className="w-[18px] h-[18px] text-cyan-400 shrink-0" />;
       case "data":
-        return <Database className="w-4 h-4 text-indigo-400 shrink-0" />;
+        return <Database className="w-[18px] h-[18px] text-indigo-400 shrink-0" />;
       case "ai":
-        return <Bot className="w-4 h-4 text-violet-400 shrink-0" />;
+        return <Bot className="w-[18px] h-[18px] text-violet-400 shrink-0" />;
       default:
-        return <Server className="w-4 h-4 text-sky-400 shrink-0" />;
+        return <Server className="w-[18px] h-[18px] text-sky-400 shrink-0" />;
     }
   };
 
   return (
-    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-24 pb-12 lg:pt-32 lg:pb-20 px-4 overflow-hidden">
+    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-24 pb-12 mb-16 lg:mb-0 lg:pt-32 lg:pb-20 px-4 overflow-hidden">
       {/* 1. Mobile Interface - Balanced spacing for modern 6.1" - 6.8" screens */}
       <div className="flex lg:hidden flex-col justify-between relative z-10 w-full max-w-lg mx-auto my-auto gap-7 py-2">
         
@@ -179,7 +179,7 @@ export const Hero = () => {
             <a
               href="#projects"
               onClick={scrollToProjects}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-sm tracking-tight hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_10px_22px_-4px_rgba(56,189,248,0.35)] transition-all duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_18px_-4px_rgba(56,189,248,0.25)] active:scale-95 group cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-sm tracking-tight hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_10px_22px_-4px_rgba(56,189,248,0.35)] transition-all duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_18px_-4px_rgba(56,189,248,0.25)] active:scale-95 group cursor-pointer"
             >
               <span>Explore Systems</span>
               <ChevronDown className="w-4 h-4 text-zinc-950 animate-bounce group-hover:scale-110 transition-transform duration-200" />
@@ -187,7 +187,7 @@ export const Hero = () => {
 
             <button
               onClick={handleCopyEmail}
-              className={`inline-flex items-center gap-2.5 px-5 py-3 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer ${
+              className={`inline-flex items-center justify-center gap-2.5 h-11 px-6 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer ${
                 copied
                   ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/20"
                   : "glass-subcard text-zinc-200 hover:text-white"
@@ -224,7 +224,7 @@ export const Hero = () => {
                 onClick={() => setIsPhotoOpen(true)}
                 title="Click to view full photo"
               >
-                <div className="w-20 h-20 rounded-2xl overflow-hidden border border-zinc-700/80 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-black/50 transition-transform group-hover:scale-105 duration-200">
+                <div className="w-20 h-20 rounded-2xl overflow-hidden border border-sky-500/40 group-hover:border-sky-400/65 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-sky-500/10 transition-all group-hover:scale-105 duration-200">
                   <img
                     src={avatarUrl}
                     alt={PERSONAL_INFO.name}
