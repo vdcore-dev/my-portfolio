@@ -36,27 +36,14 @@ export const Projects = () => {
     setActiveMobileIdx(idx);
   };
 
-  const getProjectIndexStyle = (idx: number, isSelected: boolean) => {
+  const getProjectIndexColor = (idx: number, isSelected: boolean) => {
     const colors = [
-      {
-        active: "bg-sky-500/15 border-sky-500/35 text-sky-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]",
-        inactive: "bg-zinc-900/85 border-zinc-800/85 text-sky-400/80 group-hover:text-sky-300 group-hover:border-zinc-700",
-      },
-      {
-        active: "bg-cyan-500/15 border-cyan-500/35 text-cyan-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]",
-        inactive: "bg-zinc-900/85 border-zinc-800/85 text-cyan-400/80 group-hover:text-cyan-300 group-hover:border-zinc-700",
-      },
-      {
-        active: "bg-indigo-500/15 border-indigo-500/35 text-indigo-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]",
-        inactive: "bg-zinc-900/85 border-zinc-800/85 text-indigo-400/80 group-hover:text-indigo-300 group-hover:border-zinc-700",
-      },
-      {
-        active: "bg-violet-500/15 border-violet-500/35 text-violet-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]",
-        inactive: "bg-zinc-900/85 border-zinc-800/85 text-violet-400/80 group-hover:text-violet-300 group-hover:border-zinc-700",
-      },
+      isSelected ? "text-sky-400" : "text-sky-400/75 group-hover:text-sky-400",
+      isSelected ? "text-cyan-400" : "text-cyan-400/75 group-hover:text-cyan-400",
+      isSelected ? "text-indigo-400" : "text-indigo-400/75 group-hover:text-indigo-400",
+      isSelected ? "text-violet-400" : "text-violet-400/75 group-hover:text-violet-400",
     ];
-    const palette = colors[idx % colors.length];
-    return isSelected ? palette.active : palette.inactive;
+    return colors[idx % colors.length];
   };
 
   return (
@@ -81,7 +68,7 @@ export const Projects = () => {
 
         {/* 1. DESKTOP INTERFACE */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
-          {/* Leva lista sistema - Elegantne Apple-glass kapsulice sa modernom numerizacijom */}
+          {/* Leva lista sistema - Čiste raznobojne cifre bez okvira */}
           <div className="col-span-5 flex flex-col gap-2.5">
             {PROJECTS.map((project, idx) => {
               const isSelected = project.id === selectedId;
@@ -97,7 +84,7 @@ export const Projects = () => {
                 >
                   <div className="flex items-center gap-3.5 min-w-0 pr-3">
                     <span
-                      className={`w-8 h-8 rounded-lg font-sans text-xs font-bold tabular-nums tracking-tight border flex items-center justify-center shrink-0 transition-all duration-200 ${getProjectIndexStyle(
+                      className={`font-sans text-sm font-bold tabular-nums tracking-tight shrink-0 transition-colors duration-200 ${getProjectIndexColor(
                         idx,
                         isSelected
                       )}`}

@@ -13,40 +13,20 @@ export const Skills = () => {
 
   const totalSkillsCount = SKILL_CATEGORIES.reduce((acc, cat) => acc + cat.skills.length, 0);
 
-  const getCategoryIcon = (id?: string) => {
+  const getCategoryIcon = (id?: string, sizeClass = "w-4 h-4") => {
     switch (id) {
       case "backend":
-        return <Server className="w-4 h-4 text-sky-400 shrink-0" />;
+        return <Server className={`${sizeClass} text-sky-400 shrink-0`} />;
       case "devops":
-        return <Cloud className="w-4 h-4 text-cyan-400 shrink-0" />;
+        return <Cloud className={`${sizeClass} text-cyan-400 shrink-0`} />;
       case "data":
-        return <Database className="w-4 h-4 text-indigo-400 shrink-0" />;
+        return <Database className={`${sizeClass} text-indigo-400 shrink-0`} />;
       case "ai":
-        return <Bot className="w-4 h-4 text-violet-400 shrink-0" />;
+        return <Bot className={`${sizeClass} text-violet-400 shrink-0`} />;
       case "frontend":
-        return <Layout className="w-4 h-4 text-blue-400 shrink-0" />;
+        return <Layout className={`${sizeClass} text-blue-400 shrink-0`} />;
       default:
-        return <Terminal className="w-4 h-4 text-sky-400 shrink-0" />;
-    }
-  };
-
-  const getCategoryBadgeStyle = (id?: string, isSelected?: boolean) => {
-    if (!isSelected) {
-      return "bg-zinc-900/80 border-zinc-800/80 group-hover:border-zinc-700";
-    }
-    switch (id) {
-      case "backend":
-        return "bg-sky-500/12 border-sky-500/30";
-      case "devops":
-        return "bg-cyan-500/12 border-cyan-500/30";
-      case "data":
-        return "bg-indigo-500/12 border-indigo-500/30";
-      case "ai":
-        return "bg-violet-500/12 border-violet-500/30";
-      case "frontend":
-        return "bg-blue-500/12 border-blue-500/30";
-      default:
-        return "bg-sky-500/12 border-sky-500/30";
+        return <Terminal className={`${sizeClass} text-sky-400 shrink-0`} />;
     }
   };
 
@@ -72,7 +52,7 @@ export const Skills = () => {
 
         {/* 1. DESKTOP INTERFACE */}
         <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
-          {/* Sidebar lista tastera - Elegantne Apple-glass kapsulice sa tačkicom u boji */}
+          {/* Sidebar lista tastera - Čiste raznobojne ikonice bez okvira */}
           <div className="col-span-5 flex flex-col gap-2.5">
             {SKILL_CATEGORIES.map((cat) => {
               const catKey = cat.id ?? cat.category;
@@ -89,14 +69,7 @@ export const Skills = () => {
                   }`}
                 >
                   <div className="flex items-center gap-3.5 min-w-0 pr-3">
-                    <div
-                      className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 transition-all duration-200 ${getCategoryBadgeStyle(
-                        cat.id,
-                        isSelected
-                      )}`}
-                    >
-                      {getCategoryIcon(cat.id)}
-                    </div>
+                    {getCategoryIcon(cat.id, "w-5 h-5")}
 
                     <div className="min-w-0">
                       <h3
