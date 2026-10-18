@@ -36,30 +36,32 @@ body {
 .bg-engineering-grid {
   background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
   background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 35%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 45%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 45%, transparent 100%);
 }
 
 .section-divider {
   position: relative;
 }
 
-.section-divider::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(100%, 1100px);
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(63, 63, 70, 0.5) 20%,
-    rgba(56, 189, 248, 0.35) 50%,
-    rgba(63, 63, 70, 0.5) 80%,
-    transparent 100%
-  );
+@media (min-width: 1024px) {
+  .section-divider::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100%, 1100px);
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(63, 63, 70, 0.45) 20%,
+      rgba(56, 189, 248, 0.28) 50%,
+      rgba(63, 63, 70, 0.45) 80%,
+      transparent 100%
+    );
+  }
 }
 
 /* ========================================================

@@ -93,6 +93,11 @@ export const StarField = () => {
     initStars();
 
     const render = () => {
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+
       ctx.clearRect(0, 0, width, height);
 
       let offsetX = 0;

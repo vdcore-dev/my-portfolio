@@ -33,7 +33,7 @@ export const Skills = () => {
   return (
     <section 
       id="skills" 
-      className="w-full flex flex-col pt-20 pb-16 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0 touch-pan-y"
+      className="w-full flex flex-col pt-20 pb-16 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-6 lg:scroll-mt-0 touch-pan-y"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
         

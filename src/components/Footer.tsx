@@ -66,7 +66,7 @@ export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="w-full flex flex-col justify-between pt-20 pb-4 min-h-dvh lg:pt-32 lg:pb-10 bg-zinc-950 relative overflow-hidden border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0"
+      className="w-full flex flex-col justify-between pt-20 pb-4 min-h-dvh lg:pt-32 lg:pb-10 relative overflow-hidden scroll-mt-6 lg:scroll-mt-0 z-10"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 lg:justify-between">
         

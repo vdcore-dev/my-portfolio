@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Database, Server, Cloud, Bot, User } from "lucide-react";
-import { StarField } from "./StarField";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { copySecureEmail } from "../utils/security";
 
@@ -55,32 +54,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-24 pb-12 lg:pt-32 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
-      {/* Subtle Architectural Dot Grid */}
-      <div className="absolute inset-0 bg-engineering-grid pointer-events-none z-0 opacity-65" />
-
-      {/* Background Starfield */}
-      <div className="absolute inset-0 pointer-events-none lg:pointer-events-auto touch-none z-0">
-        <StarField />
-      </div>
-
-      {/* Asymmetric galaxy ambient glows */}
-      <div 
-        className="absolute top-0 right-0 w-[550px] lg:w-[750px] h-[550px] pointer-events-none z-0 opacity-45"
-        style={{
-          background: "radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.14) 0%, rgba(59, 130, 246, 0.04) 45%, transparent 70%)"
-        }}
-      />
-      <div 
-        className="absolute bottom-12 left-0 w-[500px] lg:w-[650px] h-[500px] pointer-events-none z-0 opacity-40"
-        style={{
-          background: "radial-gradient(circle at 0% 100%, rgba(99, 102, 241, 0.16) 0%, rgba(99, 102, 241, 0.03) 50%, transparent 70%)"
-        }}
-      />
-
-      {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 lg:h-48 bg-gradient-to-b from-transparent via-zinc-950/60 to-zinc-950 pointer-events-none z-0" />
-
+    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-24 pb-12 lg:pt-32 lg:pb-20 px-4 overflow-hidden">
       {/* 1. Mobile Interface - Balanced spacing for modern 6.1" - 6.8" screens */}
       <div className="flex lg:hidden flex-col justify-between relative z-10 w-full max-w-lg mx-auto my-auto gap-7 py-2">
         
