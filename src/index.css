@@ -1,25 +1,143 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 :root {
   color-scheme: dark;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   background-color: #09090b; /* bg-zinc-950 */
   color: #f4f4f5;            /* text-zinc-100 */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-x: hidden;
   margin: 0;
 }
 
 /* Centralizovana boja selektovanog teksta */
 ::selection {
-  background-color: rgba(16, 185, 129, 0.25);
-  color: #a7f3d0;
+  background-color: rgba(56, 189, 248, 0.25);
+  color: #bae6fd;
+}
+
+/* ========================================================
+   ARCHITECTURAL BACKGROUNDS & SECTION DIVIDERS
+   ======================================================== */
+.bg-engineering-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 35%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 35%, transparent 100%);
+}
+
+.section-divider {
+  position: relative;
+}
+
+.section-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 1100px);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(63, 63, 70, 0.5) 20%,
+    rgba(56, 189, 248, 0.35) 50%,
+    rgba(63, 63, 70, 0.5) 80%,
+    transparent 100%
+  );
+}
+
+/* ========================================================
+   MODERN LINEAR-STYLE GLASS & BEZEL SURFACES
+   ======================================================== */
+.glass-panel {
+  background: linear-gradient(180deg, rgba(24, 24, 27, 0.75) 0%, rgba(9, 9, 11, 0.9) 100%);
+  border: 1px solid rgba(63, 63, 70, 0.45);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.09),
+    0 24px 48px -12px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+}
+
+.glass-panel-hover {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(82, 82, 91, 0.65);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.13),
+    0 24px 48px -12px rgba(0, 0, 0, 0.85),
+    0 0 32px -8px rgba(56, 189, 248, 0.1);
+}
+
+.glass-subcard {
+  background: linear-gradient(180deg, rgba(24, 24, 27, 0.62) 0%, rgba(9, 9, 11, 0.65) 100%);
+  border: 1px solid rgba(39, 39, 42, 0.85);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.045);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-subcard:hover {
+  border-color: rgba(63, 63, 70, 0.9);
+  background: linear-gradient(180deg, rgba(39, 39, 42, 0.52) 0%, rgba(24, 24, 27, 0.7) 100%);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+.selector-item {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.selector-item-active {
+  background: linear-gradient(180deg, rgba(32, 32, 36, 0.92) 0%, rgba(18, 18, 21, 0.96) 100%);
+  border-color: rgba(56, 189, 248, 0.32);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.09),
+    0 10px 24px -8px rgba(0, 0, 0, 0.65);
+}
+
+.selector-item-inactive {
+  background: linear-gradient(180deg, rgba(24, 24, 27, 0.48) 0%, rgba(9, 9, 11, 0.55) 100%);
+  border-color: rgba(39, 39, 42, 0.75);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.035);
+}
+
+.selector-item-inactive:hover {
+  background: linear-gradient(180deg, rgba(30, 30, 34, 0.68) 0%, rgba(16, 16, 19, 0.75) 100%);
+  border-color: rgba(63, 63, 70, 0.85);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+@keyframes panelFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.994);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-panel-switch {
+  animation: panelFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ========================================================
@@ -41,7 +159,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #10b981; /* emerald-500 hover */
+  background: #38bdf8; /* sky-400 hover */
 }
 
 /* Firefox podrška */

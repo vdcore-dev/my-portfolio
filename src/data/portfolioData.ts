@@ -3,7 +3,7 @@ import type { PersonalInfo, Project, SkillCategory } from "../types";
 export const PERSONAL_INFO: PersonalInfo = {
   name: "Vladimir Dejanovic",
   role: "Java Backend & DevOps Engineer",
-  availability: "Open to Offers",
+  availability: "Available for Work",
   location: "Remote • Worldwide",
   bio: "Specialized in Java and the Spring Boot ecosystem, automating cloud infrastructure through modern DevOps, and integrating intelligent AI workflows into scalable services.",
   email: "", // Obfuscated via security utility
@@ -133,8 +133,8 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: "Spring Boot", role: "Dependency Injection, REST, Modular Arch", highlight: true },
       { name: "Spring Security", role: "OAuth2, JWT Tokens, Role-Based Access" },
       { name: "Microservices", role: "Distributed Architecture & Service Discovery" },
-      { name: "RESTful Design", role: "Idempotency, OpenApi Contracts, DTOs" },
-      { name: "RabbitMQ", role: "Asynchronous Messaging & Event-Driven Flows" },
+      { name: "RESTful Design", role: "Idempotency, OpenAPI Contracts, DTOs" },
+      { name: "Kafka & RabbitMQ", role: "Asynchronous Messaging & Event-Driven Flows" },
     ],
   },
   {
@@ -145,9 +145,9 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
       { name: "Docker", role: "Multi-stage Builds, Compose, Optimization", highlight: true },
       { name: "CI/CD Pipelines", role: "GitHub Actions, Automated Testing & Build", highlight: true },
       { name: "Linux Systems", role: "Shell Scripting, CLI Management, Networking" },
-      { name: "Cloud Platforms", role: "Container Deployments, VPS, Environment Config" },
+      { name: "Cloud & Nginx", role: "VPS, Reverse Proxy, SSL & Container Deployments" },
       { name: "Git & Versioning", role: "Trunk-based Dev, Branching & PR Reviews" },
-      { name: "Prometheus Basics", role: "Application Metrics & Service Health Checks" },
+      { name: "Observability", role: "Prometheus, Grafana & Service Health Metrics" },
     ],
   },
   {

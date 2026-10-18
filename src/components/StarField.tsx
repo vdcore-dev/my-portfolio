@@ -61,8 +61,8 @@ export const StarField = () => {
     if (!isTouch) window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("resize", onResize);
 
-    // Čisti astronomski spektar: bela svetlost uz diskretne cyan i emerald tonove
-    const colors = ["#ffffff", "#ffffff", "#ffffff", "#f1f5f9", "#a7f3d0", "#67e8f9"];
+    // Čisti astronomski spektar: bela svetlost uz duboke sky-blue i indigo galaktičke tonove
+    const colors = ["#ffffff", "#ffffff", "#e0f2fe", "#7dd3fc", "#38bdf8", "#818cf8"];
     let stars: Star[] = [];
 
     const initStars = () => {

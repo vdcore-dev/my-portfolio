@@ -42,54 +42,57 @@ export const Hero = () => {
   const renderFocusIcon = (id: string) => {
     switch (id) {
       case "backend":
-        return <Server className="w-3.5 h-3.5 text-emerald-400 shrink-0" />;
+        return <Server className="w-4 h-4 text-sky-400 shrink-0" />;
       case "devops":
-        return <Cloud className="w-3.5 h-3.5 text-sky-400 shrink-0" />;
+        return <Cloud className="w-4 h-4 text-cyan-400 shrink-0" />;
       case "data":
-        return <Database className="w-3.5 h-3.5 text-indigo-400 shrink-0" />;
+        return <Database className="w-4 h-4 text-indigo-400 shrink-0" />;
       case "ai":
-        return <Bot className="w-3.5 h-3.5 text-teal-400 shrink-0" />;
+        return <Bot className="w-4 h-4 text-violet-400 shrink-0" />;
       default:
-        return <Server className="w-3.5 h-3.5 text-emerald-400 shrink-0" />;
+        return <Server className="w-4 h-4 text-sky-400 shrink-0" />;
     }
   };
 
   return (
-    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-28 lg:pt-32 pb-16 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
+    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-24 pb-12 lg:pt-32 lg:pb-20 px-4 overflow-hidden bg-zinc-950">
+      {/* Subtle Architectural Dot Grid */}
+      <div className="absolute inset-0 bg-engineering-grid pointer-events-none z-0 opacity-65" />
+
       {/* Background Starfield */}
       <div className="absolute inset-0 pointer-events-none lg:pointer-events-auto touch-none z-0">
         <StarField />
       </div>
 
-      {/* Asymmetric ambient glows */}
+      {/* Asymmetric galaxy ambient glows */}
       <div 
-        className="absolute top-0 right-0 w-[550px] lg:w-[750px] h-[550px] pointer-events-none z-0 opacity-40"
+        className="absolute top-0 right-0 w-[550px] lg:w-[750px] h-[550px] pointer-events-none z-0 opacity-45"
         style={{
-          background: "radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.12) 0%, rgba(16, 185, 129, 0.03) 45%, transparent 70%)"
+          background: "radial-gradient(circle at 100% 0%, rgba(56, 189, 248, 0.14) 0%, rgba(59, 130, 246, 0.04) 45%, transparent 70%)"
         }}
       />
       <div 
-        className="absolute bottom-12 left-0 w-[500px] lg:w-[650px] h-[500px] pointer-events-none z-0 opacity-35"
+        className="absolute bottom-12 left-0 w-[500px] lg:w-[650px] h-[500px] pointer-events-none z-0 opacity-40"
         style={{
-          background: "radial-gradient(circle at 0% 100%, rgba(99, 102, 241, 0.14) 0%, rgba(99, 102, 241, 0.03) 50%, transparent 70%)"
+          background: "radial-gradient(circle at 0% 100%, rgba(99, 102, 241, 0.16) 0%, rgba(99, 102, 241, 0.03) 50%, transparent 70%)"
         }}
       />
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 lg:h-48 bg-gradient-to-b from-transparent via-zinc-950/60 to-zinc-950 pointer-events-none z-0" />
 
-      {/* 1. Mobile Interface */}
-      <div className="block lg:hidden relative z-10 w-full max-w-lg mx-auto">
+      {/* 1. Mobile Interface - Balanced spacing for modern 6.1" - 6.8" screens */}
+      <div className="flex lg:hidden flex-col justify-between relative z-10 w-full max-w-lg mx-auto my-auto gap-7 py-2">
         
         {/* Profile Card */}
-        <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-4 sm:p-5 shadow-2xl shadow-indigo-500/5 mb-6">
+        <div className="rounded-3xl glass-panel p-5">
           <div className="flex items-center gap-4">
             <div 
               className="relative cursor-pointer shrink-0 group"
               onClick={() => setIsPhotoOpen(true)}
               title="Click to view full photo"
             >
-              <div className="w-20 h-20 rounded-2xl overflow-hidden border border-emerald-500/40 p-0.5 bg-gradient-to-tr from-emerald-500/20 to-indigo-500/20 shadow-lg shadow-emerald-500/10 transition-transform active:scale-95 duration-200">
+              <div className="w-20 h-20 rounded-2xl overflow-hidden border border-sky-500/40 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-sky-500/10 transition-transform active:scale-95 duration-200">
                 <img
                   src={avatarUrl}
                   alt={PERSONAL_INFO.name}
@@ -102,19 +105,24 @@ export const Hero = () => {
             </div>
 
             <div className="flex-1 min-w-0">
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-[10px] font-mono text-zinc-200 mb-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />
+                <span>{PERSONAL_INFO.availability}</span>
+              </div>
+
               <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight truncate font-sans">
                 {PERSONAL_INFO.name}
               </h2>
 
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-emerald-400 font-mono font-bold text-xs">|</span>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-sky-400 font-mono font-bold text-xs">|</span>
                 <p className="text-xs sm:text-sm font-sans text-zinc-300 font-medium truncate">
                   {PERSONAL_INFO.role}
                 </p>
               </div>
 
-              <div className="flex items-center gap-1.5 mt-2 text-zinc-400 text-xs font-sans">
-                <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <div className="flex items-center gap-1.5 mt-1.5 text-zinc-400 text-xs font-sans">
+                <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                 <span>{PERSONAL_INFO.location}</span>
               </div>
             </div>
@@ -122,10 +130,10 @@ export const Hero = () => {
         </div>
 
         {/* Headline Card */}
-        <div className="rounded-3xl bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-8 shadow-xl shadow-black/40 text-left mb-8">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-[1.2]">
+        <div className="rounded-3xl glass-panel p-6 sm:p-8 text-left">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-[1.18]">
             Building scalable{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">
+            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
               backends & resilient
             </span>{" "}
             systems.
@@ -136,34 +144,34 @@ export const Hero = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-3.5 w-full mt-10">
+        <div className="grid grid-cols-2 gap-3.5 w-full pt-1">
           <a
             href="#projects"
             onClick={scrollToProjects}
-            className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-md shadow-[#06d6a0]/20 active:scale-95 transition-transform"
+            className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_16px_-4px_rgba(56,189,248,0.22)] active:scale-95 transition-transform"
           >
             <span>Explore Systems</span>
-            <ChevronDown className="w-4 h-4 animate-bounce" />
+            <ChevronDown className="w-4 h-4 text-zinc-950 animate-bounce" />
           </a>
 
           <button
             onClick={handleCopyEmail}
             type="button"
-            className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-md active:scale-95 transition-all cursor-pointer ${
+            className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md active:scale-95 transition-all cursor-pointer ${
               copied
-                ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-emerald-500/20"
-                : "bg-zinc-900/80 border-zinc-800 text-zinc-200 hover:text-white hover:border-zinc-700"
+                ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/15"
+                : "glass-subcard text-zinc-200 hover:text-white"
             }`}
           >
             {copied ? (
               <>
                 <span className="font-semibold tracking-wide">Copied!</span>
-                <Check className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-150" />
+                <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150" />
               </>
             ) : (
               <>
                 <span>Get in touch</span>
-                <Copy className="w-4 h-4 text-emerald-400" />
+                <Copy className="w-4 h-4 text-sky-400" />
               </>
             )}
           </button>
@@ -173,17 +181,17 @@ export const Hero = () => {
       {/* 2. Desktop Interface */}
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
         <div className="col-span-7 flex flex-col items-start text-left">
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs font-mono text-emerald-400 mb-6 backdrop-blur-md shadow-inner shadow-emerald-500/10">
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-xs font-mono text-zinc-200 mb-6 backdrop-blur-md">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
             </span>
             <span>{PERSONAL_INFO.availability}</span>
           </div>
 
-          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[1.1]">
+          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[1.08]">
             Building scalable <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">
+            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
               backends & resilient
             </span> <br />
             systems.
@@ -197,30 +205,30 @@ export const Hero = () => {
             <a
               href="#projects"
               onClick={scrollToProjects}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-sm tracking-tight hover:brightness-110 transition-all duration-200 shadow-lg shadow-[#06d6a0]/25 active:scale-95 group cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-sm tracking-tight hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_10px_22px_-4px_rgba(56,189,248,0.35)] transition-all duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_18px_-4px_rgba(56,189,248,0.25)] active:scale-95 group cursor-pointer"
             >
               <span>Explore Systems</span>
-              <ChevronDown className="w-4 h-4 animate-bounce" />
+              <ChevronDown className="w-4 h-4 text-zinc-950 animate-bounce group-hover:scale-110 transition-transform duration-200" />
             </a>
 
             <button
               onClick={handleCopyEmail}
-              className={`inline-flex items-center gap-2.5 px-5 py-3 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md shadow-lg active:scale-95 group cursor-pointer ${
+              className={`inline-flex items-center gap-2.5 px-5 py-3 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer ${
                 copied
-                  ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-emerald-500/20"
-                  : "bg-zinc-900/80 border-zinc-800 text-zinc-200 hover:text-white hover:border-zinc-700 shadow-black/30"
+                  ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/20"
+                  : "glass-subcard text-zinc-200 hover:text-white"
               }`}
               title="Click to copy email address"
             >
               {copied ? (
                 <>
                   <span className="font-semibold tracking-wide">Email copied!</span>
-                  <Check className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-150" />
+                  <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150" />
                 </>
               ) : (
                 <>
                   <span>Get in touch</span>
-                  <Copy className="w-4 h-4 text-emerald-400/90 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:text-emerald-300" />
+                  <Copy className="w-4 h-4 text-sky-400/90 transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:text-sky-300" />
                 </>
               )}
             </button>
@@ -228,28 +236,28 @@ export const Hero = () => {
         </div>
 
         <div className="col-span-5 w-full">
-          <div className="rounded-3xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-xl p-6 sm:p-7 shadow-2xl shadow-indigo-500/5 relative hover:border-zinc-700 transition-all duration-300">
-            <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/70 text-xs font-mono text-zinc-400">
+          <div className="rounded-3xl glass-panel p-6 sm:p-7 relative">
+            <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
               <div className="flex items-center gap-2">
-                <User className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <User className="w-4 h-4 text-sky-400 shrink-0" />
                 <span className="font-semibold tracking-wider uppercase text-[11px] text-zinc-300">About</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-4 pb-5 border-b border-zinc-800/70">
+            <div className="flex items-center gap-4 pb-5 border-b border-zinc-800/80">
               <div 
                 className="relative group cursor-pointer shrink-0"
                 onClick={() => setIsPhotoOpen(true)}
                 title="Click to view full photo"
               >
-                <div className="w-20 h-20 rounded-2xl overflow-hidden border border-zinc-700/80 p-0.5 bg-gradient-to-tr from-emerald-500/20 to-indigo-500/20 transition-transform group-hover:scale-105 duration-200">
+                <div className="w-20 h-20 rounded-2xl overflow-hidden border border-zinc-700/80 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-black/50 transition-transform group-hover:scale-105 duration-200">
                   <img
                     src={avatarUrl}
                     alt={PERSONAL_INFO.name}
                     className="w-full h-full object-cover rounded-[14px]"
                   />
                 </div>
-                <div className="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                <div className="absolute inset-0 bg-black/45 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                   <Maximize2 className="w-5 h-5 text-white" />
                 </div>
               </div>
@@ -260,30 +268,33 @@ export const Hero = () => {
                 </h2>
                 
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-emerald-400 font-mono font-bold text-xs">|</span>
+                  <span className="text-sky-400 font-mono font-bold text-xs">|</span>
                   <p className="text-xs font-sans text-zinc-300 font-medium tracking-normal truncate">
                     {PERSONAL_INFO.role}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-1.5 mt-2.5 text-zinc-400 text-xs font-sans">
-                  <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                   <span>{PERSONAL_INFO.location}</span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-5 space-y-2.5 font-mono text-xs">
+            {/* Static Focus Area Capsules - Clean borderless colorful icons */}
+            <div className="pt-5 space-y-2.5">
               {PERSONAL_INFO.focusAreas.map((area) => (
                 <div
                   key={area.id}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-800/60 hover:border-zinc-700/80 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]"
                 >
-                  <span className="text-zinc-500 flex items-center gap-2">
+                  <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     {renderFocusIcon(area.id)}
-                    {area.label}
+                    <span>{area.label}</span>
                   </span>
-                  <span className="text-zinc-200 font-medium">{area.stack}</span>
+                  <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
+                    {area.stack}
+                  </span>
                 </div>
               ))}
             </div>
@@ -299,12 +310,12 @@ export const Hero = () => {
           onClick={() => setIsPhotoOpen(false)}
         >
           <div 
-            className="relative max-w-sm w-full rounded-3xl overflow-hidden border border-zinc-700 bg-zinc-900 shadow-2xl p-2 cursor-default"
+            className="relative max-w-sm w-full rounded-3xl overflow-hidden glass-panel p-2.5 cursor-default animate-panel-switch"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setIsPhotoOpen(false)}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-zinc-950/70 text-zinc-300 hover:text-white transition-colors cursor-pointer"
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-zinc-950/80 border border-zinc-800 text-zinc-300 hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -315,7 +326,7 @@ export const Hero = () => {
             />
             <div className="p-4 text-center">
               <h3 className="text-white font-bold text-lg font-sans">{PERSONAL_INFO.name}</h3>
-              <p className="text-emerald-400 text-xs font-mono">{PERSONAL_INFO.role}</p>
+              <p className="text-sky-400 text-xs font-mono mt-0.5">{PERSONAL_INFO.role}</p>
             </div>
           </div>
         </div>

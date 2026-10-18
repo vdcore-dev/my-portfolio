@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, MessageSquare, Share2, Radio } from "lucide-react";
+import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, MessageSquare, Share2, Info, MapPin, Clock, CheckCircle2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { triggerSecureMail, copySecureEmail } from "../utils/security";
@@ -66,39 +66,34 @@ export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="w-full flex flex-col justify-between pt-24 pb-4 min-h-dvh lg:pt-32 lg:pb-10 bg-zinc-950 relative overflow-hidden border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0"
+      className="w-full flex flex-col justify-between pt-20 pb-4 min-h-dvh lg:pt-32 lg:pb-10 bg-zinc-950 relative overflow-hidden border-t border-zinc-950 lg:border-zinc-900/80 scroll-mt-6 lg:scroll-mt-0"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 lg:justify-between">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-8 lg:mb-10 border-b border-zinc-800/80">
+        <div className="flex items-center justify-between gap-3 pb-3 mb-5 lg:pb-4 lg:mb-10 border-b border-zinc-800/80">
           <div className="flex items-center gap-2.5">
-            <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0" />
+            <MessageSquare className="w-5 h-5 text-sky-400 shrink-0" />
             <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight font-sans">
               Get in Touch
             </h2>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-zinc-500">
-            <span className="text-zinc-600">//</span>
-            <span>Direct Channel</span>
           </div>
         </div>
 
         {/* 1. Mobile Interface */}
         <div className="block lg:hidden w-full max-w-lg mx-auto">
-          <div className="rounded-3xl bg-zinc-950/80 border border-zinc-800/90 backdrop-blur-xl p-6 sm:p-7 shadow-2xl text-left mb-8">
-            <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 tracking-wide mb-3">
+          <div className="rounded-3xl glass-panel p-6 sm:p-7 text-left mb-7">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/90 border border-zinc-800/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] font-mono text-[11px] text-zinc-200 tracking-wide mb-4">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
               </span>
-              <span>Available for work</span>
+              <span>{PERSONAL_INFO.availability}</span>
             </div>
 
             <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-2.5 leading-snug">
               Let’s engineer your next{" "}
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
                 core system.
               </span>
             </h3>
@@ -112,7 +107,7 @@ export const Footer = () => {
             <button
               onClick={triggerSecureMail}
               type="button"
-              className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-md shadow-[#06d6a0]/20 active:scale-95 transition-transform cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_16px_-4px_rgba(56,189,248,0.22)] active:scale-95 transition-transform cursor-pointer"
             >
               <span>Send Email</span>
               <Send className="w-4 h-4 text-zinc-950 shrink-0" />
@@ -121,21 +116,21 @@ export const Footer = () => {
             <button
               onClick={handleCopy}
               type="button"
-              className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md shadow-md active:scale-95 transition-all cursor-pointer ${
+              className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md active:scale-95 transition-all cursor-pointer ${
                 copied
-                  ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-emerald-500/20"
-                  : "bg-zinc-900/80 border-zinc-800 text-zinc-200 hover:text-white hover:border-zinc-700"
+                  ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/15"
+                  : "glass-subcard text-zinc-200 hover:text-white"
               }`}
             >
               {copied ? (
                 <>
                   <span className="font-semibold tracking-wide">Copied!</span>
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 animate-in zoom-in-75 duration-150" />
+                  <Check className="w-4 h-4 text-sky-400 shrink-0 animate-in zoom-in-75 duration-150" />
                 </>
               ) : (
                 <>
                   <span>Copy Email</span>
-                  <Copy className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <Copy className="w-4 h-4 text-sky-400 shrink-0" />
                 </>
               )}
             </button>
@@ -152,7 +147,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="GitHub Profile"
-                className="flex items-center justify-center h-12 rounded-2xl bg-zinc-950/80 border border-zinc-800 text-zinc-300 hover:text-emerald-400 hover:border-zinc-700 active:scale-95 transition-all"
+                className="flex items-center justify-center h-12 rounded-2xl glass-subcard text-zinc-300 hover:text-sky-400 active:scale-95 transition-all"
               >
                 <GithubIcon className="w-4 h-4" />
               </a>
@@ -162,7 +157,7 @@ export const Footer = () => {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="LinkedIn Profile"
-                className="flex items-center justify-center h-12 rounded-2xl bg-zinc-950/80 border border-zinc-800 text-zinc-300 hover:text-emerald-400 hover:border-zinc-700 active:scale-95 transition-all"
+                className="flex items-center justify-center h-12 rounded-2xl glass-subcard text-zinc-300 hover:text-sky-400 active:scale-95 transition-all"
               >
                 <LinkedinIcon className="w-4 h-4" />
               </a>
@@ -173,7 +168,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="X Profile"
-                  className="flex items-center justify-center h-12 rounded-2xl bg-zinc-950/80 border border-zinc-800 text-zinc-300 hover:text-emerald-400 hover:border-zinc-700 active:scale-95 transition-all"
+                  className="flex items-center justify-center h-12 rounded-2xl glass-subcard text-zinc-300 hover:text-sky-400 active:scale-95 transition-all"
                 >
                   <XIcon className="w-4 h-4" />
                 </a>
@@ -185,9 +180,9 @@ export const Footer = () => {
         {/* 2. Desktop Interface */}
         <div className="hidden lg:grid grid-cols-12 gap-8 items-center lg:my-auto">
           <div className="col-span-8 flex flex-col items-start">
-            <h3 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.15] mb-4 font-sans">
-              Let’s engineer your next{" "}
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400 mt-1">
+            <h3 className="text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.12] mb-4 font-sans">
+              Let’s engineer your next <br />
+              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 mt-1">
                 core system.
               </span>
             </h3>
@@ -200,57 +195,74 @@ export const Footer = () => {
               <button
                 onClick={triggerSecureMail}
                 type="button"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#00b4d8] via-[#06d6a0] to-[#10b981] text-zinc-950 font-bold text-sm tracking-tight hover:brightness-110 transition-all duration-200 shadow-lg shadow-[#06d6a0]/25 active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-sm tracking-tight hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_10px_22px_-4px_rgba(56,189,248,0.35)] transition-all duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_18px_-4px_rgba(56,189,248,0.25)] active:scale-95 group cursor-pointer"
               >
                 <span>Send Direct Email</span>
-                <Send className="w-4 h-4 text-zinc-950" />
+                <Send className="w-4 h-4 text-zinc-950 transition-transform duration-200 group-hover:scale-110 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </button>
 
               <button
                 onClick={handleCopy}
                 type="button"
-                className={`inline-flex items-center gap-2.5 px-5 py-3 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md shadow-lg active:scale-95 cursor-pointer ${
+                className={`inline-flex items-center gap-2.5 px-5 py-3 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer ${
                   copied
-                    ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-emerald-500/20"
-                    : "bg-zinc-900/80 border-zinc-800 text-zinc-200 hover:text-white hover:border-zinc-700 shadow-black/30"
+                    ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/20"
+                    : "glass-subcard text-zinc-200 hover:text-white"
                 }`}
                 title="Click to copy email address"
               >
                 {copied ? (
                   <>
                     <span className="font-semibold tracking-wide">Email copied!</span>
-                    <Check className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-150" />
+                    <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150" />
                   </>
                 ) : (
                   <>
                     <span>Copy email</span>
-                    <Copy className="w-4 h-4 text-emerald-400/90 transition-transform duration-200 hover:-translate-y-0.5" />
+                    <Copy className="w-4 h-4 text-sky-400/90 transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:text-sky-300" />
                   </>
                 )}
               </button>
             </div>
           </div>
 
-          <div className="col-span-4 rounded-3xl bg-zinc-950/70 border border-zinc-800/90 backdrop-blur-xl p-6 shadow-2xl">
-            <div className="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-800/80 font-mono text-xs text-zinc-400">
-              <Radio className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="tracking-wider uppercase">Overview</span>
+          <div className="col-span-4 rounded-3xl glass-panel p-6 sm:p-7">
+            <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/80 font-mono text-xs text-zinc-400">
+              <div className="flex items-center gap-2">
+                <Info className="w-4 h-4 text-sky-400 shrink-0" />
+                <span className="tracking-wider uppercase text-zinc-300 font-semibold text-[11px]">Availability</span>
+              </div>
             </div>
 
-            <div className="space-y-3 font-mono text-xs">
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/60">
-                <span className="text-zinc-500">Location</span>
-                <span className="text-zinc-200">Remote • Worldwide</span>
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
+                <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
+                  <MapPin className="w-4 h-4 text-sky-400 shrink-0" />
+                  <span>Location</span>
+                </span>
+                <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
+                  Remote • Worldwide
+                </span>
               </div>
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/60">
-                <span className="text-zinc-500">Schedule</span>
-                <span className="text-zinc-200">Flexible</span>
+
+              <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
+                <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
+                  <Clock className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <span>Schedule</span>
+                </span>
+                <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
+                  Flexible
+                </span>
               </div>
-              <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-900/50 border border-zinc-800/60">
-                <span className="text-zinc-500">Status</span>
-                <span className="text-emerald-400 font-medium flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
-                  Open to Offers
+
+              <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
+                <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0" />
+                  <span>Status</span>
+                </span>
+                <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
+                  {PERSONAL_INFO.availability}
                 </span>
               </div>
             </div>
@@ -265,7 +277,7 @@ export const Footer = () => {
         style={{ paddingBottom: "max(1.25rem, calc(env(safe-area-inset-bottom) + 0.5rem))" }}
       >
         <div className="flex lg:hidden items-center justify-between w-full pt-4 border-t border-zinc-900/80">
-          <span className="text-[11px] font-mono text-zinc-600 tracking-wider">
+          <span className="text-[11px] font-mono text-zinc-500 tracking-wider">
             © 2026 VDCore.
           </span>
 
@@ -274,14 +286,14 @@ export const Footer = () => {
               onClick={handleShare}
               type="button"
               aria-label="Share portfolio"
-              className={`w-11 h-11 rounded-full flex items-center justify-center border transition-all active:scale-90 shadow-md cursor-pointer ${
+              className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all active:scale-90 cursor-pointer ${
                 shared
-                  ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300"
-                  : "bg-zinc-900/90 border-zinc-800 text-zinc-300 hover:text-white"
+                  ? "bg-sky-500/20 border-sky-500/40 text-sky-300"
+                  : "glass-subcard text-zinc-300 hover:text-white"
               }`}
             >
               {shared ? (
-                <Check className="w-4 h-4 text-emerald-400" />
+                <Check className="w-4 h-4 text-sky-400" />
               ) : (
                 <Share2 className="w-4 h-4 text-zinc-300" />
               )}
@@ -291,16 +303,16 @@ export const Footer = () => {
               onClick={scrollToTop}
               type="button"
               aria-label="Back to top"
-              className="w-11 h-11 rounded-full flex items-center justify-center bg-zinc-900/90 border border-zinc-800 text-emerald-400 active:scale-90 transition-transform shadow-md cursor-pointer"
+              className="w-10 h-10 rounded-full flex items-center justify-center glass-subcard text-sky-400 active:scale-90 transition-transform cursor-pointer"
             >
-              <ChevronUp className="w-5 h-5 animate-bounce" />
+              <ChevronUp className="w-4 h-4 animate-bounce" />
             </button>
           </div>
         </div>
 
         <div className="hidden lg:flex pt-6 border-t border-zinc-900/80 items-center justify-between text-xs font-mono text-zinc-500">
           <div className="flex items-center gap-2">
-            <Terminal className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <Terminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
             <span>© 2026 VDCore. All rights reserved.</span>
           </div>
 
@@ -309,20 +321,20 @@ export const Footer = () => {
               href={PERSONAL_INFO.github}
               target="_blank"
               rel="noreferrer"
-              className="group flex items-center gap-1 hover:text-emerald-400 transition-colors"
+              className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
             >
               <span>GitHub</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
 
             <a
               href={PERSONAL_INFO.linkedin}
               target="_blank"
               rel="noreferrer"
-              className="group flex items-center gap-1 hover:text-emerald-400 transition-colors"
+              className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
             >
               <span>LinkedIn</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
 
             {PERSONAL_INFO.x && (
@@ -330,26 +342,26 @@ export const Footer = () => {
                 href={PERSONAL_INFO.x}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex items-center gap-1 hover:text-emerald-400 transition-colors"
+                className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
               >
                 <span>X</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
             )}
 
             <button
               onClick={handleShare}
               type="button"
-              className="group flex items-center gap-1.5 hover:text-emerald-400 transition-colors cursor-pointer"
+              className="group flex items-center gap-1.5 hover:text-sky-400 transition-colors cursor-pointer"
             >
               {shared ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-sky-400" />
+                  <span className="text-sky-400">Copied!</span>
                 </>
               ) : (
                 <>
-                  <Share2 className="w-3.5 h-3.5 text-zinc-600 group-hover:text-emerald-400 transition-colors" />
+                  <Share2 className="w-3.5 h-3.5 text-zinc-600 group-hover:text-sky-400 transition-colors" />
                   <span className="group-hover:text-zinc-200">Share</span>
                 </>
               )}
@@ -359,10 +371,10 @@ export const Footer = () => {
               onClick={scrollToTop}
               type="button"
               aria-label="Back to top"
-              className="flex items-center gap-1 text-zinc-400 hover:text-emerald-400 transition-colors active:scale-95 cursor-pointer group"
+              className="flex items-center gap-1 text-zinc-400 hover:text-sky-400 transition-colors active:scale-95 cursor-pointer group"
             >
               <span className="group-hover:text-zinc-200">Top</span>
-              <ChevronUp className="w-4 h-4 text-emerald-400 animate-bounce" />
+              <ChevronUp className="w-4 h-4 text-sky-400 animate-bounce" />
             </button>
           </div>
         </div>

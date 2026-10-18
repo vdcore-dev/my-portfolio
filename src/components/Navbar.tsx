@@ -153,65 +153,52 @@ export const Navbar = () => {
       {/* Background overlay */}
       <div
         onClick={() => setMobileMenuOpen(false)}
-        className={`fixed inset-0 z-40 bg-black/75 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity duration-250 md:hidden ${
           mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden="true"
       />
 
-      {/* Mobile Drawer Panel */}
+      {/* Modern Floating Mobile Menu Card (Linear / Raycast Popover Style) */}
       <aside
-        className={`fixed top-24 right-0 bottom-8 z-50 w-[82%] max-w-[290px] rounded-l-[28px] bg-zinc-950/95 border-y border-l border-zinc-800/80 backdrop-blur-2xl shadow-[-16px_0_40px_rgba(0,0,0,0.85)] flex flex-col justify-between p-6 overflow-y-auto transition-all duration-300 ease-out md:hidden ${
-          mobileMenuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0 pointer-events-none"
+        className={`fixed top-[72px] inset-x-3 sm:inset-x-6 max-w-sm mx-auto z-50 rounded-3xl glass-panel p-3 flex flex-col gap-1 transition-all duration-250 ease-out origin-top md:hidden ${
+          mobileMenuOpen
+            ? "translate-y-0 scale-100 opacity-100 pointer-events-auto"
+            : "-translate-y-3 scale-95 opacity-0 pointer-events-none"
         }`}
       >
-        <div>
-          <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80">
-            <span className="font-mono text-zinc-500 font-medium text-[11px] tracking-widest uppercase">
-              Navigation
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-2 mt-5">
-            {MOBILE_LINKS.map((link) => {
-              const isActive = link.id === "home" ? activeSection === "" : activeSection === link.id;
-              const Icon = link.icon;
-              return (
-                <button
-                  key={link.id}
-                  onClick={(e) => scrollTo(e, link.id)}
-                  className={`flex items-center justify-between w-full px-4 py-3 rounded-2xl text-left text-sm font-sans transition-all active:scale-[0.98] cursor-pointer ${
-                    isActive
-                      ? "bg-zinc-900 border border-zinc-700/80 text-white font-medium shadow-md shadow-black/40"
-                      : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/40 border border-transparent"
+        {MOBILE_LINKS.map((link) => {
+          const isActive = link.id === "home" ? activeSection === "" : activeSection === link.id;
+          const Icon = link.icon;
+          return (
+            <button
+              key={link.id}
+              onClick={(e) => scrollTo(e, link.id)}
+              className={`relative flex items-center justify-between w-full px-4 py-3 rounded-2xl text-left text-sm font-sans transition-all active:scale-[0.98] cursor-pointer ${
+                isActive
+                  ? "bg-zinc-800/85 text-white font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Icon
+                  className={`w-4 h-4 transition-colors ${
+                    isActive ? "text-sky-400" : "text-zinc-500"
                   }`}
-                >
-                  <div className="flex items-center gap-3.5">
-                    <Icon className={`w-4 h-4 transition-colors ${isActive ? "text-emerald-400" : "text-zinc-500"}`} />
-                    <span className="tracking-tight">{link.name}</span>
-                  </div>
-                  
-                  <span
-                    className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
-                      isActive ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" : "bg-transparent"
-                    }`}
-                  />
-                </button>
-              );
-            })}
-          </div>
-        </div>
+                />
+                <span className="tracking-tight">{link.name}</span>
+              </div>
 
-        {/* Drawer Baseline Stack Indicators */}
-        <div className="pt-4 border-t border-zinc-900/90 flex items-center justify-center gap-2.5 sm:gap-3 font-mono text-[11px] text-zinc-600 tracking-wider">
-          <span>Java</span>
-          <span className="text-emerald-500/60 font-bold">•</span>
-          <span>Spring</span>
-          <span className="text-emerald-500/60 font-bold">•</span>
-          <span>DevOps</span>
-          <span className="text-emerald-500/60 font-bold">•</span>
-          <span>Cloud</span>
-        </div>
+              <span
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                  isActive
+                    ? "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.9)] scale-100"
+                    : "bg-transparent scale-0"
+                }`}
+              />
+            </button>
+          );
+        })}
       </aside>
 
       {/* Desktop & Main Header */}
@@ -219,28 +206,30 @@ export const Navbar = () => {
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
           <nav
-            className={`flex items-center justify-between w-full gap-2 sm:gap-4 md:gap-5 px-3.5 sm:px-6 py-2.5 rounded-full border transition-all duration-300 ${
+            className={`flex items-center justify-between w-full gap-2 sm:gap-3.5 md:gap-4 px-3.5 sm:px-5 py-2 rounded-full border transition-colors duration-300 ${
               isScrolled
-                ? "bg-zinc-950/90 border-zinc-800/90 backdrop-blur-xl shadow-2xl shadow-black/70"
-                : "bg-zinc-900/80 border-zinc-800/70 backdrop-blur-md shadow-lg shadow-black/30"
+                ? "bg-zinc-950/90 border-zinc-700/75 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_20px_40px_-10px_rgba(0,0,0,0.85)]"
+                : "bg-zinc-900/80 border-zinc-800/80 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07),0_12px_28px_-8px_rgba(0,0,0,0.5)]"
             }`}
           >
-            <div className="hidden md:flex items-baseline font-sans tracking-tight select-none py-0.5 leading-none cursor-default">
-              <span className="font-extrabold text-[15px] text-white">VD</span>
-              <span className="font-light text-[15px] text-zinc-400">Core</span>
-              <span className="font-black text-[15px] text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.85)]">.</span>
+            {/* Desktop Static Brand Wordmark - Optically centered with refined 4px dot */}
+            <div className="hidden md:flex items-center pl-1.5 pr-0.5 font-sans tracking-tight select-none cursor-default translate-y-[1px]">
+              <span className="font-extrabold text-[15px] text-white leading-none">VD</span>
+              <span className="font-medium text-[15px] text-zinc-400 leading-none">Core</span>
+              <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[4px] shrink-0" />
             </div>
 
+            {/* Mobile Clickable Brand Wordmark */}
             <a
               href="#"
               title="VDCore Home"
               aria-label="VDCore Home"
               onClick={scrollToTop}
-              className="flex md:hidden items-baseline font-sans tracking-tight select-none py-0.5 pl-1.5 active:scale-95 transition-transform"
+              className="flex md:hidden items-center h-8 pl-2 font-sans tracking-tight select-none active:scale-95 transition-transform"
             >
-              <span className="font-extrabold text-base text-white">VD</span>
-              <span className="font-medium text-base text-zinc-400">Core</span>
-              <span className="font-black text-base text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.85)]">.</span>
+              <span className="font-extrabold text-base text-white leading-none">VD</span>
+              <span className="font-medium text-base text-zinc-400 leading-none">Core</span>
+              <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[4.5px] shrink-0" />
             </a>
 
             {/* Desktop Home Anchor Button */}
@@ -250,12 +239,12 @@ export const Navbar = () => {
                 title="Scroll to Top"
                 aria-label="Home"
                 onClick={scrollToTop}
-                className="p-1.5 rounded-full transition-all cursor-pointer"
+                className="p-1.5 rounded-full transition-colors cursor-pointer"
               >
                 <Home
                   className={`w-[18px] h-[18px] transition-colors duration-200 ${
                     activeSection === ""
-                      ? "text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                      ? "text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]"
                       : "text-zinc-400 hover:text-white"
                   }`}
                   strokeWidth={2.2}
@@ -265,7 +254,8 @@ export const Navbar = () => {
 
             <div className="hidden md:block w-px h-4 bg-zinc-800 shrink-0" />
             
-            <div className="hidden md:flex items-center gap-6 text-sm font-medium">
+            {/* Zero-Shift Raycast/Linear Style Capsule Navigation */}
+            <div className="hidden md:flex items-center gap-1 text-[13px] font-medium">
               {DESKTOP_LINKS.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -273,13 +263,22 @@ export const Navbar = () => {
                     key={link.id}
                     href={link.href}
                     onClick={(e) => scrollTo(e, link.id)}
-                    className={`relative py-1 transition-colors duration-200 cursor-pointer ${
-                      isActive ? "text-zinc-100 font-semibold" : "text-zinc-400 hover:text-zinc-200"
+                    className={`relative px-3.5 py-1.5 rounded-full transition-colors duration-200 cursor-pointer select-none ${
+                      isActive ? "text-white" : "text-zinc-400 hover:text-zinc-200"
                     }`}
                   >
-                    <span>{link.name}</span>
+                    {/* Background Pill Indicator (Absolute so width NEVER shifts) */}
                     <span
-                      className={`absolute -bottom-0.5 left-0 right-0 mx-auto w-5 h-0.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.85)] origin-center transition-all duration-300 ease-out ${
+                      className={`absolute inset-0 rounded-full transition-all duration-250 ease-out -z-10 ${
+                        isActive
+                          ? "bg-zinc-800/90 border border-zinc-700/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] opacity-100 scale-100"
+                          : "opacity-0 scale-95"
+                      }`}
+                    />
+                    <span>{link.name}</span>
+                    {/* Subtle bottom electric-blue glow line inside the pill */}
+                    <span
+                      className={`absolute bottom-0 left-0 right-0 mx-auto w-4 h-[1.5px] rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.95)] transition-all duration-250 ease-out ${
                         isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
                       }`}
                     />
@@ -291,7 +290,7 @@ export const Navbar = () => {
             <div className="w-px h-4 bg-zinc-800 hidden md:block shrink-0" />
 
             {/* Social Network Platforms */}
-            <div className="hidden md:flex items-center gap-1.5 shrink-0">
+            <div className="hidden md:flex items-center gap-1 shrink-0">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
@@ -299,7 +298,7 @@ export const Navbar = () => {
                 aria-label="GitHub Profile"
                 className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
               >
-                <GithubIcon className="w-[18px] h-[18px]" />
+                <GithubIcon className="w-[17px] h-[17px]" />
               </a>
 
               <a
@@ -309,7 +308,7 @@ export const Navbar = () => {
                 aria-label="LinkedIn Profile"
                 className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
               >
-                <LinkedinIcon className="w-[18px] h-[18px]" />
+                <LinkedinIcon className="w-[17px] h-[17px]" />
               </a>
 
               {PERSONAL_INFO.x && (
@@ -320,7 +319,7 @@ export const Navbar = () => {
                   aria-label="X Profile"
                   className="p-1.5 rounded-full text-zinc-400 hover:text-white hover:bg-zinc-800/70 transition-all"
                 >
-                  <XIcon className="w-[17px] h-[17px]" />
+                  <XIcon className="w-4 h-4" />
                 </a>
               )}
 
@@ -328,9 +327,9 @@ export const Navbar = () => {
                 href="/cv.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="group/cv flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-800/80 border border-zinc-700/60 text-zinc-200 font-medium text-xs hover:bg-zinc-950 hover:border-emerald-500/60 hover:text-emerald-300 transition-all ml-1 shadow-sm active:scale-95"
+                className="group/cv flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-700/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 font-mono font-medium text-xs hover:bg-sky-500/10 hover:border-sky-500/40 hover:text-sky-300 transition-all ml-1 active:scale-95"
               >
-                <FileText className="w-3.5 h-3.5 text-zinc-400 group-hover/cv:text-emerald-400 transition-colors" />
+                <FileText className="w-3.5 h-3.5 text-sky-400 transition-transform group-hover/cv:scale-110" />
                 <span>CV</span>
               </a>
             </div>
@@ -340,9 +339,9 @@ export const Navbar = () => {
                 href="/cv.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full bg-zinc-800/80 border border-zinc-700/60 text-zinc-200 text-xs font-mono font-medium active:scale-95 hover:text-white transition-all shadow-sm"
+                className="flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full bg-zinc-900 border border-zinc-700/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 text-xs font-mono font-medium active:scale-95 hover:text-white transition-all"
               >
-                <FileText className="w-3.5 h-3.5 text-zinc-400" />
+                <FileText className="w-3.5 h-3.5 text-sky-400" />
                 <span>CV</span>
               </a>
 
@@ -350,12 +349,13 @@ export const Navbar = () => {
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle Navigation Menu"
-                className="relative w-10 h-10 rounded-full flex items-center justify-center text-zinc-300 hover:text-white hover:bg-zinc-800/80 transition-colors focus:outline-none shrink-0 cursor-pointer"
+                aria-expanded={mobileMenuOpen}
+                className="relative w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/80 border border-zinc-800 text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors focus:outline-none shrink-0 cursor-pointer"
               >
                 <div className="flex flex-col items-center justify-center w-4 h-4 relative">
                   <span
                     className={`block absolute h-0.5 w-4 bg-current transform transition-all duration-300 ease-in-out ${
-                      mobileMenuOpen ? "rotate-45 translate-y-0 text-zinc-200" : "-translate-y-1.5"
+                      mobileMenuOpen ? "rotate-45 translate-y-0 text-sky-400" : "-translate-y-1.5"
                     }`}
                   />
                   <span
@@ -365,7 +365,7 @@ export const Navbar = () => {
                   />
                   <span
                     className={`block absolute h-0.5 w-4 bg-current transform transition-all duration-300 ease-in-out ${
-                      mobileMenuOpen ? "-rotate-45 translate-y-0 text-zinc-200" : "translate-y-1.5"
+                      mobileMenuOpen ? "-rotate-45 translate-y-0 text-sky-400" : "translate-y-1.5"
                     }`}
                   />
                 </div>
