@@ -239,44 +239,44 @@ export const ModernBackground = () => {
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-zinc-950 select-none w-full h-full"
       aria-hidden="true"
     >
-      {/* 1. Deep Edge-to-Edge Radiant Nebula Core (Hero section) */}
+      {/* 1. Deep Midnight Cobalt & Royal Indigo Core (Hero section - calm, non-glaring) */}
       <div
-        className="absolute top-0 inset-x-0 w-full h-[650px] pointer-events-none opacity-85"
+        className="absolute top-0 inset-x-0 w-full h-[620px] pointer-events-none opacity-70"
         style={{
           background:
-            "radial-gradient(ellipse 85% 65% at 50% -10%, rgba(56, 189, 248, 0.22) 0%, rgba(14, 165, 233, 0.13) 32%, rgba(99, 102, 241, 0.08) 58%, rgba(168, 85, 247, 0.03) 78%, transparent 100%)",
+            "radial-gradient(ellipse 80% 55% at 50% -10%, rgba(37, 99, 235, 0.12) 0%, rgba(56, 189, 248, 0.07) 30%, rgba(99, 102, 241, 0.05) 55%, transparent 80%)",
         }}
       />
 
-      {/* 2. Cosmic Dust Belts (Lateral glows illuminating Projects & Skills) */}
+      {/* 2. Subdued Cosmic Dust Belts (Lateral glows illuminating Projects & Skills) */}
       <div
-        className="absolute top-[35%] -right-[10%] sm:right-0 w-[550px] sm:w-[850px] h-[550px] sm:h-[850px] rounded-full pointer-events-none opacity-65"
+        className="absolute top-[35%] -right-[10%] sm:right-0 w-[550px] sm:w-[800px] h-[550px] sm:h-[800px] rounded-full pointer-events-none opacity-50"
         style={{
           background:
-            "radial-gradient(circle, rgba(14, 165, 233, 0.09) 0%, rgba(56, 189, 248, 0.035) 45%, transparent 70%)",
+            "radial-gradient(circle, rgba(37, 99, 235, 0.045) 0%, rgba(99, 102, 241, 0.02) 45%, transparent 70%)",
         }}
       />
       <div
-        className="absolute top-[60%] -left-[10%] sm:left-0 w-[550px] sm:w-[850px] h-[550px] sm:h-[850px] rounded-full pointer-events-none opacity-65"
+        className="absolute top-[60%] -left-[10%] sm:left-0 w-[550px] sm:w-[800px] h-[550px] sm:h-[800px] rounded-full pointer-events-none opacity-50"
         style={{
           background:
-            "radial-gradient(circle, rgba(99, 102, 241, 0.09) 0%, rgba(168, 85, 247, 0.04) 45%, transparent 70%)",
+            "radial-gradient(circle, rgba(99, 102, 241, 0.045) 0%, rgba(56, 189, 248, 0.02) 45%, transparent 70%)",
         }}
       />
 
-      {/* 3. Bottom Stellar Horizon Glow (Behind Contact & Footer) */}
+      {/* 3. Deep Midnight Horizon Glow (Behind Contact & Footer) */}
       <div
-        className="absolute bottom-0 inset-x-0 w-full h-[600px] pointer-events-none opacity-75"
+        className="absolute bottom-0 inset-x-0 w-full h-[580px] pointer-events-none opacity-65"
         style={{
           background:
-            "radial-gradient(ellipse 80% 55% at 50% 115%, rgba(99, 102, 241, 0.16) 0%, rgba(56, 189, 248, 0.06) 48%, rgba(168, 85, 247, 0.02) 72%, transparent 100%)",
+            "radial-gradient(ellipse 75% 50% at 50% 115%, rgba(79, 70, 229, 0.10) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 80%)",
         }}
       />
 
       {/* 4. Multi-Depth Astronomical Canvas (Stars, Twinkle, Meteor, Parallax) */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-90"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-85"
       />
 
       {/* 5. Deep Peripheral Cosmic Vignette */}
