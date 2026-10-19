@@ -168,16 +168,18 @@ export const Navbar = () => {
             <button
               key={link.id}
               onClick={(e) => scrollTo(e, link.id)}
-              className={`relative flex items-center justify-between w-full px-4 py-3 rounded-2xl text-left text-sm font-sans transition-all active:scale-[0.98] cursor-pointer ${
+              className={`relative flex items-center justify-between w-full px-4 py-3 rounded-2xl text-left text-sm font-sans border transition-all duration-200 active:scale-[0.98] cursor-pointer ${
                 isActive
-                  ? "bg-zinc-800/85 text-white font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
-                  : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50"
+                  ? "bg-gradient-to-r from-sky-500/[0.12] via-zinc-900/95 to-zinc-900/90 border-sky-500/35 text-white font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(14,165,233,0.18)]"
+                  : "border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50"
               }`}
             >
               <div className="flex items-center gap-3">
                 <Icon
-                  className={`w-4 h-4 transition-colors ${
-                    isActive ? "text-sky-400" : "text-zinc-500"
+                  className={`w-4 h-4 transition-all duration-200 ${
+                    isActive
+                      ? "text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.7)] scale-105"
+                      : "text-zinc-500"
                   }`}
                 />
                 <span className="tracking-tight">{link.name}</span>
@@ -186,7 +188,7 @@ export const Navbar = () => {
               <span
                 className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
                   isActive
-                    ? "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.9)] scale-100"
+                    ? "bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.95)] scale-100"
                     : "bg-transparent scale-0"
                 }`}
               />
