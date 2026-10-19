@@ -147,7 +147,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="GitHub Profile"
-                  className="flex items-center justify-center h-12 rounded-2xl glass-subcard text-zinc-200 hover:text-sky-400 active:scale-95 transition-all"
+                  className="flex items-center justify-center h-12 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] text-zinc-200 hover:text-sky-400 active:scale-95 transition-all"
                 >
                   <GithubIcon className="w-[18px] h-[18px]" />
                 </a>
@@ -157,7 +157,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label="LinkedIn Profile"
-                  className="flex items-center justify-center h-12 rounded-2xl glass-subcard text-zinc-200 hover:text-sky-400 active:scale-95 transition-all"
+                  className="flex items-center justify-center h-12 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] text-zinc-200 hover:text-sky-400 active:scale-95 transition-all"
                 >
                   <LinkedinIcon className="w-[18px] h-[18px]" />
                 </a>
@@ -168,7 +168,7 @@ export const Footer = () => {
                     target="_blank"
                     rel="noreferrer"
                     aria-label="X Profile"
-                    className="flex items-center justify-center h-12 rounded-2xl glass-subcard text-zinc-200 hover:text-sky-400 active:scale-95 transition-all"
+                    className="flex items-center justify-center h-12 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] text-zinc-200 hover:text-sky-400 active:scale-95 transition-all"
                   >
                     <XIcon className="w-4 h-4" />
                   </a>

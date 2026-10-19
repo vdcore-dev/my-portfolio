@@ -30,15 +30,7 @@ body {
   color: #bae6fd;
 }
 
-/* ========================================================
-   ARCHITECTURAL BACKGROUNDS
-   ======================================================== */
-.bg-engineering-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 45%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 92% 90% at 50% 50%, #000 45%, transparent 100%);
-}
+
 
 /* ========================================================
    MODERN LINEAR-STYLE GLASS & BEZEL SURFACES
@@ -72,22 +64,22 @@ body {
 }
 
 .selector-item-active {
-  background: linear-gradient(180deg, rgba(32, 32, 36, 0.92) 0%, rgba(18, 18, 21, 0.96) 100%);
-  border-color: rgba(56, 189, 248, 0.32);
+  background: linear-gradient(180deg, #202024 0%, #121215 100%);
+  border-color: rgba(56, 189, 248, 0.35);
   box-shadow:
     inset 0 1px 0 0 rgba(255, 255, 255, 0.09),
     0 10px 24px -8px rgba(0, 0, 0, 0.65);
 }
 
 .selector-item-inactive {
-  background: linear-gradient(180deg, rgba(24, 24, 27, 0.48) 0%, rgba(9, 9, 11, 0.55) 100%);
-  border-color: rgba(39, 39, 42, 0.75);
+  background: linear-gradient(180deg, #18181b 0%, #0f0f12 100%);
+  border-color: #27272a;
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.035);
 }
 
 .selector-item-inactive:hover {
-  background: linear-gradient(180deg, rgba(30, 30, 34, 0.68) 0%, rgba(16, 16, 19, 0.75) 100%);
-  border-color: rgba(63, 63, 70, 0.85);
+  background: linear-gradient(180deg, #222226 0%, #151518 100%);
+  border-color: #3f3f46;
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
 }
 

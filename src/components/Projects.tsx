@@ -143,11 +143,6 @@ export const Projects = () => {
                       {activeProject.title}
                     </h3>
                   </div>
-
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 font-mono text-[10px] shrink-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]" />
-                    {activeProject.featured ? "Core System" : "Production Ready"}
-                  </span>
                 </div>
 
                 {/* Project description */}
@@ -271,10 +266,6 @@ export const Projects = () => {
                         {project.title}
                       </h3>
                     </div>
-                    <span className="inline-flex items-center gap-1.5 text-[10px] text-zinc-300 font-mono px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 shrink-0">
-                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_5px_rgba(56,189,248,0.85)]" />
-                      {project.featured ? "Core" : "Ready"}
-                    </span>
                   </div>
 
                   <p className="text-zinc-300 text-xs leading-relaxed mb-4 font-sans line-clamp-2">
