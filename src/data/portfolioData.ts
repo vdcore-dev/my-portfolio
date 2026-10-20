@@ -38,7 +38,7 @@ export const PROJECTS: Project[] = [
   {
     id: "saas-billing",
     title: "SaaS Subscription & Billing Platform",
-    category: "Distributed Billing & SaaS",
+    category: "Fintech SaaS",
     description:
       "Enterprise billing engine featuring automated recurring subscriptions, transactional consistency, webhook handling, and real-time revenue analytics.",
     tags: ["Java", "Spring Boot", "PostgreSQL", "Redis", "React", "Docker"],
@@ -55,7 +55,7 @@ export const PROJECTS: Project[] = [
   {
     id: "payment-gateway",
     title: "Payment Gateway Simulator",
-    category: "Financial Systems & Microservices",
+    category: "Financial API",
     description:
       "High-throughput mock transaction gateway demonstrating idempotent API design, payload encryption, network latency simulation, and audit logging.",
     tags: ["Spring Boot", "RabbitMQ", "PostgreSQL", "Docker", "REST API"],
@@ -71,7 +71,7 @@ export const PROJECTS: Project[] = [
   {
     id: "task-orchestrator",
     title: "Distributed Task Scheduler",
-    category: "Cloud Infrastructure",
+    category: "Distributed Cloud",
     description:
       "High-availability asynchronous job execution service with leader election, distributed cron scheduling, and worker pool balancing.",
     tags: ["Java 21", "Spring Boot", "Redis", "Docker", "Prometheus"],
@@ -87,7 +87,7 @@ export const PROJECTS: Project[] = [
   {
     id: "modern-portfolio",
     title: "Minimalist Engineering Portfolio",
-    category: "Frontend & Performance",
+    category: "Web Architecture",
     description:
       "High-performance developer platform built with React 19, TypeScript, and Tailwind CSS, featuring subtle galaxy mask blending and zero layout shift.",
     tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
@@ -108,8 +108,9 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     id: "backend",
     category: "Backend & Systems",
     tagline: "High-throughput services, OOP design, concurrency & clean microservices",
+    previewTech: ["Java", "Spring Boot", "Microservices"],
     skills: [
-      { name: "Java (17/21)", role: "Virtual Threads, Streams, Concurrency", highlight: true },
+      { name: "Java (LTS 17/21/25)", role: "Virtual Threads, Records, Concurrency", highlight: true },
       { name: "Spring Boot", role: "Dependency Injection, REST, Modular Arch", highlight: true },
       { name: "Spring Security", role: "OAuth2, JWT Tokens, Role-Based Access" },
       { name: "Microservices", role: "Distributed Architecture & Service Discovery" },
@@ -121,6 +122,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     id: "devops",
     category: "DevOps & Cloud",
     tagline: "Infrastructure automation, automated delivery & containerized workloads",
+    previewTech: ["Docker", "Linux", "CI/CD", "Cloud"],
     skills: [
       { name: "Docker", role: "Multi-stage Builds, Compose, Optimization", highlight: true },
       { name: "CI/CD Pipelines", role: "GitHub Actions, Automated Testing & Build", highlight: true },
@@ -134,6 +136,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     id: "data",
     category: "Data & Storage",
     tagline: "Relational integrity, caching layers & transaction consistency",
+    previewTech: ["PostgreSQL", "Redis", "JPA / Hibernate"],
     skills: [
       { name: "PostgreSQL", role: "Indexing, ACID Transactions, Schema Design", highlight: true },
       { name: "Redis", role: "Distributed Locks, Cache-Aside, Key Eviction", highlight: true },
@@ -147,6 +150,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     id: "ai",
     category: "AI & Integrations",
     tagline: "Modern AI pipelines, intelligent backends & LLM orchestration",
+    previewTech: ["Spring AI", "LLM APIs"],
     skills: [
       { name: "Spring AI", role: "Native Framework LLM Clients & Models", highlight: true },
       { name: "LLM APIs", role: "Anthropic & OpenAI Structured Output", highlight: true },
@@ -160,9 +164,10 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     id: "frontend",
     category: "Web & Interface",
     tagline: "Type-safe clients, component modularity & zero layout shift",
+    previewTech: ["TypeScript", "React", "Tailwind"],
     skills: [
       { name: "TypeScript", role: "Strict Static Typing, Generics, Safety", highlight: true },
-      { name: "React 19", role: "Hooks, State Architecture, Component Lifecycles" },
+      { name: "React", role: "Component Architecture, Hooks & State", highlight: true },
       { name: "Tailwind CSS", role: "Modern Layouts, Glassmorphism & UI Systems" },
       { name: "API Integration", role: "Axios/Fetch, State Sync & Error Boundaries" },
       { name: "Vite", role: "Fast Bundling & Modern Frontend Tooling" },

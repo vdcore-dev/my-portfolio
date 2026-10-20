@@ -35,38 +35,55 @@ export const Hero = () => {
   const scrollToProjects = (e: React.MouseEvent) => {
     e.preventDefault();
     const el = document.getElementById("projects");
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
-  const renderFocusIcon = (id: string) => {
+  const renderFocusIcon = (id: string, sizeClass = "w-[18px] h-[18px]") => {
     switch (id) {
       case "backend":
-        return <Server className="w-[18px] h-[18px] text-sky-400 shrink-0" />;
+        return <Server className={`${sizeClass} text-sky-400 shrink-0`} />;
       case "devops":
-        return <Cloud className="w-[18px] h-[18px] text-cyan-400 shrink-0" />;
+        return <Cloud className={`${sizeClass} text-cyan-400 shrink-0`} />;
       case "data":
-        return <Database className="w-[18px] h-[18px] text-indigo-400 shrink-0" />;
+        return <Database className={`${sizeClass} text-indigo-400 shrink-0`} />;
       case "ai":
-        return <Bot className="w-[18px] h-[18px] text-violet-400 shrink-0" />;
+        return <Bot className={`${sizeClass} text-violet-400 shrink-0`} />;
       default:
-        return <Server className="w-[18px] h-[18px] text-sky-400 shrink-0" />;
+        return <Server className={`${sizeClass} text-sky-400 shrink-0`} />;
+    }
+  };
+
+  const getFocusLabel = (id: string) => {
+    switch (id) {
+      case "backend":
+        return "Backend";
+      case "devops":
+        return "DevOps";
+      case "data":
+        return "Data";
+      case "ai":
+        return "AI";
+      default:
+        return "Core";
     }
   };
 
   return (
-    <section className="relative min-h-svh lg:min-h-dvh flex flex-col justify-center pt-24 pb-12 mb-16 lg:mb-0 lg:pt-32 lg:pb-20 px-4 overflow-hidden">
-      {/* 1. Mobile Interface - Balanced spacing for modern 6.1" - 6.8" screens */}
-      <div className="flex lg:hidden flex-col justify-between relative z-10 w-full max-w-lg mx-auto my-auto gap-7 py-2">
+    <section id="home" className="relative min-h-svh lg:h-auto lg:min-h-dvh flex flex-col justify-start lg:justify-center box-border lg:pt-32 lg:pb-20 lg:px-4">
+      {/* 1. Mobile Interface - Exact 1-viewport fit with uniform vertical rhythm */}
+      <div className="flex lg:hidden flex-col justify-between min-h-[calc(100svh-1px)] pt-[96px] pb-7 px-4 relative z-10 w-full max-w-lg mx-auto box-border">
         
-        {/* Profile Card */}
-        <div className="rounded-3xl glass-panel p-5">
+        {/* Profile Card with 4 Focus Area Symbols */}
+        <div className="rounded-3xl glass-panel p-4 sm:p-5">
           <div className="flex items-center gap-4">
             <div 
               className="relative cursor-pointer shrink-0 group"
               onClick={() => setIsPhotoOpen(true)}
               title="Click to view full photo"
             >
-              <div className="w-20 h-20 rounded-2xl overflow-hidden border border-sky-500/40 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-sky-500/10 transition-transform active:scale-95 duration-200">
+              <div className="w-[88px] h-[88px] rounded-2xl overflow-hidden border border-sky-500/40 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-sky-500/10 transition-transform active:scale-95 duration-200">
                 <img
                   src={avatarUrl}
                   alt={PERSONAL_INFO.name}
@@ -79,18 +96,21 @@ export const Hero = () => {
             </div>
 
             <div className="flex-1 min-w-0">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-[10px] font-mono text-zinc-200 mb-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)] animate-pulse" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-[10px] font-mono text-zinc-200 mb-1.5">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
+                </span>
                 <span>{PERSONAL_INFO.availability}</span>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight truncate font-sans">
+              <h2 className="text-xl font-bold text-zinc-100 tracking-tight truncate font-sans">
                 {PERSONAL_INFO.name}
               </h2>
 
-              <div className="flex items-center gap-2 mt-0.5">
+              <div className="flex items-center gap-1.5 mt-0.5">
                 <span className="text-sky-400 font-mono font-bold text-xs">|</span>
-                <p className="text-xs sm:text-sm font-sans text-zinc-300 font-medium truncate">
+                <p className="text-xs font-sans text-zinc-300 font-medium truncate">
                   {PERSONAL_INFO.role}
                 </p>
               </div>
@@ -101,37 +121,55 @@ export const Hero = () => {
               </div>
             </div>
           </div>
+
+          {/* 4 Focus Area Symbols - Compact micro-capsules */}
+          <div className="grid grid-cols-4 gap-1.5 pt-2.5 mt-3 border-t border-zinc-800/80">
+            {PERSONAL_INFO.focusAreas.map((area) => (
+              <div 
+                key={area.id}
+                className="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl bg-zinc-900/70 border border-zinc-800/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]"
+                title={area.stack}
+              >
+                {renderFocusIcon(area.id, "w-3.5 h-3.5")}
+                <span className="text-[9px] font-mono font-medium text-zinc-300 mt-1 truncate">
+                  {getFocusLabel(area.id)}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Headline Card */}
-        <div className="rounded-3xl glass-panel p-6 sm:p-8 text-left">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mb-4 leading-[1.18]">
+        {/* Headline Card - Equal vertical spacing */}
+        <div className="rounded-3xl glass-panel p-5 sm:p-6 text-left">
+          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-100 mb-2 leading-[1.2]">
             Building scalable{" "}
             <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
               backends & resilient
             </span>{" "}
             systems.
           </h1>
-          <p className="text-sm text-zinc-400 leading-relaxed font-sans mt-2">
+          <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
             {PERSONAL_INFO.bio}
           </p>
         </div>
 
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-3.5 w-full pt-1">
+        {/* Action Buttons - Symmetrical Full-Width Box-Aligned Capsule Duo */}
+        <div className="flex items-center gap-3 w-full pt-1">
           <a
             href="#projects"
             onClick={scrollToProjects}
-            className="inline-flex items-center justify-center gap-2 h-12 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-xs sm:text-sm tracking-tight shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_16px_-4px_rgba(56,189,248,0.22)] active:scale-95 transition-transform"
+            className="flex-1 inline-flex items-center justify-center gap-2 h-10 px-3 rounded-full glass-subcard hover:border-sky-500/40 border border-zinc-800 text-xs font-sans font-medium backdrop-blur-md active:scale-95 transition-all cursor-pointer shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] group"
           >
-            <span>Explore Systems</span>
-            <ChevronDown className="w-4 h-4 text-zinc-950 animate-bounce" />
+            <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
+              Explore Systems
+            </span>
+            <ChevronDown className="w-3.5 h-3.5 text-sky-400 animate-bounce shrink-0" />
           </a>
 
           <button
             onClick={handleCopyEmail}
             type="button"
-            className={`inline-flex items-center justify-center gap-2 h-12 text-xs sm:text-sm font-sans font-medium rounded-full border backdrop-blur-md active:scale-95 transition-all cursor-pointer ${
+            className={`flex-1 inline-flex items-center justify-center gap-2 h-10 px-3 text-xs font-sans font-medium rounded-full border backdrop-blur-md active:scale-95 transition-all cursor-pointer ${
               copied
                 ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/15"
                 : "glass-subcard text-zinc-200 hover:text-white"
@@ -140,12 +178,12 @@ export const Hero = () => {
             {copied ? (
               <>
                 <span className="font-semibold tracking-wide">Copied!</span>
-                <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150" />
+                <Check className="w-3.5 h-3.5 text-sky-400 animate-in zoom-in-75 duration-150 shrink-0" />
               </>
             ) : (
               <>
                 <span>Get in touch</span>
-                <Copy className="w-4 h-4 text-sky-400" />
+                <Copy className="w-3.5 h-3.5 text-sky-400 shrink-0" />
               </>
             )}
           </button>
@@ -156,14 +194,14 @@ export const Hero = () => {
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
         <div className="col-span-7 flex flex-col items-start text-left">
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-xs font-mono text-zinc-200 mb-6 backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
             </span>
             <span>{PERSONAL_INFO.availability}</span>
           </div>
 
-          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-white mb-6 leading-[1.08]">
+          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-zinc-100 mb-6 leading-[1.08]">
             Building scalable <br />
             <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
               backends & resilient
@@ -179,10 +217,12 @@ export const Hero = () => {
             <a
               href="#projects"
               onClick={scrollToProjects}
-              className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-sm tracking-tight hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_10px_22px_-4px_rgba(56,189,248,0.35)] transition-all duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_18px_-4px_rgba(56,189,248,0.25)] active:scale-95 group cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard hover:border-sky-500/50 border border-zinc-800 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-6px_rgba(56,189,248,0.22)] active:scale-95 transition-all duration-200 group cursor-pointer"
             >
-              <span>Explore Systems</span>
-              <ChevronDown className="w-4 h-4 text-zinc-950 animate-bounce group-hover:scale-110 transition-transform duration-200" />
+              <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 group-hover:brightness-110 transition-all duration-200">
+                Explore Systems
+              </span>
+              <ChevronDown className="w-4 h-4 text-sky-400 animate-bounce group-hover:scale-110 transition-transform duration-200 shrink-0" />
             </a>
 
             <button
@@ -237,7 +277,7 @@ export const Hero = () => {
               </div>
 
               <div className="flex-1 min-w-0">
-                <h2 className="text-xl font-bold text-white tracking-tight truncate font-sans">
+                <h2 className="text-xl font-bold text-zinc-100 tracking-tight truncate font-sans">
                   {PERSONAL_INFO.name}
                 </h2>
                 
@@ -299,7 +339,7 @@ export const Hero = () => {
               className="w-full h-80 object-cover rounded-2xl"
             />
             <div className="p-4 text-center">
-              <h3 className="text-white font-bold text-lg font-sans">{PERSONAL_INFO.name}</h3>
+              <h3 className="text-zinc-100 font-bold text-lg font-sans">{PERSONAL_INFO.name}</h3>
               <p className="text-sky-400 text-xs font-mono mt-0.5">{PERSONAL_INFO.role}</p>
             </div>
           </div>

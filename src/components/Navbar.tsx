@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, FolderKanban, Layers, MessageSquare } from "lucide-react";
+import { Home, FileText, FolderGit2, Layers, Send, Share2, Check } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 
@@ -10,19 +10,58 @@ const DESKTOP_LINKS = [
 ];
 
 const MOBILE_LINKS = [
-  { name: "Home", href: "#", id: "home", icon: Home },
-  { name: "Projects", href: "#projects", id: "projects", icon: FolderKanban },
-  { name: "Skills", href: "#skills", id: "skills", icon: Layers },
-  { name: "Contact", href: "#contact", id: "contact", icon: MessageSquare },
+  { name: "Home", href: "#", id: "home", icon: Home, tag: "Top" },
+  { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2, tag: "04" },
+  { name: "Skills", href: "#skills", id: "skills", icon: Layers, tag: "Stack" },
+  { name: "Contact", href: "#contact", id: "contact", icon: Send, tag: "Direct" },
 ];
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isShared, setIsShared] = useState(false);
 
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleShare = async () => {
+    const shareUrl = window.location.origin || window.location.href;
+    const isMobileDevice =
+      typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (isMobileDevice && navigator.share) {
+      try {
+        await navigator.share({
+          title: `${PERSONAL_INFO.name} | Software Engineer`,
+          text: "Check out this software engineer portfolio.",
+          url: shareUrl,
+        });
+      } catch {
+        // User canceled share
+      }
+    } else {
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(shareUrl);
+        } else {
+          const textArea = document.createElement("textarea");
+          textArea.value = shareUrl;
+          textArea.style.position = "fixed";
+          textArea.style.left = "-999999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          document.execCommand("copy");
+          textArea.remove();
+        }
+        setIsShared(true);
+        setTimeout(() => setIsShared(false), 2000);
+      } catch {
+        setIsShared(false);
+      }
+    }
+  };
 
   // Prevent background scroll and attach Escape key listener
   useEffect(() => {
@@ -155,7 +194,7 @@ export const Navbar = () => {
 
       {/* Modern Floating Mobile Menu Card (Linear / Raycast Popover Style) */}
       <aside
-        className={`fixed top-[72px] inset-x-3 sm:inset-x-6 max-w-sm mx-auto z-50 rounded-3xl glass-panel p-3 flex flex-col gap-1 transition-all duration-250 ease-out origin-top md:hidden ${
+        className={`fixed top-[70px] inset-x-3 sm:inset-x-6 max-w-sm mx-auto z-50 rounded-3xl glass-panel p-2.5 flex flex-col gap-1 transition-all duration-250 ease-out origin-top md:hidden ${
           mobileMenuOpen
             ? "translate-y-0 scale-100 opacity-100 pointer-events-auto"
             : "-translate-y-3 scale-95 opacity-0 pointer-events-none"
@@ -168,33 +207,103 @@ export const Navbar = () => {
             <button
               key={link.id}
               onClick={(e) => scrollTo(e, link.id)}
-              className={`relative flex items-center justify-between w-full px-4 py-3 rounded-2xl text-left text-sm font-sans border transition-all duration-200 active:scale-[0.98] cursor-pointer ${
+              className={`group relative flex items-center justify-between w-full px-3.5 py-2.5 rounded-2xl text-left text-sm font-sans transition-all duration-200 active:scale-[0.98] cursor-pointer ${
                 isActive
-                  ? "bg-gradient-to-r from-sky-500/[0.12] via-zinc-900/95 to-zinc-900/90 border-sky-500/35 text-white font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(14,165,233,0.18)]"
-                  : "border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50"
+                  ? "bg-white/[0.07] border border-white/[0.1] text-zinc-100 font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]"
+                  : "border border-transparent text-zinc-400 hover:text-zinc-200 active:bg-white/[0.04]"
               }`}
             >
-              <div className="flex items-center gap-3">
-                <Icon
-                  className={`w-4 h-4 transition-all duration-200 ${
+              <div className="flex items-center gap-2.5">
+                <span
+                  className={`w-1 h-3.5 rounded-full transition-all duration-200 ${
                     isActive
-                      ? "text-sky-400 drop-shadow-[0_0_8px_rgba(56,189,248,0.7)] scale-105"
-                      : "text-zinc-500"
+                      ? "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.7)] opacity-100 scale-100"
+                      : "bg-transparent opacity-0 scale-75 -ml-1"
                   }`}
                 />
-                <span className="tracking-tight">{link.name}</span>
+                <Icon
+                  className={`w-4 h-4 transition-colors duration-200 ${
+                    isActive ? "text-sky-400" : "text-zinc-500 group-hover:text-zinc-400"
+                  }`}
+                />
+                <span className="tracking-tight text-[14px]">{link.name}</span>
               </div>
 
+              {/* Minimalist Monochromatic Context Tag */}
               <span
-                className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                className={`font-mono text-[11px] px-2 py-0.5 rounded-md border transition-colors ${
                   isActive
-                    ? "bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.95)] scale-100"
-                    : "bg-transparent scale-0"
+                    ? "bg-white/[0.06] border-white/[0.1] text-zinc-300"
+                    : "bg-white/[0.03] border-white/[0.05] text-zinc-500 group-hover:text-zinc-400 group-hover:bg-white/[0.05]"
                 }`}
-              />
+              >
+                {link.tag}
+              </span>
             </button>
           );
         })}
+
+        {/* Popover Footer: Quick Socials, Share & Availability Status */}
+        <div className="h-px w-full bg-white/[0.06] my-1" />
+
+        <div className="flex items-center justify-between px-2 pt-1 pb-0.5">
+          <div className="flex items-center gap-1">
+            <a
+              href={PERSONAL_INFO.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="GitHub Profile"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/[0.06] active:scale-95 transition-all"
+            >
+              <GithubIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={PERSONAL_INFO.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn Profile"
+              className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/[0.06] active:scale-95 transition-all"
+            >
+              <LinkedinIcon className="w-4 h-4" />
+            </a>
+            {PERSONAL_INFO.x && (
+              <a
+                href={PERSONAL_INFO.x}
+                target="_blank"
+                rel="noreferrer"
+                aria-label="X Profile"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/[0.06] active:scale-95 transition-all"
+              >
+                <XIcon className="w-3.5 h-3.5" />
+              </a>
+            )}
+            {/* Native Mobile Share / Clipboard Copy */}
+            <button
+              onClick={handleShare}
+              aria-label="Share portfolio"
+              title="Share portfolio"
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all active:scale-95 cursor-pointer ${
+                isShared
+                  ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                  : "text-zinc-400 hover:text-white hover:bg-white/[0.06]"
+              }`}
+            >
+              {isShared ? (
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+              ) : (
+                <Share2 className="w-3.5 h-3.5" />
+              )}
+            </button>
+          </div>
+
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono text-zinc-400">
+            <span className="relative flex h-2 w-2 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
+            </span>
+            <span>Available</span>
+          </div>
+        </div>
       </aside>
 
       {/* Desktop & Main Header */}
@@ -204,13 +313,13 @@ export const Navbar = () => {
           <nav
             className={`relative flex items-center justify-between w-full gap-2 sm:gap-3.5 md:gap-3.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border transition-all duration-300 ${
               isScrolled
-                ? "bg-zinc-950/90 border-zinc-700/75 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_20px_40px_-10px_rgba(0,0,0,0.85)]"
-                : "bg-zinc-900/80 border-zinc-800/85 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_12px_28px_-8px_rgba(0,0,0,0.55)]"
+                ? "bg-zinc-950/90 border-white/[0.14] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_20px_40px_-10px_rgba(0,0,0,0.85)]"
+                : "bg-zinc-900/80 border-white/[0.1] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_12px_28px_-8px_rgba(0,0,0,0.55)]"
             }`}
           >
             {/* Desktop Static Brand Wordmark - Optically aligned with 13px nav links & icons */}
             <div className="hidden md:flex items-center h-8 pl-2.5 pr-1 font-sans tracking-tight select-none cursor-default translate-y-[2.5px]">
-              <span className="font-extrabold text-[15px] text-white leading-none">VD</span>
+              <span className="font-extrabold text-[15px] text-zinc-100 leading-none">VD</span>
               <span className="font-medium text-[15px] text-zinc-400 leading-none">Core</span>
               <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[3.5px] shrink-0" />
             </div>
@@ -223,7 +332,7 @@ export const Navbar = () => {
               onClick={scrollToTop}
               className="flex md:hidden items-center h-8 pl-2 font-sans tracking-tight select-none active:scale-95 transition-transform"
             >
-              <span className="font-extrabold text-base text-white leading-none">VD</span>
+              <span className="font-extrabold text-base text-zinc-100 leading-none">VD</span>
               <span className="font-medium text-base text-zinc-400 leading-none">Core</span>
               <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[4.5px] shrink-0" />
             </a>
@@ -275,7 +384,7 @@ export const Navbar = () => {
                     onClick={(e) => scrollTo(e, link.id)}
                     className={`relative h-8 px-3.5 rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer select-none ${
                       isActive
-                        ? "text-white"
+                        ? "text-zinc-100"
                         : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50"
                     }`}
                   >
@@ -351,7 +460,7 @@ export const Navbar = () => {
                 href="/cv.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full bg-zinc-900/90 border border-zinc-700/75 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 text-xs font-mono font-medium active:scale-95 hover:text-white transition-all"
+                className="flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-200 text-xs font-mono font-medium active:scale-95 hover:text-white transition-all"
               >
                 <FileText className="w-3.5 h-3.5 text-sky-400" />
                 <span>CV</span>
@@ -362,8 +471,8 @@ export const Navbar = () => {
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-label="Toggle Navigation Menu"
                 aria-expanded={mobileMenuOpen}
-                className={`relative w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/90 border shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 hover:text-white hover:bg-zinc-800/90 transition-all focus:outline-none shrink-0 cursor-pointer active:scale-95 ${
-                  mobileMenuOpen ? "border-sky-500/40" : "border-zinc-700/75"
+                className={`relative w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/90 border shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-200 hover:text-white hover:bg-zinc-800/90 transition-all focus:outline-none shrink-0 cursor-pointer active:scale-95 ${
+                  mobileMenuOpen ? "border-sky-500/40" : "border-white/[0.1]"
                 }`}
               >
                 <div className="flex flex-col items-center justify-center w-4 h-4 relative">

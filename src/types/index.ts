@@ -14,6 +14,7 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   featured?: boolean;
+  image?: string;
   specs?: ProjectSpecs;
 }
 
@@ -27,6 +28,7 @@ export interface SkillCategory {
   id?: string;
   category: string;
   tagline?: string;
+  previewTech?: string[];
   skills: SkillItem[];
 }
 

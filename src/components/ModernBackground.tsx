@@ -26,6 +26,9 @@ export const ModernBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
+    // Only run animated galaxy canvas on desktop screens (>= 1024px)
+    if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -239,54 +242,100 @@ export const ModernBackground = () => {
       className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-zinc-950 select-none w-full h-full"
       aria-hidden="true"
     >
-      {/* 1. Deep Midnight Cobalt & Royal Indigo Core (Hero section - calm, non-glaring) */}
-      <div
-        className="absolute top-0 inset-x-0 w-full h-[620px] pointer-events-none opacity-70"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 55% at 50% -10%, rgba(37, 99, 235, 0.12) 0%, rgba(56, 189, 248, 0.07) 30%, rgba(99, 102, 241, 0.05) 55%, transparent 80%)",
-        }}
-      />
+      {/* =========================================================
+          1. DESKTOP / PC BACKGROUND (100% Restored Original Version)
+          ========================================================= */}
+      <div className="hidden lg:block">
+        {/* Desktop Hero Core Glow */}
+        <div
+          className="absolute top-0 inset-x-0 w-full h-[620px] pointer-events-none opacity-70"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 55% at 50% -10%, rgba(37, 99, 235, 0.12) 0%, rgba(56, 189, 248, 0.07) 30%, rgba(99, 102, 241, 0.05) 55%, transparent 80%)",
+          }}
+        />
 
-      {/* 2. Subdued Cosmic Dust Belts (Lateral glows illuminating Projects & Skills) */}
-      <div
-        className="absolute top-[35%] -right-[10%] sm:right-0 w-[550px] sm:w-[800px] h-[550px] sm:h-[800px] rounded-full pointer-events-none opacity-50"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(37, 99, 235, 0.045) 0%, rgba(99, 102, 241, 0.02) 45%, transparent 70%)",
-        }}
-      />
-      <div
-        className="absolute top-[60%] -left-[10%] sm:left-0 w-[550px] sm:w-[800px] h-[550px] sm:h-[800px] rounded-full pointer-events-none opacity-50"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(99, 102, 241, 0.045) 0%, rgba(56, 189, 248, 0.02) 45%, transparent 70%)",
-        }}
-      />
+        {/* Desktop Lateral Cosmic Dust Belts */}
+        <div
+          className="absolute top-[35%] right-0 w-[800px] h-[800px] rounded-full pointer-events-none opacity-50"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(37, 99, 235, 0.045) 0%, rgba(99, 102, 241, 0.02) 45%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute top-[60%] left-0 w-[800px] h-[800px] rounded-full pointer-events-none opacity-50"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(99, 102, 241, 0.045) 0%, rgba(56, 189, 248, 0.02) 45%, transparent 70%)",
+          }}
+        />
 
-      {/* 3. Deep Midnight Horizon Glow (Behind Contact & Footer) */}
-      <div
-        className="absolute bottom-0 inset-x-0 w-full h-[580px] pointer-events-none opacity-65"
-        style={{
-          background:
-            "radial-gradient(ellipse 75% 50% at 50% 115%, rgba(79, 70, 229, 0.10) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 80%)",
-        }}
-      />
+        {/* Desktop Midnight Horizon Glow */}
+        <div
+          className="absolute bottom-0 inset-x-0 w-full h-[580px] pointer-events-none opacity-65"
+          style={{
+            background:
+              "radial-gradient(ellipse 75% 50% at 50% 115%, rgba(79, 70, 229, 0.10) 0%, rgba(37, 99, 235, 0.04) 50%, transparent 80%)",
+          }}
+        />
 
-      {/* 4. Multi-Depth Astronomical Canvas (Stars, Twinkle, Meteor, Parallax) */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-85"
-      />
+        {/* Desktop Multi-Depth Astronomical Canvas (Stars, Twinkle, Meteor, Mouse Parallax) */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full pointer-events-none opacity-85"
+        />
 
-      {/* 5. Deep Peripheral Cosmic Vignette */}
-      <div
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 95% 90% at 50% 50%, transparent 60%, rgba(9, 9, 11, 0.65) 100%)",
-        }}
-      />
+        {/* Desktop Peripheral Cosmic Vignette */}
+        <div
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 95% 90% at 50% 50%, transparent 60%, rgba(9, 9, 11, 0.65) 100%)",
+          }}
+        />
+      </div>
+
+      {/* =========================================================
+          2. MOBILE BACKGROUND (Smooth Ambient Mist & Toolbar Blending)
+          ========================================================= */}
+      <div className="block lg:hidden">
+        {/* Mobile Atmospheric Celestial Mist (Hero - Soft feathered dispersion without circular hotspot) */}
+        <div
+          className="absolute top-0 inset-x-0 w-full h-[620px] pointer-events-none opacity-60"
+          style={{
+            background:
+              "radial-gradient(ellipse 160% 85% at 50% -25%, rgba(56, 189, 248, 0.09) 0%, rgba(37, 99, 235, 0.05) 35%, rgba(99, 102, 241, 0.025) 60%, transparent 80%)",
+          }}
+        />
+
+        {/* Mobile Soft Ambient Body Fog (Continuous diffused wash across Projects & Skills - Zero isolated blobs) */}
+        <div
+          className="absolute top-[25%] inset-x-0 w-full h-[1000px] pointer-events-none opacity-45 blur-[30px]"
+          style={{
+            background:
+              "radial-gradient(ellipse 130% 60% at 50% 50%, rgba(37, 99, 235, 0.04) 0%, rgba(99, 102, 241, 0.025) 40%, transparent 75%)",
+          }}
+        />
+
+        {/* Mobile Midnight Horizon Glow (Deep feathered dusk behind Contact & Footer) */}
+        <div
+          className="absolute bottom-0 inset-x-0 w-full h-[580px] pointer-events-none opacity-60"
+          style={{
+            background:
+              "radial-gradient(ellipse 140% 75% at 50% 120%, rgba(79, 70, 229, 0.08) 0%, rgba(37, 99, 235, 0.03) 45%, transparent 80%)",
+          }}
+        />
+
+        {/* Mobile Peripheral Cosmic Vignette */}
+        <div
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 95% 90% at 50% 50%, transparent 60%, rgba(9, 9, 11, 0.65) 100%)",
+          }}
+        />
+      </div>
     </div>
   );
 };
