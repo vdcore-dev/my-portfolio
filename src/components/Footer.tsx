@@ -67,10 +67,10 @@ export const Footer = () => {
           
           {/* Modern Capsule Header - Desktop only */}
           <div className="hidden lg:flex items-center justify-between gap-3 pb-3 mb-5 lg:pb-4 lg:mb-10 border-b border-zinc-800/80">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs font-mono text-zinc-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.1] text-xs font-mono text-zinc-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]">
               <span className="font-semibold tracking-wide uppercase text-[11px] text-zinc-200">Get in Touch</span>
             </div>
-            <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] text-zinc-400">
+            <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-400">
               Direct Channel
             </span>
           </div>
@@ -259,7 +259,7 @@ export const Footer = () => {
               </div>
 
               <div className="space-y-2.5">
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
+                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     <MapPin className="w-[18px] h-[18px] text-sky-400 shrink-0" />
                     <span>Location</span>
@@ -269,7 +269,7 @@ export const Footer = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
+                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     <Clock className="w-[18px] h-[18px] text-cyan-400 shrink-0" />
                     <span>Schedule</span>
@@ -279,7 +279,7 @@ export const Footer = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]">
+                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     <CheckCircle2 className="w-[18px] h-[18px] text-indigo-400 shrink-0" />
                     <span>Status</span>

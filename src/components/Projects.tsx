@@ -48,6 +48,7 @@ export const Projects = () => {
           tagDot: "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]",
           expandedCard: "!border-sky-500/60 shadow-[0_0_24px_rgba(56,189,248,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-sky-500/10 border-sky-500/40 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.2)]",
+          activeSidebarBorder: "!border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(56,189,248,0.25)]",
         };
       case "payment-gateway":
         return {
@@ -59,6 +60,7 @@ export const Projects = () => {
           tagDot: "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]",
           expandedCard: "!border-emerald-500/60 shadow-[0_0_24px_rgba(52,211,153,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-emerald-500/10 border-emerald-500/40 text-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.2)]",
+          activeSidebarBorder: "!border-emerald-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(52,211,153,0.25)]",
         };
       case "task-orchestrator":
         return {
@@ -70,6 +72,7 @@ export const Projects = () => {
           tagDot: "bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]",
           expandedCard: "!border-indigo-500/60 shadow-[0_0_24px_rgba(129,140,248,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-indigo-500/10 border-indigo-500/40 text-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.2)]",
+          activeSidebarBorder: "!border-indigo-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(129,140,248,0.25)]",
         };
       case "modern-portfolio":
       default:
@@ -82,6 +85,7 @@ export const Projects = () => {
           tagDot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]",
           expandedCard: "!border-cyan-500/60 shadow-[0_0_24px_rgba(34,211,238,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.2)]",
+          activeSidebarBorder: "!border-cyan-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(34,211,238,0.25)]",
         };
     }
   };
@@ -119,13 +123,14 @@ export const Projects = () => {
           <div className="col-span-5 flex flex-col gap-2.5">
             {PROJECTS.map((project, idx) => {
               const isSelected = project.id === selectedId;
+              const projectConfig = getProjectSystemConfig(project.id);
               return (
                 <button
                   key={project.id}
                   onClick={() => setSelectedId(project.id)}
                   className={`selector-item w-full text-left px-4 py-3.5 rounded-2xl border flex items-center justify-between group cursor-pointer ${
                     isSelected
-                      ? "selector-item-active text-white"
+                      ? `selector-item-active ${projectConfig.activeSidebarBorder} text-white`
                       : "selector-item-inactive text-zinc-400"
                   }`}
                 >
@@ -157,7 +162,7 @@ export const Projects = () => {
                     <span
                       className={`rounded-full transition-all duration-200 ${
                         isSelected
-                          ? "w-2 h-2 bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.9)]"
+                          ? `w-2 h-2 ${projectConfig.tagDot}`
                           : "w-1.5 h-1.5 bg-zinc-800 group-hover:bg-zinc-600"
                       }`}
                     />
@@ -244,7 +249,7 @@ export const Projects = () => {
                   {activeProject.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] text-zinc-200 font-mono text-[11px] font-medium"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-zinc-200 font-mono text-[11px] font-medium"
                     >
                       <span className="w-1.5 h-1.5 rounded-full bg-sky-400/90 shadow-[0_0_5px_rgba(56,189,248,0.8)] shrink-0" />
                       {tag}
@@ -272,11 +277,13 @@ export const Projects = () => {
                     href={activeProject.liveUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="group/demo inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 text-zinc-950 font-bold text-sm tracking-tight hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55),0_10px_22px_-4px_rgba(56,189,248,0.35)] transition-all duration-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.45),0_6px_18px_-4px_rgba(56,189,248,0.25)] active:scale-95"
+                    className="group/demo inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard hover:border-sky-500/50 border border-zinc-800 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-6px_rgba(56,189,248,0.22)] active:scale-95 transition-all duration-200 cursor-pointer"
                   >
-                    <Globe className="w-4 h-4 text-zinc-950 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:rotate-12" />
-                    <span>Live Preview</span>
-                    <ArrowUpRight className="w-4 h-4 text-zinc-950 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5" />
+                    <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 group-hover/demo:brightness-110 transition-all duration-200">
+                      Live Preview
+                    </span>
+                    <Globe className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:rotate-12 shrink-0" />
+                    <ArrowUpRight className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5 shrink-0" />
                   </a>
                 )}
               </div>

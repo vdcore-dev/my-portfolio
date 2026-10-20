@@ -193,7 +193,7 @@ export const Hero = () => {
       {/* 2. Desktop Interface */}
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
         <div className="col-span-7 flex flex-col items-start text-left">
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] text-xs font-mono text-zinc-200 mb-6 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-xs font-mono text-zinc-200 mb-6 backdrop-blur-md">
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
@@ -217,7 +217,7 @@ export const Hero = () => {
             <a
               href="#projects"
               onClick={scrollToProjects}
-              className="inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard hover:border-sky-500/50 border border-zinc-800 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-6px_rgba(56,189,248,0.22)] active:scale-95 transition-all duration-200 group cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard hover:border-sky-500/50 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-6px_rgba(56,189,248,0.22)] active:scale-95 transition-all duration-200 group cursor-pointer"
             >
               <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 group-hover:brightness-110 transition-all duration-200">
                 Explore Systems
@@ -300,7 +300,7 @@ export const Hero = () => {
               {PERSONAL_INFO.focusAreas.map((area) => (
                 <div
                   key={area.id}
-                  className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-zinc-800/85 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.045)]"
+                  className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
                 >
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     {renderFocusIcon(area.id)}

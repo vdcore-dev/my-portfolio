@@ -53,6 +53,8 @@ export const Skills = () => {
           expandedCard: "!border-sky-500/60 shadow-[0_0_24px_rgba(56,189,248,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-sky-500/10 border-sky-500/40 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.2)]",
           highlightCard: "bg-gradient-to-b from-sky-500/[0.08] to-zinc-900/90 border-sky-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
+          highlightCardDesktop: "bg-gradient-to-b from-sky-500/[0.08] to-zinc-900/90 border-sky-500/35 hover:border-sky-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(14,165,233,0.18)]",
+          activeSidebarBorder: "!border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(56,189,248,0.25)]",
           starColor: "text-sky-400 fill-sky-400/35",
           titleHover: "group-hover:text-sky-300",
         };
@@ -68,6 +70,8 @@ export const Skills = () => {
           expandedCard: "!border-cyan-500/60 shadow-[0_0_24px_rgba(34,211,238,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.2)]",
           highlightCard: "bg-gradient-to-b from-cyan-500/[0.08] to-zinc-900/90 border-cyan-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
+          highlightCardDesktop: "bg-gradient-to-b from-cyan-500/[0.08] to-zinc-900/90 border-cyan-500/35 hover:border-cyan-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(34,211,238,0.18)]",
+          activeSidebarBorder: "!border-cyan-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(34,211,238,0.25)]",
           starColor: "text-cyan-400 fill-cyan-400/35",
           titleHover: "group-hover:text-cyan-300",
         };
@@ -83,6 +87,8 @@ export const Skills = () => {
           expandedCard: "!border-indigo-500/60 shadow-[0_0_24px_rgba(129,140,248,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-indigo-500/10 border-indigo-500/40 text-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.2)]",
           highlightCard: "bg-gradient-to-b from-indigo-500/[0.08] to-zinc-900/90 border-indigo-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
+          highlightCardDesktop: "bg-gradient-to-b from-indigo-500/[0.08] to-zinc-900/90 border-indigo-500/35 hover:border-indigo-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(129,140,248,0.18)]",
+          activeSidebarBorder: "!border-indigo-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(129,140,248,0.25)]",
           starColor: "text-indigo-400 fill-indigo-400/35",
           titleHover: "group-hover:text-indigo-300",
         };
@@ -98,6 +104,8 @@ export const Skills = () => {
           expandedCard: "!border-violet-500/60 shadow-[0_0_24px_rgba(167,139,250,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-violet-500/10 border-violet-500/40 text-violet-400 shadow-[0_0_12px_rgba(167,139,250,0.2)]",
           highlightCard: "bg-gradient-to-b from-violet-500/[0.08] to-zinc-900/90 border-violet-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
+          highlightCardDesktop: "bg-gradient-to-b from-violet-500/[0.08] to-zinc-900/90 border-violet-500/35 hover:border-violet-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(167,139,250,0.18)]",
+          activeSidebarBorder: "!border-violet-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(167,139,250,0.25)]",
           starColor: "text-violet-400 fill-violet-400/35",
           titleHover: "group-hover:text-violet-300",
         };
@@ -114,6 +122,8 @@ export const Skills = () => {
           expandedCard: "!border-blue-500/60 shadow-[0_0_24px_rgba(96,165,250,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
           closeBtn: "bg-blue-500/10 border-blue-500/40 text-blue-400 shadow-[0_0_12px_rgba(96,165,250,0.2)]",
           highlightCard: "bg-gradient-to-b from-blue-500/[0.08] to-zinc-900/90 border-blue-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
+          highlightCardDesktop: "bg-gradient-to-b from-blue-500/[0.08] to-zinc-900/90 border-blue-500/35 hover:border-blue-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(96,165,250,0.18)]",
+          activeSidebarBorder: "!border-blue-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(96,165,250,0.25)]",
           starColor: "text-blue-400 fill-blue-400/35",
           titleHover: "group-hover:text-blue-300",
         };
@@ -161,6 +171,7 @@ export const Skills = () => {
             {SKILL_CATEGORIES.map((cat) => {
               const catKey = cat.id ?? cat.category;
               const isSelected = catKey === activeCategoryId;
+              const catVisualConfig = getCategoryVisualConfig(cat.id);
 
               return (
                 <button
@@ -168,7 +179,7 @@ export const Skills = () => {
                   onClick={() => setActiveCategoryId(catKey)}
                   className={`selector-item w-full text-left px-4 py-3.5 rounded-2xl border flex items-center justify-between group cursor-pointer ${
                     isSelected
-                      ? "selector-item-active text-white"
+                      ? `selector-item-active ${catVisualConfig.activeSidebarBorder} text-white`
                       : "selector-item-inactive text-zinc-400"
                   }`}
                 >
@@ -193,7 +204,7 @@ export const Skills = () => {
                     <span
                       className={`rounded-full transition-all duration-200 ${
                         isSelected
-                          ? "w-2 h-2 bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.9)]"
+                          ? `w-2 h-2 ${catVisualConfig.tagDot}`
                           : "w-1.5 h-1.5 bg-zinc-800 group-hover:bg-zinc-600"
                       }`}
                     />
@@ -205,64 +216,70 @@ export const Skills = () => {
 
           {/* Category showcase display card */}
           <div className="col-span-7">
-            <div
-              key={activeCategoryId}
-              className="rounded-3xl glass-panel p-6 sm:p-7 relative flex flex-col justify-between h-[445px] animate-panel-switch"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-zinc-800/80 mb-3.5">
-                  <div className="flex items-center gap-3 min-w-0">
-                    {getCategoryIcon(activeCategory.id, "w-5 h-5")}
-                    <h3 className="text-lg sm:text-xl font-bold text-zinc-100 tracking-tight font-sans truncate">
-                      {activeCategory.category}
-                    </h3>
-                  </div>
+            {(() => {
+              const activeVisualConfig = getCategoryVisualConfig(activeCategory.id);
+              return (
+                <div
+                  key={activeCategoryId}
+                  className="rounded-3xl glass-panel p-6 sm:p-7 relative flex flex-col justify-between h-[445px] animate-panel-switch"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-zinc-800/80 mb-3.5">
+                      <div className="flex items-center gap-3 min-w-0">
+                        {getCategoryIcon(activeCategory.id, "w-5 h-5")}
+                        <h3 className="text-lg sm:text-xl font-bold text-zinc-100 tracking-tight font-sans truncate">
+                          {activeCategory.category}
+                        </h3>
+                      </div>
 
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 font-mono text-[10px] shrink-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.9)]" />
-                    {activeCategory.skills.length} Technologies
-                  </span>
-                </div>
-
-                {/* Tagline */}
-                <p className="text-zinc-300 text-sm font-sans leading-relaxed mb-4 line-clamp-2">
-                  {activeCategory.tagline || ""}
-                </p>
-              </div>
-
-              {/* 2x3 skills grid */}
-              <div className="grid grid-cols-2 gap-3 font-mono text-xs">
-                {activeCategory.skills.map((skill: SkillItem) => (
-                  <div
-                    key={skill.name}
-                    className={`p-3.5 rounded-2xl border transition-all duration-200 flex flex-col justify-between h-[84px] ${
-                      skill.highlight
-                        ? "bg-gradient-to-b from-sky-500/[0.08] to-zinc-900/90 border-sky-500/35 hover:border-sky-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(14,165,233,0.15)]"
-                        : "glass-subcard"
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-bold text-sm text-zinc-100 flex items-center gap-2 truncate font-sans">
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                            skill.highlight
-                              ? "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)]"
-                              : "bg-sky-400/75 shadow-[0_0_5px_rgba(56,189,248,0.6)]"
-                          }`}
-                        />
-                        <span className="truncate">{skill.name}</span>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 border border-white/[0.1] text-zinc-300 font-mono text-[11px] shrink-0 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]">
+                        <span className={`w-1.5 h-1.5 rounded-full ${activeVisualConfig.tagDot}`} />
+                        <Layers className="w-3.5 h-3.5 text-zinc-400" />
+                        <span>{String(activeCategory.skills.length).padStart(2, "0")} Tech</span>
                       </span>
-                      {skill.highlight && (
-                        <Star className="w-3.5 h-3.5 text-sky-400 fill-sky-400/35 shrink-0 ml-1" />
-                      )}
                     </div>
-                    <p className="text-[11px] text-zinc-400 font-sans mt-0.5 leading-snug line-clamp-2">
-                      {skill.role}
+
+                    {/* Tagline */}
+                    <p className="text-zinc-300 text-sm font-sans leading-relaxed mb-4 line-clamp-2">
+                      {activeCategory.tagline || ""}
                     </p>
                   </div>
-                ))}
-              </div>
-            </div>
+
+                  {/* 2x3 skills grid */}
+                  <div className="grid grid-cols-2 gap-3 font-mono text-xs">
+                    {activeCategory.skills.map((skill: SkillItem) => (
+                      <div
+                        key={skill.name}
+                        className={`p-3.5 rounded-2xl border transition-all duration-200 flex flex-col justify-between h-[84px] ${
+                          skill.highlight
+                            ? activeVisualConfig.highlightCardDesktop
+                            : "glass-subcard"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-bold text-sm text-zinc-100 flex items-center gap-2 truncate font-sans">
+                            <span
+                              className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                                skill.highlight
+                                  ? activeVisualConfig.tagDot
+                                  : "bg-zinc-700"
+                              }`}
+                            />
+                            <span className="truncate">{skill.name}</span>
+                          </span>
+                          {skill.highlight && (
+                            <Star className={`w-3.5 h-3.5 ${activeVisualConfig.starColor} shrink-0 ml-1`} />
+                          )}
+                        </div>
+                        <p className="text-[11px] text-zinc-400 font-sans mt-0.5 leading-snug line-clamp-2">
+                          {skill.role}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
 
