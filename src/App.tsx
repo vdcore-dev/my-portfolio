@@ -8,29 +8,8 @@ import { ModernBackground } from "./components/ModernBackground";
 
 export default function App() {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      if ("scrollRestoration" in window.history) {
-        window.history.scrollRestoration = "manual";
-      }
-
-      // If page was loaded/reloaded near the top, snap cleanly to 0
-      const resetIfNearTop = () => {
-        if (window.scrollY < 160) {
-          window.scrollTo(0, 0);
-        }
-      };
-
-      resetIfNearTop();
-      const rAF = requestAnimationFrame(resetIfNearTop);
-      const t1 = setTimeout(resetIfNearTop, 60);
-
-      window.addEventListener("pageshow", resetIfNearTop);
-
-      return () => {
-        cancelAnimationFrame(rAF);
-        clearTimeout(t1);
-        window.removeEventListener("pageshow", resetIfNearTop);
-      };
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
     }
   }, []);
 

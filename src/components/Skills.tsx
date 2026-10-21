@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { SKILL_CATEGORIES } from "../data/portfolioData";
-import { Server, Database, Layout, Terminal, Cloud, Bot, Star, ChevronDown, Layers } from "lucide-react";
+import { Server, Database, Layout, Terminal, Cloud, Bot, ChevronDown, Layers } from "lucide-react";
 import type { SkillCategory, SkillItem } from "../types";
 
 export const Skills = () => {
@@ -8,6 +8,7 @@ export const Skills = () => {
   const [activeCategoryId, setActiveCategoryId] = useState<string>(defaultId);
   const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null);
   const mobileSkillRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const initialCardViewportTopRef = useRef<number | null>(null);
 
   const activeCategory: SkillCategory =
     SKILL_CATEGORIES.find((c) => (c.id ?? c.category) === activeCategoryId) ||
@@ -16,26 +17,76 @@ export const Skills = () => {
   const totalSkillsCount = SKILL_CATEGORIES.reduce((acc, cat) => acc + cat.skills.length, 0);
 
   const toggleMobileCategory = (id: string) => {
-    const willExpand = expandedMobileCategory !== id;
-    setExpandedMobileCategory(willExpand ? id : null);
+    const isCurrentlyOpen = expandedMobileCategory === id;
+    const navbarHeight = 84;
+    const targetComfortableTop = navbarHeight + 12; // 96px
 
-    if (willExpand) {
-      setTimeout(() => {
-        const cardEl = mobileSkillRefs.current[id];
-        if (cardEl) {
-          const rect = cardEl.getBoundingClientRect();
-          const navbarHeight = 84;
-          const windowHeight = window.innerHeight;
+    if (isCurrentlyOpen) {
+      // User is CLOSING the currently open card
+      const cardEl = mobileSkillRefs.current[id];
+      const prevRestTop = initialCardViewportTopRef.current;
 
-          if (rect.bottom > windowHeight) {
-            const extraScroll = rect.bottom - windowHeight + 24;
-            window.scrollBy({ top: extraScroll, behavior: "smooth" });
-          } else if (rect.top < navbarHeight) {
-            const topOffset = rect.top - navbarHeight;
-            window.scrollBy({ top: topOffset, behavior: "smooth" });
-          }
+      setExpandedMobileCategory(null);
+
+      if (cardEl) {
+        // Return to the initial position on screen where the card was before opening
+        const currentCardDocTop = cardEl.getBoundingClientRect().top + window.scrollY;
+        const restTopClamped =
+          prevRestTop !== null
+            ? Math.max(targetComfortableTop, Math.min(prevRestTop, window.innerHeight - 140))
+            : targetComfortableTop;
+        const targetScrollY = currentCardDocTop - restTopClamped;
+
+        window.scrollTo({
+          top: Math.max(0, targetScrollY),
+          behavior: "smooth",
+        });
+      }
+      initialCardViewportTopRef.current = null;
+    } else {
+      // User is OPENING a new card
+      const cardEl = mobileSkillRefs.current[id];
+      const prevOpenId = expandedMobileCategory;
+      const prevCardEl = prevOpenId ? mobileSkillRefs.current[prevOpenId] : null;
+
+      // Capture the card's current position on the user's screen before opening
+      if (cardEl) {
+        initialCardViewportTopRef.current = cardEl.getBoundingClientRect().top;
+      }
+
+      // Check if previous open card is ABOVE this card in the document
+      let heightLossFromAbove = 0;
+      if (prevCardEl && cardEl) {
+        const isPrevAbove =
+          (cardEl.compareDocumentPosition(prevCardEl) & Node.DOCUMENT_POSITION_PRECEDING) !== 0;
+        if (isPrevAbove) {
+          // When the upper card collapses, this card shifts UP by the height lost from the upper card
+          const prevTotalHeight = prevCardEl.offsetHeight;
+          const estimatedClosedHeight = 92;
+          heightLossFromAbove = Math.max(0, prevTotalHeight - estimatedClosedHeight);
         }
-      }, 180);
+      }
+
+      setExpandedMobileCategory(id);
+
+      if (cardEl) {
+        const currentCardDocTop = cardEl.getBoundingClientRect().top + window.scrollY;
+        const finalCardDocTop = currentCardDocTop - heightLossFromAbove;
+        const targetScrollY = finalCardDocTop - targetComfortableTop;
+
+        window.scrollTo({
+          top: Math.max(0, targetScrollY),
+          behavior: "smooth",
+        });
+
+        // Ensure scroll reaches destination once DOM layout updates
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: Math.max(0, targetScrollY),
+            behavior: "smooth",
+          });
+        });
+      }
     }
   };
 
@@ -50,7 +101,7 @@ export const Skills = () => {
           badgeBorder: "border-sky-500/35",
           glowGradient: "from-sky-500/25 via-sky-500/5 to-transparent",
           tagDot: "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]",
-          expandedCard: "!border-sky-500/60 shadow-[0_0_24px_rgba(56,189,248,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
+          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
           closeBtn: "bg-sky-500/10 border-sky-500/40 text-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.2)]",
           highlightCard: "bg-gradient-to-b from-sky-500/[0.08] to-zinc-900/90 border-sky-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
           highlightCardDesktop: "bg-gradient-to-b from-sky-500/[0.08] to-zinc-900/90 border-sky-500/35 hover:border-sky-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(14,165,233,0.18)]",
@@ -67,7 +118,7 @@ export const Skills = () => {
           badgeBorder: "border-cyan-500/35",
           glowGradient: "from-cyan-500/25 via-cyan-500/5 to-transparent",
           tagDot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]",
-          expandedCard: "!border-cyan-500/60 shadow-[0_0_24px_rgba(34,211,238,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
+          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
           closeBtn: "bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.2)]",
           highlightCard: "bg-gradient-to-b from-cyan-500/[0.08] to-zinc-900/90 border-cyan-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
           highlightCardDesktop: "bg-gradient-to-b from-cyan-500/[0.08] to-zinc-900/90 border-cyan-500/35 hover:border-cyan-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(34,211,238,0.18)]",
@@ -84,7 +135,7 @@ export const Skills = () => {
           badgeBorder: "border-indigo-500/35",
           glowGradient: "from-indigo-500/25 via-indigo-500/5 to-transparent",
           tagDot: "bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]",
-          expandedCard: "!border-indigo-500/60 shadow-[0_0_24px_rgba(129,140,248,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
+          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
           closeBtn: "bg-indigo-500/10 border-indigo-500/40 text-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.2)]",
           highlightCard: "bg-gradient-to-b from-indigo-500/[0.08] to-zinc-900/90 border-indigo-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
           highlightCardDesktop: "bg-gradient-to-b from-indigo-500/[0.08] to-zinc-900/90 border-indigo-500/35 hover:border-indigo-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(129,140,248,0.18)]",
@@ -101,7 +152,7 @@ export const Skills = () => {
           badgeBorder: "border-violet-500/35",
           glowGradient: "from-violet-500/25 via-violet-500/5 to-transparent",
           tagDot: "bg-violet-400 shadow-[0_0_6px_rgba(167,139,250,0.8)]",
-          expandedCard: "!border-violet-500/60 shadow-[0_0_24px_rgba(167,139,250,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
+          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
           closeBtn: "bg-violet-500/10 border-violet-500/40 text-violet-400 shadow-[0_0_12px_rgba(167,139,250,0.2)]",
           highlightCard: "bg-gradient-to-b from-violet-500/[0.08] to-zinc-900/90 border-violet-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
           highlightCardDesktop: "bg-gradient-to-b from-violet-500/[0.08] to-zinc-900/90 border-violet-500/35 hover:border-violet-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(167,139,250,0.18)]",
@@ -119,7 +170,7 @@ export const Skills = () => {
           badgeBorder: "border-blue-500/35",
           glowGradient: "from-blue-500/25 via-blue-500/5 to-transparent",
           tagDot: "bg-blue-400 shadow-[0_0_6px_rgba(96,165,250,0.8)]",
-          expandedCard: "!border-blue-500/60 shadow-[0_0_24px_rgba(96,165,250,0.18),inset_0_1px_0_0_rgba(255,255,255,0.18)]",
+          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
           closeBtn: "bg-blue-500/10 border-blue-500/40 text-blue-400 shadow-[0_0_12px_rgba(96,165,250,0.2)]",
           highlightCard: "bg-gradient-to-b from-blue-500/[0.08] to-zinc-900/90 border-blue-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
           highlightCardDesktop: "bg-gradient-to-b from-blue-500/[0.08] to-zinc-900/90 border-blue-500/35 hover:border-blue-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(96,165,250,0.18)]",
@@ -150,7 +201,7 @@ export const Skills = () => {
   return (
     <section 
       id="skills" 
-      className="w-full flex flex-col pt-[116px] pb-10 lg:py-0 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-0 touch-pan-y"
+      className="w-full flex flex-col pt-[116px] pb-24 sm:pb-28 lg:py-0 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-0 touch-pan-y"
     >
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
         
@@ -268,7 +319,9 @@ export const Skills = () => {
                             <span className="truncate">{skill.name}</span>
                           </span>
                           {skill.highlight && (
-                            <Star className={`w-3.5 h-3.5 ${activeVisualConfig.starColor} shrink-0 ml-1`} />
+                            <span className="px-1.5 py-0.5 rounded-md bg-white/[0.08] border border-white/[0.12] text-[9px] font-mono font-bold tracking-wider text-zinc-200 uppercase shrink-0 shadow-inner">
+                              CORE
+                            </span>
                           )}
                         </div>
                         <p className="text-[11px] text-zinc-400 font-sans mt-0.5 leading-snug line-clamp-2">
@@ -297,7 +350,7 @@ export const Skills = () => {
                 ref={(el) => {
                   mobileSkillRefs.current[catKey] = el;
                 }}
-                className={`rounded-3xl transition-all duration-300 overflow-hidden glass-panel p-4 ${
+                className={`rounded-3xl transition-[border-color,box-shadow] duration-300 overflow-hidden glass-panel p-4 ${
                   isExpanded
                     ? visualConfig.expandedCard
                     : "hover:border-white/20"
@@ -308,63 +361,51 @@ export const Skills = () => {
                   onClick={() => toggleMobileCategory(catKey)}
                   className="flex items-start gap-3.5 cursor-pointer select-none group"
                 >
-                  {/* Left: Radiant Category Hardware/System Badge */}
-                  <div className={`relative w-[68px] h-[68px] sm:w-[74px] sm:h-[74px] rounded-2xl overflow-hidden shrink-0 border ${visualConfig.badgeBorder} bg-zinc-950 flex flex-col items-center justify-center shadow-lg transition-transform duration-300 group-hover:scale-105`}>
-                    <div className={`absolute inset-0 bg-gradient-to-br ${visualConfig.glowGradient}`} />
-                    <CategoryIcon className={`w-7 h-7 ${visualConfig.accentColor} relative z-10 transition-transform duration-300 group-hover:scale-110`} />
-                    <span className="relative z-10 text-[8px] font-mono font-bold tracking-wider text-zinc-400 mt-1 uppercase">
-                      {visualConfig.subLabel}
-                    </span>
+                  {/* Left: Clean Frosted Glass Housing with Centered Radiant Icon */}
+                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl shrink-0 border border-white/[0.08] bg-zinc-900/60 backdrop-blur-md flex items-center justify-center shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-transform duration-300 group-hover:scale-105">
+                    <CategoryIcon className={`w-6 h-6 sm:w-7 sm:h-7 ${visualConfig.accentColor} transition-transform duration-300 group-hover:scale-110`} />
                   </div>
 
                   {/* Right: Full-width Title & Info + Bottom Actions Bar */}
                   <div className="flex-1 min-w-0">
-                    {/* Domain Category Eyebrow Capsule */}
-                    <div className="flex items-center mb-1.5">
-                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
-                        <span className={`w-1 h-1 rounded-full ${visualConfig.tagDot}`} />
-                        <span className="text-[9px] font-mono font-medium text-zinc-300 uppercase tracking-wider">
-                          {visualConfig.domainLabel}
-                        </span>
-                      </span>
-                    </div>
-
                     {/* Category Title */}
-                    <h3 className={`text-sm sm:text-base font-bold text-zinc-100 tracking-tight leading-snug ${visualConfig.titleHover} transition-colors`}>
+                    <h3 className="text-sm sm:text-base font-bold text-zinc-100 tracking-tight leading-snug group-hover:text-white transition-colors">
                       {cat.category}
                     </h3>
 
                     {/* Top Core Technologies Preview */}
-                    <div className="mt-1.5 font-mono text-[11px] text-zinc-400 leading-snug">
+                    <div className="mt-1 font-mono text-[11px] text-zinc-400 leading-snug">
                       <span>
                         {(cat.previewTech ?? cat.skills.slice(0, 2).map((s) => s.name)).join(" • ")}
                       </span>
                     </div>
 
-                    {/* Actions Bar Below Title: Tool count pill & Modern Expand Toggle */}
+                    {/* Actions Bar Below Title: Tool count pill & Clean Neutral Expand Toggle */}
                     <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-zinc-800/60">
                       <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-300 text-xs font-mono font-medium shadow-inner">
                         <Layers className="w-3.5 h-3.5 text-zinc-400" />
                         <span>{String(cat.skills.length).padStart(2, "0")} Tech</span>
                       </span>
 
-                      {/* 2026 Expand / Stack Button */}
+                      {/* Circular Glass Toggle Button - Glowing Accent Arrow When Open */}
                       <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleMobileCategory(catKey);
                         }}
-                        className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-all duration-300 cursor-pointer ${
+                        aria-label={isExpanded ? "Collapse category" : "Expand category"}
+                        className={`ml-auto w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-300 cursor-pointer ${
                           isExpanded
-                            ? visualConfig.closeBtn
-                            : "bg-zinc-900/90 border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-700"
+                            ? "bg-white/[0.08] border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]"
+                            : "bg-zinc-900/90 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/60"
                         }`}
                       >
-                        <span>{isExpanded ? "Close" : "Stack"}</span>
                         <ChevronDown
-                          className={`w-3.5 h-3.5 stroke-[2.5] transition-transform duration-300 ${
-                            isExpanded ? "rotate-180" : visualConfig.accentColor
+                          className={`w-4 h-4 stroke-[2.5] transition-all duration-300 ${
+                            isExpanded
+                              ? `rotate-180 ${visualConfig.accentColor} drop-shadow-[0_0_6px_currentColor]`
+                              : "text-zinc-400"
                           }`}
                         />
                       </button>
@@ -372,41 +413,51 @@ export const Skills = () => {
                   </div>
                 </div>
 
-                {/* Expanded State: 2-Column Grid of Skills with Highlighting */}
-                {isExpanded && (
-                  <div className="pt-3.5 mt-3.5 border-t border-zinc-800/80 animate-in fade-in zoom-in-95 duration-200">
-                    {cat.tagline && (
-                      <p className="text-xs sm:text-[13px] text-zinc-300 leading-relaxed font-sans mb-3.5">
-                        {cat.tagline}
-                      </p>
-                    )}
+                {/* Expanded State with Fluid CSS Grid Transition */}
+                <div
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isExpanded
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="pt-3.5 mt-3.5 border-t border-zinc-800/80">
+                      {cat.tagline && (
+                        <p className="text-xs sm:text-[13px] text-zinc-300 leading-relaxed font-sans mb-3.5">
+                          {cat.tagline}
+                        </p>
+                      )}
 
-                    <div className="grid grid-cols-2 gap-2">
-                      {cat.skills.map((skill: SkillItem) => (
-                        <div
-                          key={skill.name}
-                          className={`p-2.5 rounded-xl border flex flex-col justify-between min-h-[74px] transition-all ${
-                            skill.highlight
-                              ? visualConfig.highlightCard
-                              : "bg-zinc-900/60 border-zinc-800/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]"
-                          }`}
-                        >
-                          <div className="flex items-center justify-between gap-1 mb-1">
-                            <span className="font-sans text-xs font-bold text-zinc-100 truncate">
-                              {skill.name}
-                            </span>
-                            {skill.highlight && (
-                              <Star className={`w-3 h-3 ${visualConfig.starColor} shrink-0`} />
-                            )}
+                      <div className="grid grid-cols-2 gap-2">
+                        {cat.skills.map((skill: SkillItem) => (
+                          <div
+                            key={skill.name}
+                            className={`p-2.5 rounded-xl border flex flex-col justify-between min-h-[78px] transition-all ${
+                              skill.highlight
+                                ? visualConfig.highlightCard
+                                : "bg-zinc-900/60 border-zinc-800/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]"
+                            }`}
+                          >
+                            <div className="flex items-start justify-between gap-1 mb-1">
+                              <span className="font-sans text-xs font-bold text-zinc-100 leading-snug break-words">
+                                {skill.name}
+                              </span>
+                              {skill.highlight && (
+                                <span className="px-1.5 py-0.5 rounded-md bg-white/[0.08] border border-white/[0.12] text-[8px] font-mono font-bold tracking-wider text-zinc-200 uppercase shrink-0 shadow-inner">
+                                  CORE
+                                </span>
+                              )}
+                            </div>
+                            <p className="text-[10px] text-zinc-400 font-sans leading-relaxed line-clamp-2">
+                              {skill.role}
+                            </p>
                           </div>
-                          <p className="text-[10px] text-zinc-400 font-sans leading-relaxed line-clamp-2">
-                            {skill.role}
-                          </p>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

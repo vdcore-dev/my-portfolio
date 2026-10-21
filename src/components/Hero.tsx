@@ -24,7 +24,10 @@ export const Hero = () => {
     };
   }, [isPhotoOpen]);
 
-  const handleCopyEmail = async () => {
+  const handleCopyEmail = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e?.currentTarget) {
+      e.currentTarget.blur();
+    }
     const success = await copySecureEmail();
     if (success) {
       setCopied(true);
@@ -158,32 +161,32 @@ export const Hero = () => {
           <a
             href="#projects"
             onClick={scrollToProjects}
-            className="flex-1 inline-flex items-center justify-center gap-2 h-10 px-3 rounded-full glass-subcard hover:border-sky-500/40 border border-zinc-800 text-xs font-sans font-medium backdrop-blur-md active:scale-95 transition-all cursor-pointer shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] group"
+            className="flex-1 inline-flex items-center justify-center gap-2 h-11 px-3.5 rounded-full glass-subcard !border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_20px_-6px_rgba(56,189,248,0.25)] hover:border-sky-500/60 text-sm font-sans font-medium backdrop-blur-md active:scale-95 transition-all cursor-pointer group"
           >
             <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
               Explore Systems
             </span>
-            <ChevronDown className="w-3.5 h-3.5 text-sky-400 animate-bounce shrink-0" />
+            <ChevronDown className="w-4 h-4 text-sky-400 animate-bounce group-hover:scale-110 transition-transform duration-200 shrink-0" />
           </a>
 
           <button
             onClick={handleCopyEmail}
             type="button"
-            className={`flex-1 inline-flex items-center justify-center gap-2 h-10 px-3 text-xs font-sans font-medium rounded-full border backdrop-blur-md active:scale-95 transition-all cursor-pointer ${
+            className={`flex-1 inline-flex items-center justify-center gap-2 h-11 px-3.5 text-sm font-sans font-medium rounded-full border backdrop-blur-md active:scale-95 transition-all cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-500/50 ${
               copied
-                ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/15"
-                : "glass-subcard text-zinc-200 hover:text-white"
+                ? "bg-sky-500/15 !border-sky-500/50 text-sky-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_8px_20px_-6px_rgba(56,189,248,0.25)]"
+                : "glass-subcard border-white/[0.1] text-zinc-200 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
             }`}
           >
             {copied ? (
               <>
                 <span className="font-semibold tracking-wide">Copied!</span>
-                <Check className="w-3.5 h-3.5 text-sky-400 animate-in zoom-in-75 duration-150 shrink-0" />
+                <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150 shrink-0" />
               </>
             ) : (
               <>
                 <span>Get in touch</span>
-                <Copy className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                <Copy className="w-4 h-4 text-sky-400 shrink-0 group-hover:rotate-12 transition-transform duration-200" />
               </>
             )}
           </button>
@@ -192,7 +195,10 @@ export const Hero = () => {
 
       {/* 2. Desktop Interface */}
       <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
-        <div className="col-span-7 flex flex-col items-start text-left">
+        <div className="col-span-7 flex flex-col items-start text-left relative">
+          {/* Subtle Ambient Radial Glow behind the headline */}
+          <div className="absolute -top-16 -left-16 w-[450px] h-[350px] bg-gradient-to-tr from-sky-500/15 via-indigo-500/10 to-transparent blur-[110px] rounded-full pointer-events-none -z-10" />
+
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-xs font-mono text-zinc-200 mb-6 backdrop-blur-md">
             <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -201,7 +207,7 @@ export const Hero = () => {
             <span>{PERSONAL_INFO.availability}</span>
           </div>
 
-          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-zinc-100 mb-6 leading-[1.08]">
+          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-zinc-100 mb-6 leading-[1.08] font-sans">
             Building scalable <br />
             <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
               backends & resilient
@@ -217,7 +223,7 @@ export const Hero = () => {
             <a
               href="#projects"
               onClick={scrollToProjects}
-              className="inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard hover:border-sky-500/50 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-6px_rgba(56,189,248,0.22)] active:scale-95 transition-all duration-200 group cursor-pointer"
+              className="inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard !border-sky-500/40 hover:!border-sky-400/70 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_24px_-6px_rgba(56,189,248,0.25)] active:scale-95 transition-all duration-200 group cursor-pointer"
             >
               <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 group-hover:brightness-110 transition-all duration-200">
                 Explore Systems
@@ -227,16 +233,16 @@ export const Hero = () => {
 
             <button
               onClick={handleCopyEmail}
-              className={`inline-flex items-center justify-center gap-2.5 h-11 px-6 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer ${
+              className={`inline-flex items-center justify-center gap-2.5 h-11 px-6 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-500/50 ${
                 copied
-                  ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/20"
-                  : "glass-subcard text-zinc-200 hover:text-white"
+                  ? "bg-sky-500/15 !border-sky-500/50 text-sky-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_8px_20px_-6px_rgba(56,189,248,0.25)]"
+                  : "glass-subcard border-white/[0.1] text-zinc-200 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/20"
               }`}
               title="Click to copy email address"
             >
               {copied ? (
                 <>
-                  <span className="font-semibold tracking-wide">Email copied!</span>
+                  <span className="font-semibold tracking-wide">Copied to Clipboard!</span>
                   <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150" />
                 </>
               ) : (

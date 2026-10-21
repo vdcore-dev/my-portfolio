@@ -304,7 +304,7 @@ export const Projects = () => {
                 ref={(el) => {
                   mobileCardRefs.current[project.id] = el;
                 }}
-                className={`rounded-3xl transition-all duration-300 overflow-hidden glass-panel p-4 ${
+                className={`rounded-3xl transition-[border-color,box-shadow] duration-300 overflow-hidden glass-panel p-4 ${
                   isExpanded
                     ? systemConfig.expandedCard
                     : "hover:border-white/20"

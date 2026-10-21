@@ -7,15 +7,9 @@
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
       }
-      function forceTop() {
+      if (!window.location.hash && window.scrollY > 0) {
         window.scrollTo(0, 0);
       }
-      forceTop();
-      window.addEventListener('DOMContentLoaded', forceTop);
-      window.addEventListener('load', forceTop);
-      window.addEventListener('pageshow', forceTop);
-      setTimeout(forceTop, 50);
-      setTimeout(forceTop, 150);
     </script>
 
     <!-- 1. Core Identity & SEO Meta Tags -->

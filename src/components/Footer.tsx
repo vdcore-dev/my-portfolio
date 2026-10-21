@@ -8,7 +8,10 @@ export const Footer = () => {
   const [copied, setCopied] = useState(false);
   const [shared, setShared] = useState(false);
 
-  const handleCopy = async () => {
+  const handleCopy = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    if (e?.currentTarget) {
+      e.currentTarget.blur();
+    }
     const success = await copySecureEmail();
     if (success) {
       setCopied(true);

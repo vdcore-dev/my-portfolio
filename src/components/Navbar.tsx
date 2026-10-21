@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Home, FileText, FolderGit2, Layers, Send, Share2, Check } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
+import { triggerSecureMail } from "../utils/security";
 
 const DESKTOP_LINKS = [
   { name: "Projects", href: "#projects", id: "projects" },
@@ -10,10 +11,10 @@ const DESKTOP_LINKS = [
 ];
 
 const MOBILE_LINKS = [
-  { name: "Home", href: "#", id: "home", icon: Home, tag: "Top" },
-  { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2, tag: "04" },
-  { name: "Skills", href: "#skills", id: "skills", icon: Layers, tag: "Stack" },
-  { name: "Contact", href: "#contact", id: "contact", icon: Send, tag: "Direct" },
+  { name: "Home", href: "#", id: "home", icon: Home },
+  { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
+  { name: "Skills", href: "#skills", id: "skills", icon: Layers },
+  { name: "Contact", href: "#contact", id: "contact", icon: Send },
 ];
 
 export const Navbar = () => {
@@ -192,7 +193,7 @@ export const Navbar = () => {
         aria-hidden="true"
       />
 
-      {/* Modern Floating Mobile Menu Card (Linear / Raycast Popover Style) */}
+      {/* Modern Floating Mobile Menu Card (Option 3 - Full-width clean rows, dot indicator, no vertical bar) */}
       <aside
         className={`fixed top-[70px] inset-x-3 sm:inset-x-6 max-w-sm mx-auto z-50 rounded-3xl glass-panel p-2.5 flex flex-col gap-1 transition-all duration-250 ease-out origin-top md:hidden ${
           mobileMenuOpen
@@ -207,20 +208,13 @@ export const Navbar = () => {
             <button
               key={link.id}
               onClick={(e) => scrollTo(e, link.id)}
-              className={`group relative flex items-center justify-between w-full px-3.5 py-2.5 rounded-2xl text-left text-sm font-sans transition-all duration-200 active:scale-[0.98] cursor-pointer ${
+              className={`group relative flex items-center justify-between w-full h-10 px-3.5 rounded-2xl text-left text-sm font-sans transition-all duration-200 select-none cursor-pointer active:scale-[0.98] ${
                 isActive
-                  ? "bg-white/[0.07] border border-white/[0.1] text-zinc-100 font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-                  : "border border-transparent text-zinc-400 hover:text-zinc-200 active:bg-white/[0.04]"
+                  ? "bg-white/[0.08] border border-white/[0.12] text-zinc-100 font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]"
+                  : "border border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
               }`}
             >
-              <div className="flex items-center gap-2.5">
-                <span
-                  className={`w-1 h-3.5 rounded-full transition-all duration-200 ${
-                    isActive
-                      ? "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.7)] opacity-100 scale-100"
-                      : "bg-transparent opacity-0 scale-75 -ml-1"
-                  }`}
-                />
+              <div className="flex items-center gap-3">
                 <Icon
                   className={`w-4 h-4 transition-colors duration-200 ${
                     isActive ? "text-sky-400" : "text-zinc-500 group-hover:text-zinc-400"
@@ -229,24 +223,22 @@ export const Navbar = () => {
                 <span className="tracking-tight text-[14px]">{link.name}</span>
               </div>
 
-              {/* Minimalist Monochromatic Context Tag */}
+              {/* Symmetrical subtle dot indicator for all 4 sections */}
               <span
-                className={`font-mono text-[11px] px-2 py-0.5 rounded-md border transition-colors ${
+                className={`w-1.5 h-1.5 rounded-full mr-0.5 transition-all duration-200 ${
                   isActive
-                    ? "bg-white/[0.06] border-white/[0.1] text-zinc-300"
-                    : "bg-white/[0.03] border-white/[0.05] text-zinc-500 group-hover:text-zinc-400 group-hover:bg-white/[0.05]"
+                    ? "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.85)] scale-110"
+                    : "bg-zinc-700/60 group-hover:bg-zinc-600"
                 }`}
-              >
-                {link.tag}
-              </span>
+              />
             </button>
           );
         })}
 
-        {/* Popover Footer: Quick Socials, Share & Availability Status */}
+        {/* Popover Footer: Quick Socials, Share & Mailto */}
         <div className="h-px w-full bg-white/[0.06] my-1" />
 
-        <div className="flex items-center justify-between px-2 pt-1 pb-0.5">
+        <div className="flex items-center justify-between px-1.5 pt-0.5 pb-0.5">
           <div className="flex items-center gap-1">
             <a
               href={PERSONAL_INFO.github}
@@ -277,7 +269,6 @@ export const Navbar = () => {
                 <XIcon className="w-3.5 h-3.5" />
               </a>
             )}
-            {/* Native Mobile Share / Clipboard Copy */}
             <button
               onClick={handleShare}
               aria-label="Share portfolio"
@@ -296,17 +287,20 @@ export const Navbar = () => {
             </button>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono text-zinc-400">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
-            </span>
-            <span>Available</span>
-          </div>
+          <button
+            onClick={triggerSecureMail}
+            type="button"
+            aria-label="Send Direct Email (mailto)"
+            title="Send Direct Email (mailto)"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:border-sky-500/40 text-[11px] font-mono text-zinc-300 hover:text-white transition-all active:scale-95 cursor-pointer"
+          >
+            <Send className="w-3.5 h-3.5 text-sky-400" />
+            <span>Mailto</span>
+          </button>
         </div>
       </aside>
 
-      {/* Desktop & Main Header */}
+      {/* Desktop & Main Header (100% Original Desktop Layout) */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
