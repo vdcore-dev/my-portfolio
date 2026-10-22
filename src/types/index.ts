@@ -5,6 +5,20 @@ export interface ProjectSpecs {
   security?: string;
 }
 
+export interface ArchitectureStep {
+  step: string;
+  name: string;
+  tech: string;
+  detail: string;
+}
+
+export interface MockApiSpec {
+  method: "GET" | "POST" | "PUT" | "DELETE";
+  endpoint: string;
+  status: number;
+  response: Record<string, unknown>;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -13,14 +27,14 @@ export interface Project {
   tags: string[];
   githubUrl?: string;
   liveUrl?: string;
-  featured?: boolean;
-  image?: string;
   specs?: ProjectSpecs;
+  architectureSteps?: ArchitectureStep[];
+  mockApi?: MockApiSpec;
 }
 
 export interface SkillItem {
   name: string;
-  role: string;
+  role?: string;
   highlight?: boolean;
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Database, Server, Cloud, Bot, User } from "lucide-react";
+import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Database, Server, Cloud, Bot, User, FileText } from "lucide-react";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { copySecureEmail } from "../utils/security";
 
@@ -75,8 +75,11 @@ export const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-svh lg:h-auto lg:min-h-dvh flex flex-col justify-start lg:justify-center box-border lg:pt-32 lg:pb-20 lg:px-4">
-      {/* 1. Mobile Interface - Exact 1-viewport fit with uniform vertical rhythm */}
-      <div className="flex lg:hidden flex-col justify-between min-h-[calc(100svh-1px)] pt-[96px] pb-7 px-4 relative z-10 w-full max-w-lg mx-auto box-border">
+      {/* 1. Mobile Interface - Locked to small viewport (svh): CTAs always sit above the browser toolbar, zero stretch while scrolling */}
+      <div
+        className="flex lg:hidden flex-col justify-between gap-4 min-h-svh pt-[92px] px-4 relative z-10 w-full max-w-lg mx-auto box-border"
+        style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
+      >
         
         {/* Profile Card with 4 Focus Area Symbols */}
         <div className="rounded-3xl glass-panel p-4 sm:p-5">
@@ -134,7 +137,7 @@ export const Hero = () => {
                 title={area.stack}
               >
                 {renderFocusIcon(area.id, "w-3.5 h-3.5")}
-                <span className="text-[9px] font-mono font-medium text-zinc-300 mt-1 truncate">
+                <span className="text-[10px] font-mono font-medium text-zinc-300 mt-1 truncate">
                   {getFocusLabel(area.id)}
                 </span>
               </div>
@@ -169,27 +172,15 @@ export const Hero = () => {
             <ChevronDown className="w-4 h-4 text-sky-400 animate-bounce group-hover:scale-110 transition-transform duration-200 shrink-0" />
           </a>
 
-          <button
-            onClick={handleCopyEmail}
-            type="button"
-            className={`flex-1 inline-flex items-center justify-center gap-2 h-11 px-3.5 text-sm font-sans font-medium rounded-full border backdrop-blur-md active:scale-95 transition-all cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-500/50 ${
-              copied
-                ? "bg-sky-500/15 !border-sky-500/50 text-sky-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_8px_20px_-6px_rgba(56,189,248,0.25)]"
-                : "glass-subcard border-white/[0.1] text-zinc-200 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
-            }`}
+          <a
+            href="/cv.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="flex-1 inline-flex items-center justify-center gap-2 h-11 px-3.5 text-sm font-sans font-medium rounded-full glass-subcard border border-white/[0.1] text-zinc-200 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/20 backdrop-blur-md active:scale-95 transition-all cursor-pointer group"
           >
-            {copied ? (
-              <>
-                <span className="font-semibold tracking-wide">Copied!</span>
-                <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150 shrink-0" />
-              </>
-            ) : (
-              <>
-                <span>Get in touch</span>
-                <Copy className="w-4 h-4 text-sky-400 shrink-0 group-hover:rotate-12 transition-transform duration-200" />
-              </>
-            )}
-          </button>
+            <FileText className="w-4 h-4 text-sky-400 shrink-0 group-hover:scale-110 transition-transform duration-200" />
+            <span>View CV</span>
+          </a>
         </div>
       </div>
 

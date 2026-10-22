@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Copy, Check, ChevronUp, ArrowUpRight, Send, Mail, Terminal, Share2, Info, MapPin, Clock, CheckCircle2 } from "lucide-react";
+import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, Share2, Info, MapPin, Clock, CheckCircle2 } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { triggerSecureMail, copySecureEmail } from "../utils/security";
+import { sharePortfolio } from "../utils/share";
 
 export const Footer = () => {
   const [copied, setCopied] = useState(false);
@@ -20,39 +21,10 @@ export const Footer = () => {
   };
 
   const handleShare = async () => {
-    const shareUrl = window.location.origin || window.location.href;
-    const isMobile = typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    if (isMobile && navigator.share) {
-      try {
-        await navigator.share({
-          title: `${PERSONAL_INFO.name} | Software Engineer`,
-          text: "Check out this software engineer portfolio.",
-          url: shareUrl,
-        });
-      } catch {
-        // User canceled share action
-      }
-    } else {
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(shareUrl);
-        } else {
-          const textArea = document.createElement("textarea");
-          textArea.value = shareUrl;
-          textArea.style.position = "fixed";
-          textArea.style.left = "-999999px";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          document.execCommand("copy");
-          textArea.remove();
-        }
-        setShared(true);
-        setTimeout(() => setShared(false), 2000);
-      } catch {
-        setShared(false);
-      }
+    const success = await sharePortfolio();
+    if (success) {
+      setShared(true);
+      setTimeout(() => setShared(false), 2000);
     }
   };
 
@@ -63,7 +35,7 @@ export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="w-full relative overflow-hidden scroll-mt-0 z-10 pt-6 pb-12 lg:py-0 lg:min-h-dvh flex flex-col justify-between lg:pt-32 lg:pb-10"
+      className="w-full relative overflow-hidden scroll-mt-0 z-10 pt-24 pb-[max(2rem,env(safe-area-inset-bottom))] lg:py-0 lg:min-h-dvh flex flex-col justify-between lg:pt-32 lg:pb-10"
     >
       <div className="w-full flex flex-col justify-between flex-1">
         <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-start lg:justify-between">
@@ -78,56 +50,57 @@ export const Footer = () => {
             </span>
           </div>
 
-          {/* 1. Mobile Interface - Pure Open Minimalist 2026 Style (Van boxa, No hard line) */}
-          <div className="flex lg:hidden flex-col w-full max-w-lg mx-auto items-center text-center gap-6">
-            
-            {/* Top: Work / Availability Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-xs font-mono text-zinc-200">
-              <span className="relative flex h-2 w-2 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
-              </span>
-              <span className="font-semibold text-zinc-100">Available for work</span>
-              <span className="text-zinc-600">•</span>
-              <span className="text-zinc-400">Let’s connect</span>
-            </div>
+          {/* 1. Mobile Interface - Compact, recruiter-focused contact block */}
+          <div className="flex lg:hidden flex-col w-full max-w-sm mx-auto items-center text-center">
 
-            {/* Minimalist Contact Symbols: Mailto & Copy */}
-            <div className="flex items-center gap-2.5">
+            {/* Headline + one-line value proposition */}
+            <h3 className="text-xl font-bold text-zinc-100 tracking-tight font-sans leading-snug">
+              Let’s build something{" "}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
+                scalable.
+              </span>
+            </h3>
+            <p className="mt-2 text-xs text-zinc-400 font-sans leading-relaxed text-balance max-w-xs">
+              Open to backend engineering roles <br /> &amp; distributed systems.
+            </p>
+
+            {/* Action row: primary Email pill + bubble-glass Copy (icon centered, emerald border on success) */}
+            <div className="mt-6 flex items-center justify-center gap-2.5">
               <button
                 onClick={triggerSecureMail}
                 type="button"
-                title="Send Direct Email (mailto)"
-                aria-label="Send Direct Email (mailto)"
-                className="inline-flex items-center gap-1.5 h-8.5 px-4 rounded-full bg-zinc-900/90 border border-zinc-800 hover:border-sky-500/40 text-zinc-300 hover:text-white transition-all active:scale-95 cursor-pointer text-xs font-mono shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
+                className="group inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full glass-subcard !border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_20px_-6px_rgba(56,189,248,0.25)] text-sm font-sans font-medium active:scale-95 transition-transform cursor-pointer"
               >
-                <Send className="w-3.5 h-3.5 text-sky-400" />
-                <span>Mailto</span>
+                <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
+                  Email me
+                </span>
+                <Send className="w-4 h-4 text-sky-400 shrink-0" />
               </button>
 
               <button
                 onClick={handleCopy}
                 type="button"
-                title="Copy Email Address"
-                aria-label="Copy Email Address"
-                className="inline-flex items-center gap-1.5 h-8.5 px-4 rounded-full bg-zinc-900/90 border border-zinc-800 hover:border-sky-500/40 text-zinc-300 hover:text-white transition-all active:scale-95 cursor-pointer text-xs font-mono shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
+                aria-label={copied ? "Email copied" : "Copy email address"}
+                title={copied ? "Copied!" : "Copy email address"}
+                className={`relative w-11 h-11 rounded-full glass-subcard flex items-center justify-center active:scale-90 transition-[transform,border-color,box-shadow] duration-200 cursor-pointer ${
+                  copied
+                    ? "!border-emerald-400/70 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_0_16px_-4px_rgba(52,211,153,0.55)]"
+                    : "!border-white/[0.12]"
+                }`}
               >
                 {copied ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-sky-400" />
-                    <span className="text-sky-400 font-medium">Copied!</span>
-                  </>
+                  <Check className="w-4 h-4 text-emerald-400" strokeWidth={2.5} />
                 ) : (
-                  <>
-                    <Mail className="w-3.5 h-3.5 text-sky-400" />
-                    <span>Copy</span>
-                  </>
+                  <Copy className="w-4 h-4 text-zinc-200" />
                 )}
               </button>
             </div>
 
+            {/* Hairline divider */}
+            <div className="mt-7 h-px w-24 bg-gradient-to-r from-transparent via-zinc-700/70 to-transparent" />
+
             {/* PC-Header Styled Circular Social Icons + Top Button */}
-            <div className="flex items-center gap-1.5">
+            <div className="mt-6 flex items-center gap-1.5">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
@@ -191,8 +164,8 @@ export const Footer = () => {
             </div>
 
             {/* Bottom Copyright */}
-            <div className="text-[11px] font-mono text-zinc-500 tracking-wide">
-              <span>© 2026 VDCore. All rights reserved.</span>
+            <div className="mt-5 text-[11px] font-mono text-zinc-600 tracking-wide">
+              <span>© 2026 VDCORE. All rights reserved.</span>
             </div>
 
           </div>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, FolderGit2, Layers, Send, Share2, Check } from "lucide-react";
+import { Home, FileText, Send } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
-import { triggerSecureMail } from "../utils/security";
 
 const DESKTOP_LINKS = [
   { name: "Projects", href: "#projects", id: "projects" },
@@ -10,76 +9,12 @@ const DESKTOP_LINKS = [
   { name: "Contact", href: "#contact", id: "contact" },
 ];
 
-const MOBILE_LINKS = [
-  { name: "Home", href: "#", id: "home", icon: Home },
-  { name: "Projects", href: "#projects", id: "projects", icon: FolderGit2 },
-  { name: "Skills", href: "#skills", id: "skills", icon: Layers },
-  { name: "Contact", href: "#contact", id: "contact", icon: Send },
-];
-
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isShared, setIsShared] = useState(false);
 
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleShare = async () => {
-    const shareUrl = window.location.origin || window.location.href;
-    const isMobileDevice =
-      typeof navigator !== "undefined" && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-    if (isMobileDevice && navigator.share) {
-      try {
-        await navigator.share({
-          title: `${PERSONAL_INFO.name} | Software Engineer`,
-          text: "Check out this software engineer portfolio.",
-          url: shareUrl,
-        });
-      } catch {
-        // User canceled share
-      }
-    } else {
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(shareUrl);
-        } else {
-          const textArea = document.createElement("textarea");
-          textArea.value = shareUrl;
-          textArea.style.position = "fixed";
-          textArea.style.left = "-999999px";
-          document.body.appendChild(textArea);
-          textArea.focus();
-          textArea.select();
-          document.execCommand("copy");
-          textArea.remove();
-        }
-        setIsShared(true);
-        setTimeout(() => setIsShared(false), 2000);
-      } catch {
-        setIsShared(false);
-      }
-    }
-  };
-
-  // Prevent background scroll and attach Escape key listener
-  useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [mobileMenuOpen]);
 
   useEffect(() => {
     return () => {
@@ -151,7 +86,6 @@ export const Navbar = () => {
     clearScrollTimeout();
     isScrollingProgrammatically.current = true;
     setActiveSection("");
-    setMobileMenuOpen(false);
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -170,7 +104,6 @@ export const Navbar = () => {
     clearScrollTimeout();
     isScrollingProgrammatically.current = true;
     setActiveSection(id);
-    setMobileMenuOpen(false);
 
     const element = document.getElementById(id);
     if (element) {
@@ -184,123 +117,13 @@ export const Navbar = () => {
 
   return (
     <>
-      {/* Background overlay */}
+      {/* Top Ambient Vignette / Edge Fade Mask - Content softly blurs & melts under the viewport edge behind the navbar */}
       <div
-        onClick={() => setMobileMenuOpen(false)}
-        className={`fixed inset-0 z-40 bg-black/70 backdrop-blur-sm transition-opacity duration-250 md:hidden ${
-          mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className="fixed top-0 left-0 right-0 h-16 sm:h-20 pointer-events-none z-30 bg-gradient-to-b from-zinc-950 via-zinc-950/60 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
         aria-hidden="true"
       />
 
-      {/* Modern Floating Mobile Menu Card (Option 3 - Full-width clean rows, dot indicator, no vertical bar) */}
-      <aside
-        className={`fixed top-[70px] inset-x-3 sm:inset-x-6 max-w-sm mx-auto z-50 rounded-3xl glass-panel p-2.5 flex flex-col gap-1 transition-all duration-250 ease-out origin-top md:hidden ${
-          mobileMenuOpen
-            ? "translate-y-0 scale-100 opacity-100 pointer-events-auto"
-            : "-translate-y-3 scale-95 opacity-0 pointer-events-none"
-        }`}
-      >
-        {MOBILE_LINKS.map((link) => {
-          const isActive = link.id === "home" ? activeSection === "" : activeSection === link.id;
-          const Icon = link.icon;
-          return (
-            <button
-              key={link.id}
-              onClick={(e) => scrollTo(e, link.id)}
-              className={`group relative flex items-center justify-between w-full h-10 px-3.5 rounded-2xl text-left text-sm font-sans transition-all duration-200 select-none cursor-pointer active:scale-[0.98] ${
-                isActive
-                  ? "bg-white/[0.08] border border-white/[0.12] text-zinc-100 font-medium shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]"
-                  : "border border-transparent text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <Icon
-                  className={`w-4 h-4 transition-colors duration-200 ${
-                    isActive ? "text-sky-400" : "text-zinc-500 group-hover:text-zinc-400"
-                  }`}
-                />
-                <span className="tracking-tight text-[14px]">{link.name}</span>
-              </div>
-
-              {/* Symmetrical subtle dot indicator for all 4 sections */}
-              <span
-                className={`w-1.5 h-1.5 rounded-full mr-0.5 transition-all duration-200 ${
-                  isActive
-                    ? "bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.85)] scale-110"
-                    : "bg-zinc-700/60 group-hover:bg-zinc-600"
-                }`}
-              />
-            </button>
-          );
-        })}
-
-        {/* Popover Footer: Quick Socials, Share & Mailto */}
-        <div className="h-px w-full bg-white/[0.06] my-1" />
-
-        <div className="flex items-center justify-between px-1.5 pt-0.5 pb-0.5">
-          <div className="flex items-center gap-1">
-            <a
-              href={PERSONAL_INFO.github}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub Profile"
-              className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/[0.06] active:scale-95 transition-all"
-            >
-              <GithubIcon className="w-4 h-4" />
-            </a>
-            <a
-              href={PERSONAL_INFO.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn Profile"
-              className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/[0.06] active:scale-95 transition-all"
-            >
-              <LinkedinIcon className="w-4 h-4" />
-            </a>
-            {PERSONAL_INFO.x && (
-              <a
-                href={PERSONAL_INFO.x}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="X Profile"
-                className="w-8 h-8 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/[0.06] active:scale-95 transition-all"
-              >
-                <XIcon className="w-3.5 h-3.5" />
-              </a>
-            )}
-            <button
-              onClick={handleShare}
-              aria-label="Share portfolio"
-              title="Share portfolio"
-              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all active:scale-95 cursor-pointer ${
-                isShared
-                  ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-                  : "text-zinc-400 hover:text-white hover:bg-white/[0.06]"
-              }`}
-            >
-              {isShared ? (
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-              ) : (
-                <Share2 className="w-3.5 h-3.5" />
-              )}
-            </button>
-          </div>
-
-          <button
-            onClick={triggerSecureMail}
-            type="button"
-            aria-label="Send Direct Email (mailto)"
-            title="Send Direct Email (mailto)"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:border-sky-500/40 text-[11px] font-mono text-zinc-300 hover:text-white transition-all active:scale-95 cursor-pointer"
-          >
-            <Send className="w-3.5 h-3.5 text-sky-400" />
-            <span>Mailto</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* Desktop & Main Header (100% Original Desktop Layout) */}
+      {/* Desktop & Main Header */}
       <header className="fixed top-3 sm:top-5 left-0 right-0 z-40 flex justify-center px-3 sm:px-4 pointer-events-none">
         <div className="w-full max-w-sm sm:max-w-fit pointer-events-auto flex flex-col items-center">
           
@@ -311,24 +134,26 @@ export const Navbar = () => {
                 : "bg-zinc-900/80 border-white/[0.1] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_12px_28px_-8px_rgba(0,0,0,0.55)]"
             }`}
           >
-            {/* Desktop Static Brand Wordmark - Optically aligned with 13px nav links & icons */}
-            <div className="hidden md:flex items-center h-8 pl-2.5 pr-1 font-sans tracking-tight select-none cursor-default translate-y-[2.5px]">
-              <span className="font-extrabold text-[15px] text-zinc-100 leading-none">VD</span>
-              <span className="font-medium text-[15px] text-zinc-400 leading-none">Core</span>
-              <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[3.5px] shrink-0" />
+            {/* Desktop Brand Wordmark - Modern Architectural All-Caps (Static, unclickable as requested) */}
+            <div className="hidden md:flex items-center h-8 pl-2 pr-1 font-sans select-none cursor-default">
+              <span className="font-extrabold text-[14px] tracking-[0.14em] text-zinc-100 leading-none">
+                VDCORE
+              </span>
+              <span className="w-[5px] h-[5px] rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.95)] ml-1 translate-y-[3.5px] shrink-0" />
             </div>
 
-            {/* Mobile Clickable Brand Wordmark */}
+            {/* Mobile Clickable Brand Wordmark - Baseline Period (Smooth Scroll to Top) */}
             <a
               href="#"
-              title="VDCore Home"
-              aria-label="VDCore Home"
+              title="VDCORE Home"
+              aria-label="VDCORE Home"
               onClick={scrollToTop}
-              className="flex md:hidden items-center h-8 pl-2 font-sans tracking-tight select-none active:scale-95 transition-transform"
+              className="flex md:hidden items-center h-8 pl-1.5 font-sans select-none active:scale-95 transition-transform cursor-pointer"
             >
-              <span className="font-extrabold text-base text-zinc-100 leading-none">VD</span>
-              <span className="font-medium text-base text-zinc-400 leading-none">Core</span>
-              <span className="w-1 h-1 rounded-full bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.95)] ml-[2px] translate-y-[4.5px] shrink-0" />
+              <span className="font-extrabold text-[15px] tracking-[0.14em] text-zinc-100 leading-none">
+                VDCORE
+              </span>
+              <span className="w-[5px] h-[5px] rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.95)] ml-1 translate-y-[3.5px] shrink-0" />
             </a>
 
             <div className="hidden md:block w-px h-4 bg-zinc-800/90 shrink-0" />
@@ -449,43 +274,15 @@ export const Navbar = () => {
               </a>
             </div>
 
-            <div className="flex md:hidden items-center gap-2">
-              <a
-                href="/cv.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-1.5 h-9 px-3.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-200 text-xs font-mono font-medium active:scale-95 hover:text-white transition-all"
-              >
-                <FileText className="w-3.5 h-3.5 text-sky-400" />
-                <span>CV</span>
-              </a>
-
-              {/* Hamburger Toggle Button - Matched border & glass surface with CV button */}
+            <div className="flex md:hidden items-center">
               <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle Navigation Menu"
-                aria-expanded={mobileMenuOpen}
-                className={`relative w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/90 border shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-200 hover:text-white hover:bg-zinc-800/90 transition-all focus:outline-none shrink-0 cursor-pointer active:scale-95 ${
-                  mobileMenuOpen ? "border-sky-500/40" : "border-white/[0.1]"
-                }`}
+                onClick={(e) => scrollTo(e, "contact")}
+                type="button"
+                aria-label="Contact Section"
+                className="flex items-center justify-center gap-1.5 h-8 px-3.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-200 text-xs font-sans font-medium active:scale-95 hover:text-white transition-all cursor-pointer"
               >
-                <div className="flex flex-col items-center justify-center w-4 h-4 relative">
-                  <span
-                    className={`block absolute h-0.5 w-4 bg-current transform transition-all duration-300 ease-in-out ${
-                      mobileMenuOpen ? "rotate-45 translate-y-0 text-sky-400" : "-translate-y-1.5"
-                    }`}
-                  />
-                  <span
-                    className={`block absolute h-0.5 w-4 bg-current transform transition-all duration-300 ease-in-out ${
-                      mobileMenuOpen ? "opacity-0" : "opacity-100"
-                    }`}
-                  />
-                  <span
-                    className={`block absolute h-0.5 w-4 bg-current transform transition-all duration-300 ease-in-out ${
-                      mobileMenuOpen ? "-rotate-45 translate-y-0 text-sky-400" : "translate-y-1.5"
-                    }`}
-                  />
-                </div>
+                <Send className="w-3.5 h-3.5 text-sky-400" />
+                <span>Contact</span>
               </button>
             </div>
           </nav>

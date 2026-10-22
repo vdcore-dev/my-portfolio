@@ -4,7 +4,7 @@ const CHAR_CODES = [99, 111, 110, 116, 97, 99, 116, 64, 118, 100, 99, 111, 114, 
 /**
  * Reconstructs address strictly on client interaction.
  */
-export const getSecureEmail = (): string => {
+const getSecureEmail = (): string => {
   return String.fromCharCode(...CHAR_CODES);
 };
 
