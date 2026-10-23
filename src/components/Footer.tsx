@@ -1,5 +1,17 @@
 import { useState } from "react";
-import { Copy, Check, ChevronUp, ArrowUpRight, Send, Terminal, Share2, Info, MapPin, Clock, CheckCircle2 } from "lucide-react";
+import {
+  FaPaperPlane,
+  FaCopy,
+  FaCheck,
+  FaShareNodes,
+  FaArrowUpRightFromSquare,
+  FaTerminal,
+  FaChevronUp,
+  FaCircleInfo,
+  FaEarthAmericas,
+  FaRegClock,
+  FaCircleCheck,
+} from "react-icons/fa6";
 import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { triggerSecureMail, copySecureEmail } from "../utils/security";
@@ -44,13 +56,12 @@ export const Footer = () => {
           
           {/* ========================================================
               UNIFIED ARCHITECTURAL CONTACT HEADER
-              (Modern softer-squared badge + flanking gradient wings fading out halfway)
               ======================================================== */}
           <ScrollReveal direction="up">
             <div className="w-full flex items-center justify-center mb-8 sm:mb-12">
               <div className="flex items-center justify-center gap-3 sm:gap-5 w-full max-w-xl px-2">
                 
-                {/* Left Wing: starts at badge and fades out halfway to the left */}
+                {/* Left Wing */}
                 <div 
                   className="flex-1 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/50 to-transparent" 
                   aria-hidden="true" 
@@ -63,7 +74,7 @@ export const Footer = () => {
                   </span>
                 </div>
 
-                {/* Right Wing: starts at badge and fades out halfway to the right */}
+                {/* Right Wing */}
                 <div 
                   className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/50 to-transparent" 
                   aria-hidden="true" 
@@ -87,7 +98,7 @@ export const Footer = () => {
               Open to backend engineering roles <br /> &amp; distributed systems.
             </p>
 
-            {/* Action row: primary Email pill + bubble-glass Copy (icon centered, emerald border on success) */}
+            {/* Action row: primary Email pill + bubble-glass Copy */}
             <div className="mt-6 flex items-center justify-center gap-2.5">
               <button
                 onClick={triggerSecureMail}
@@ -97,7 +108,7 @@ export const Footer = () => {
                 <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
                   Email me
                 </span>
-                <Send className="w-4 h-4 text-sky-400 shrink-0" />
+                <FaPaperPlane className="w-3.5 h-3.5 text-sky-400 shrink-0" />
               </button>
 
               <button
@@ -112,9 +123,9 @@ export const Footer = () => {
                 }`}
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-emerald-400" strokeWidth={2.5} />
+                  <FaCheck className="w-3.5 h-3.5 text-emerald-400" />
                 ) : (
-                  <Copy className="w-4 h-4 text-zinc-200" />
+                  <FaCopy className="w-3.5 h-3.5 text-zinc-200" />
                 )}
               </button>
             </div>
@@ -167,9 +178,9 @@ export const Footer = () => {
                 }`}
               >
                 {shared ? (
-                  <Check className="w-4 h-4 text-sky-400" />
+                  <FaCheck className="w-3.5 h-3.5 text-sky-400" />
                 ) : (
-                  <Share2 className="w-4 h-4 text-zinc-400" />
+                  <FaShareNodes className="w-3.5 h-3.5 text-zinc-400" />
                 )}
               </button>
 
@@ -182,7 +193,7 @@ export const Footer = () => {
                 className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-sky-400 hover:bg-zinc-800/70 active:scale-90 transition-all cursor-pointer"
                 title="Back to top"
               >
-                <ChevronUp className="w-4 h-4 text-sky-400 animate-bounce" />
+                <FaChevronUp className="w-3.5 h-3.5 text-sky-400 animate-bounce" />
               </button>
             </div>
 
@@ -198,7 +209,7 @@ export const Footer = () => {
             <div className="col-span-8 flex flex-col items-start">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] font-mono text-[11px] text-zinc-200 tracking-wide mb-5">
                 <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.85)] shrink-0" />
-                <span>Open for Backend & Cloud Opportunities</span>
+                <span>Open for Backend &amp; Cloud Opportunities</span>
               </div>
 
               <h3 className="text-4xl lg:text-5xl font-extrabold text-zinc-100 tracking-tight leading-[1.12] mb-4 font-sans">
@@ -216,51 +227,52 @@ export const Footer = () => {
                 <button
                   onClick={triggerSecureMail}
                   type="button"
-                  className="inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard hover:border-sky-500/50 border border-zinc-800 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_24px_-6px_rgba(56,189,248,0.22)] active:scale-95 transition-all duration-200 group cursor-pointer"
+                  className="group inline-flex items-center justify-center gap-2.5 h-11 px-7 rounded-full glass-subcard !border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_20px_-6px_rgba(56,189,248,0.25)] text-sm font-sans font-medium active:scale-95 transition-transform cursor-pointer select-none"
                 >
-                  <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 group-hover:brightness-110 transition-all duration-200">
+                  <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
                     Send Direct Email
                   </span>
-                  <Send className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover:scale-110 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0" />
+                  <FaPaperPlane className="w-3.5 h-3.5 text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
                 </button>
 
                 <button
                   onClick={handleCopy}
                   type="button"
-                  className={`inline-flex items-center justify-center gap-2.5 h-11 px-6 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer ${
+                  className={`inline-flex items-center justify-center gap-2.5 h-11 px-6 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md active:scale-95 group cursor-pointer ${
                     copied
-                      ? "bg-sky-500/15 border-sky-500/50 text-sky-300 shadow-lg shadow-sky-500/20"
+                      ? "bg-emerald-500/15 border-emerald-500/50 text-emerald-300 shadow-lg shadow-emerald-500/20"
                       : "glass-subcard text-zinc-200 hover:text-white"
                   }`}
                   title="Click to copy email address"
                 >
                   {copied ? (
                     <>
-                      <span className="font-semibold tracking-wide">Email Copied!</span>
-                      <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150" />
+                      <span className="font-semibold tracking-wide text-emerald-300">Email Copied!</span>
+                      <FaCheck className="w-3.5 h-3.5 text-emerald-400 animate-in zoom-in-75 duration-150" />
                     </>
                   ) : (
                     <>
                       <span>Copy Email</span>
-                      <Copy className="w-4 h-4 text-sky-400/90 transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:text-sky-300" />
+                      <FaCopy className="w-3.5 h-3.5 text-zinc-400 group-hover:text-sky-400 transition-colors" />
                     </>
                   )}
                 </button>
               </div>
             </div>
 
-            <div className="col-span-4 rounded-3xl glass-panel p-6 sm:p-7">
+            {/* Availability Box with Glass Bezel & High-Tech Telemetry Pulse */}
+            <div className="col-span-4 rounded-3xl glass-panel p-6 sm:p-7 border border-white/[0.09] shadow-2xl">
               <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/80 font-mono text-xs text-zinc-400">
                 <div className="flex items-center gap-2">
-                  <Info className="w-4 h-4 text-sky-400 shrink-0" />
+                  <FaCircleInfo className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                   <span className="tracking-wider uppercase text-zinc-300 font-semibold text-[11px]">Availability</span>
                 </div>
               </div>
 
               <div className="space-y-2.5">
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
-                    <MapPin className="w-[18px] h-[18px] text-sky-400 shrink-0" />
+                    <FaEarthAmericas className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>Location</span>
                   </span>
                   <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
@@ -268,9 +280,9 @@ export const Footer = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
-                    <Clock className="w-[18px] h-[18px] text-cyan-400 shrink-0" />
+                    <FaRegClock className="w-4 h-4 text-cyan-400 shrink-0" />
                     <span>Schedule</span>
                   </span>
                   <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
@@ -278,15 +290,43 @@ export const Footer = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
+                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
-                    <CheckCircle2 className="w-[18px] h-[18px] text-indigo-400 shrink-0" />
+                    <FaCircleCheck className="w-4 h-4 text-sky-400 shrink-0" />
                     <span>Status</span>
                   </span>
-                  <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.9)]" />
-                    {PERSONAL_INFO.availability}
-                  </span>
+                  
+                  {/* Telemetry live signal matching Hero & About */}
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono font-semibold text-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.15)]">
+                    <div className="relative w-5 h-2.5 flex items-center overflow-hidden shrink-0">
+                      <svg
+                        viewBox="0 0 100 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-full h-full text-emerald-400 pointer-events-none"
+                      >
+                        <path
+                          d="M 0 12 L 20 12 L 25 12 L 28 8 L 32 16 L 35 12 L 40 12 L 44 2 L 49 22 L 53 12 L 58 12 L 62 9 L 66 12 L 100 12"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeOpacity="0.3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M 0 12 L 20 12 L 25 12 L 28 8 L 32 16 L 35 12 L 40 12 L 44 2 L 49 22 L 53 12 L 58 12 L 62 9 L 66 12 L 100 12"
+                          stroke="#34d399"
+                          strokeWidth="2.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeDasharray="120"
+                          strokeDashoffset="120"
+                          className="animate-ecg-trace"
+                        />
+                      </svg>
+                    </div>
+                    <span>{PERSONAL_INFO.availability}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -301,7 +341,7 @@ export const Footer = () => {
         >
           <div className="flex pt-6 border-t border-zinc-900/80 items-center justify-between text-xs font-mono text-zinc-500">
             <div className="flex items-center gap-2">
-              <Terminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+              <FaTerminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
               <span>© 2026 VDCore. All rights reserved.</span>
             </div>
 
@@ -313,7 +353,7 @@ export const Footer = () => {
                 className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
               >
                 <span>GitHub</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <FaArrowUpRightFromSquare className="w-3 h-3 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
 
               <a
@@ -323,7 +363,7 @@ export const Footer = () => {
                 className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
               >
                 <span>LinkedIn</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <FaArrowUpRightFromSquare className="w-3 h-3 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </a>
 
               {PERSONAL_INFO.x && (
@@ -334,7 +374,7 @@ export const Footer = () => {
                   className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
                 >
                   <span>X</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <FaArrowUpRightFromSquare className="w-3 h-3 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
               )}
 
@@ -345,12 +385,12 @@ export const Footer = () => {
               >
                 {shared ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-sky-400" />
+                    <FaCheck className="w-3 h-3 text-sky-400" />
                     <span className="text-sky-400">Copied!</span>
                   </>
                 ) : (
                   <>
-                    <Share2 className="w-3.5 h-3.5 text-zinc-500 group-hover:text-sky-400 transition-colors" />
+                    <FaShareNodes className="w-3 h-3 text-zinc-500 group-hover:text-sky-400 transition-colors" />
                     <span className="group-hover:text-zinc-200">Share</span>
                   </>
                 )}
@@ -360,10 +400,10 @@ export const Footer = () => {
                 onClick={scrollToTop}
                 type="button"
                 aria-label="Back to top"
-                className="flex items-center gap-1 text-zinc-400 hover:text-sky-400 transition-colors active:scale-95 cursor-pointer group"
+                className="flex items-center gap-1.5 text-zinc-400 hover:text-sky-400 transition-colors active:scale-95 cursor-pointer group"
               >
                 <span className="group-hover:text-zinc-200">Top</span>
-                <ChevronUp className="w-4 h-4 text-sky-400 animate-bounce" />
+                <FaChevronUp className="w-3 h-3 text-sky-400 animate-bounce" />
               </button>
             </div>
           </div>

@@ -188,6 +188,40 @@ svg {
 }
 
 /* ========================================================
+   HERO ENTRANCE CHOREOGRAPHY (Silky 60/120fps CSS Stagger)
+   ======================================================== */
+@keyframes heroEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-animate-1 {
+  animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.hero-animate-2 {
+  animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.hero-animate-3 {
+  animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both;
+}
+
+.hero-animate-4 {
+  animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+.hero-animate-5 {
+  animation: heroEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+/* ========================================================
    MODERN ULTRA-SLIM SCROLLBAR (Linear Style)
    ======================================================== */
 ::-webkit-scrollbar {

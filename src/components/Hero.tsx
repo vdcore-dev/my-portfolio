@@ -57,14 +57,14 @@ export const Hero = () => {
               ======================================================== */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Terminal Static Greeting (>_ Hi, I'm Vladimir) with blinking cursor | */}
-            <p className="font-mono text-base sm:text-xl font-medium text-zinc-300 tracking-tight mb-2.5 sm:mb-3.5 flex items-center gap-2 h-7 select-none">
+            <p className="hero-animate-1 font-mono text-base sm:text-xl font-medium text-zinc-300 tracking-tight mb-2.5 sm:mb-3.5 flex items-center gap-2 h-7 select-none">
               <span className="text-sky-400 font-bold tracking-normal">&gt;_</span>
               <span>Hi, I'm Vladimir</span>
               <span className="inline-block w-[2px] h-5 bg-sky-400 rounded-full animate-pulse ml-0.5" />
             </p>
 
             {/* Structured Headline: Java Backend & / DevOps Engineer. */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-extrabold tracking-tight text-zinc-100 font-sans leading-[1.1] mb-5 sm:mb-6">
+            <h1 className="hero-animate-2 text-4xl sm:text-5xl lg:text-[58px] font-extrabold tracking-tight text-zinc-100 font-sans leading-[1.1] mb-5 sm:mb-6">
               Java Backend &amp; <br />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
                 DevOps Engineer.
@@ -72,12 +72,12 @@ export const Hero = () => {
             </h1>
 
             {/* 100% Real, Human Statement Covering Java, Spring, DevOps, Cloud, AI */}
-            <p className="text-sm sm:text-base md:text-lg text-zinc-400 font-sans max-w-xl leading-relaxed mb-6 sm:mb-8">
+            <p className="hero-animate-3 text-sm sm:text-base md:text-lg text-zinc-400 font-sans max-w-xl leading-relaxed mb-6 sm:mb-8">
               I build reliable backend systems with Java and Spring, manage cloud infrastructure with modern DevOps, and integrate smart AI capabilities into scalable applications.
             </p>
 
             {/* Primary Action Button: View My Work */}
-            <div>
+            <div className="hero-animate-4">
               <button
                 type="button"
                 onClick={scrollToProjects}
@@ -94,7 +94,7 @@ export const Hero = () => {
           {/* ========================================================
               RIGHT COLUMN: Pure Icon Symbols (100% Buttons, Zero Boxes) & ECG Status
               ======================================================== */}
-          <div className="lg:col-span-5 w-full flex flex-col items-center lg:items-end justify-center select-none mt-7 sm:mt-9 lg:mt-0">
+          <div className="hero-animate-5 lg:col-span-5 w-full flex flex-col items-center lg:items-end justify-center select-none mt-7 sm:mt-9 lg:mt-0">
             
             {/* Pure Icon Symbols Row (Slightly larger, luxurious spacing, 100% button architecture) */}
             <div className="flex items-center gap-6 sm:gap-7">
