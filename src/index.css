@@ -10,16 +10,20 @@
 }
 
 html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 body {
-  background-color: #09090b; /* bg-zinc-950 - Identical to PC */
+  background-color: #09090b; /* bg-zinc-950 */
   color: #f4f4f5;            /* text-zinc-100 */
   font-family: var(--font-sans);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  overflow-x: hidden;
+  overflow-x: clip;
+  touch-action: pan-y;
   margin: 0;
 }
 
@@ -29,45 +33,62 @@ body {
   color: #bae6fd;
 }
 
+/* Obliterate any browser focus rings, white boxes, or highlight outlines on window switch/focus */
+*, *:focus, *:focus-visible, *:focus-within {
+  outline: none !important;
+  outline-width: 0 !important;
+  outline-color: transparent !important;
+  -webkit-focus-ring-color: transparent !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+html, body, button, a {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+  outline: none !important;
+  outline-color: transparent !important;
+}
+
+svg {
+  background-color: transparent !important;
+  user-select: none;
+}
+
 /* ========================================================
-   MODERN LINEAR-STYLE GLASS & BEZEL SURFACES
+   APPLE-GRADE TRANSLUCENT FROSTED GLASS SURFACES
    ======================================================== */
 .glass-panel {
-  background: linear-gradient(180deg, rgba(24, 24, 27, 0.72) 0%, rgba(9, 9, 11, 0.9) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(18, 18, 22, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.11);
   box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.13),
-    0 24px 48px -12px rgba(0, 0, 0, 0.78);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.16),
+    0 24px 48px -12px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
 }
 
 .glass-subcard {
-  background: linear-gradient(180deg, rgba(24, 24, 27, 0.6) 0%, rgba(9, 9, 11, 0.65) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.09);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  background: rgba(24, 24, 28, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
   transition: border-color 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .glass-subcard:hover {
-    border-color: rgba(56, 189, 248, 0.4);
-    background: linear-gradient(180deg, rgba(39, 39, 42, 0.55) 0%, rgba(24, 24, 27, 0.72) 100%);
+    border-color: rgba(56, 189, 248, 0.45);
+    background: rgba(30, 30, 36, 0.7);
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.16),
-      0 8px 24px -6px rgba(56, 189, 248, 0.18);
+      inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+      0 10px 28px -6px rgba(56, 189, 248, 0.22);
   }
 
   .selector-item-inactive:hover {
-    background: linear-gradient(180deg, #222226 0%, #151518 100%);
-    border-color: #3f3f46;
-    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    background: rgba(28, 28, 32, 0.7);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -91,6 +112,32 @@ body {
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.035);
 }
 
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes floatReverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-1deg);
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatReverse 6s ease-in-out infinite;
+}
+
 @keyframes panelFadeIn {
   from {
     opacity: 0;
@@ -104,6 +151,40 @@ body {
 
 .animate-panel-switch {
   animation: panelFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dataPulseFlow {
+  from {
+    stroke-dashoffset: 72;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ecgTrace {
+  0% {
+    stroke-dashoffset: 120;
+    opacity: 0.3;
+  }
+  20% {
+    opacity: 1;
+  }
+  65% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.4;
+  }
+  100% {
+    stroke-dashoffset: -120;
+    opacity: 0.3;
+  }
+}
+
+.animate-ecg-trace {
+  animation: ecgTrace 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 /* ========================================================

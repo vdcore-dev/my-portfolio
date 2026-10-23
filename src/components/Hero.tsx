@@ -1,347 +1,230 @@
-import React, { useState, useEffect } from "react";
-import { ChevronDown, Copy, Check, MapPin, Maximize2, X, Database, Server, Cloud, Bot, User, FileText } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowRight, Mail, Check, FileText } from "lucide-react";
+import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { copySecureEmail } from "../utils/security";
+import { scrollToElement } from "../utils/scroll";
 
 export const Hero = () => {
   const [copied, setCopied] = useState(false);
-  const [isPhotoOpen, setIsPhotoOpen] = useState(false);
-
-  const avatarUrl = "/avatar2.jpg";
-
-  useEffect(() => {
-    if (!isPhotoOpen) return;
-    
-    document.body.style.overflow = "hidden";
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsPhotoOpen(false);
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isPhotoOpen]);
-
-  const handleCopyEmail = async (e?: React.MouseEvent<HTMLButtonElement>) => {
-    if (e?.currentTarget) {
-      e.currentTarget.blur();
-    }
-    const success = await copySecureEmail();
-    if (success) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2200);
-    }
-  };
 
   const scrollToProjects = (e: React.MouseEvent) => {
     e.preventDefault();
-    const el = document.getElementById("projects");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
+    scrollToElement("projects", 64);
   };
 
-  const renderFocusIcon = (id: string, sizeClass = "w-[18px] h-[18px]") => {
-    switch (id) {
-      case "backend":
-        return <Server className={`${sizeClass} text-sky-400 shrink-0`} />;
-      case "devops":
-        return <Cloud className={`${sizeClass} text-cyan-400 shrink-0`} />;
-      case "data":
-        return <Database className={`${sizeClass} text-indigo-400 shrink-0`} />;
-      case "ai":
-        return <Bot className={`${sizeClass} text-violet-400 shrink-0`} />;
-      default:
-        return <Server className={`${sizeClass} text-sky-400 shrink-0`} />;
-    }
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    copySecureEmail();
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
   };
 
-  const getFocusLabel = (id: string) => {
-    switch (id) {
-      case "backend":
-        return "Backend";
-      case "devops":
-        return "DevOps";
-      case "data":
-        return "Data";
-      case "ai":
-        return "AI";
-      default:
-        return "Core";
-    }
+  const openLink = (url: string) => {
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
-    <section id="home" className="relative min-h-svh lg:h-auto lg:min-h-dvh flex flex-col justify-start lg:justify-center box-border lg:pt-32 lg:pb-20 lg:px-4">
-      {/* 1. Mobile Interface - Locked to small viewport (svh): CTAs always sit above the browser toolbar, zero stretch while scrolling */}
+    <section
+      id="home"
+      className="relative min-h-[100svh] w-full flex flex-col justify-start sm:justify-center items-center pt-24 sm:pt-28 pb-8 sm:pb-12 px-4 sm:px-6 overflow-hidden box-border"
+    >
+      {/* 1. DUAL-CORE ATMOSPHERIC COSMIC NEBULA (Zero GPU Filter Lag - Pure Silk Gradients) */}
       <div
-        className="flex lg:hidden flex-col justify-between gap-4 min-h-svh pt-[92px] px-4 relative z-10 w-full max-w-lg mx-auto box-border"
-        style={{ paddingBottom: "max(1.5rem, env(safe-area-inset-bottom))" }}
-      >
-        
-        {/* Profile Card with 4 Focus Area Symbols */}
-        <div className="rounded-3xl glass-panel p-4 sm:p-5">
-          <div className="flex items-center gap-4">
-            <div 
-              className="relative cursor-pointer shrink-0 group"
-              onClick={() => setIsPhotoOpen(true)}
-              title="Click to view full photo"
-            >
-              <div className="w-[88px] h-[88px] rounded-2xl overflow-hidden border border-sky-500/40 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-sky-500/10 transition-transform active:scale-95 duration-200">
-                <img
-                  src={avatarUrl}
-                  alt={PERSONAL_INFO.name}
-                  className="w-full h-full rounded-[14px] object-cover"
-                />
-              </div>
-              <div className="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                <Maximize2 className="w-4 h-4 text-white" />
-              </div>
-            </div>
+        className="absolute top-[30%] left-[24%] -translate-x-1/2 -translate-y-1/2 w-[600px] h-[440px] pointer-events-none -z-10 rounded-full"
+        style={{
+          background:
+            "radial-gradient(ellipse 65% 55% at 50% 50%, rgba(99, 102, 241, 0.12) 0%, rgba(56, 189, 248, 0.05) 45%, transparent 70%)",
+        }}
+        aria-hidden="true"
+      />
 
-            <div className="flex-1 min-w-0">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-[10px] font-mono text-zinc-200 mb-1.5">
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
-                </span>
-                <span>{PERSONAL_INFO.availability}</span>
-              </div>
+      <div
+        className="absolute top-[34%] right-[10%] translate-x-1/4 -translate-y-1/2 w-[650px] h-[480px] pointer-events-none -z-10 rounded-full"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(56, 189, 248, 0.14) 0%, rgba(129, 140, 248, 0.08) 40%, rgba(168, 85, 247, 0.04) 60%, transparent 75%)",
+        }}
+        aria-hidden="true"
+      />
 
-              <h2 className="text-xl font-bold text-zinc-100 tracking-tight truncate font-sans">
-                {PERSONAL_INFO.name}
-              </h2>
+      {/* 2. MAIN HERO CONTENT */}
+      <div className="max-w-6xl mx-auto w-full z-10 my-0 sm:my-auto pt-3 sm:pt-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center">
+          
+          {/* ========================================================
+              LEFT COLUMN: Pure Greeting + Split Headline + Statement
+              ======================================================== */}
+          <div className="lg:col-span-7 flex flex-col items-start text-left">
+            {/* Terminal Static Greeting (>_ Hi, I'm Vladimir) with blinking cursor | */}
+            <p className="font-mono text-base sm:text-xl font-medium text-zinc-300 tracking-tight mb-2.5 sm:mb-3.5 flex items-center gap-2 h-7 select-none">
+              <span className="text-sky-400 font-bold tracking-normal">&gt;_</span>
+              <span>Hi, I'm Vladimir</span>
+              <span className="inline-block w-[2px] h-5 bg-sky-400 rounded-full animate-pulse ml-0.5" />
+            </p>
 
-              <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="text-sky-400 font-mono font-bold text-xs">|</span>
-                <p className="text-xs font-sans text-zinc-300 font-medium truncate">
-                  {PERSONAL_INFO.role}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-1.5 mt-1.5 text-zinc-400 text-xs font-sans">
-                <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                <span>{PERSONAL_INFO.location}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* 4 Focus Area Symbols - Compact micro-capsules */}
-          <div className="grid grid-cols-4 gap-1.5 pt-2.5 mt-3 border-t border-zinc-800/80">
-            {PERSONAL_INFO.focusAreas.map((area) => (
-              <div 
-                key={area.id}
-                className="flex flex-col items-center justify-center py-1.5 px-1 rounded-xl bg-zinc-900/70 border border-zinc-800/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]"
-                title={area.stack}
-              >
-                {renderFocusIcon(area.id, "w-3.5 h-3.5")}
-                <span className="text-[10px] font-mono font-medium text-zinc-300 mt-1 truncate">
-                  {getFocusLabel(area.id)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Headline Card - Equal vertical spacing */}
-        <div className="rounded-3xl glass-panel p-5 sm:p-6 text-left">
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-100 mb-2 leading-[1.2]">
-            Building scalable{" "}
-            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
-              backends & resilient
-            </span>{" "}
-            systems.
-          </h1>
-          <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
-            {PERSONAL_INFO.bio}
-          </p>
-        </div>
-
-        {/* Action Buttons - Symmetrical Full-Width Box-Aligned Capsule Duo */}
-        <div className="flex items-center gap-3 w-full pt-1">
-          <a
-            href="#projects"
-            onClick={scrollToProjects}
-            className="flex-1 inline-flex items-center justify-center gap-2 h-11 px-3.5 rounded-full glass-subcard !border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_20px_-6px_rgba(56,189,248,0.25)] hover:border-sky-500/60 text-sm font-sans font-medium backdrop-blur-md active:scale-95 transition-all cursor-pointer group"
-          >
-            <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
-              Explore Systems
-            </span>
-            <ChevronDown className="w-4 h-4 text-sky-400 animate-bounce group-hover:scale-110 transition-transform duration-200 shrink-0" />
-          </a>
-
-          <a
-            href="/cv.pdf"
-            target="_blank"
-            rel="noreferrer"
-            className="flex-1 inline-flex items-center justify-center gap-2 h-11 px-3.5 text-sm font-sans font-medium rounded-full glass-subcard border border-white/[0.1] text-zinc-200 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/20 backdrop-blur-md active:scale-95 transition-all cursor-pointer group"
-          >
-            <FileText className="w-4 h-4 text-sky-400 shrink-0 group-hover:scale-110 transition-transform duration-200" />
-            <span>View CV</span>
-          </a>
-        </div>
-      </div>
-
-      {/* 2. Desktop Interface */}
-      <div className="hidden lg:grid relative z-10 max-w-6xl mx-auto w-full grid-cols-12 gap-12 items-center">
-        <div className="col-span-7 flex flex-col items-start text-left relative">
-          {/* Subtle Ambient Radial Glow behind the headline */}
-          <div className="absolute -top-16 -left-16 w-[450px] h-[350px] bg-gradient-to-tr from-sky-500/15 via-indigo-500/10 to-transparent blur-[110px] rounded-full pointer-events-none -z-10" />
-
-          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-xs font-mono text-zinc-200 mb-6 backdrop-blur-md">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.95)]" />
-            </span>
-            <span>{PERSONAL_INFO.availability}</span>
-          </div>
-
-          <h1 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-zinc-100 mb-6 leading-[1.08] font-sans">
-            Building scalable <br />
-            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
-              backends & resilient
-            </span> <br />
-            systems.
-          </h1>
-
-          <p className="text-base sm:text-lg text-zinc-400 max-w-xl mb-8 leading-relaxed font-sans">
-            {PERSONAL_INFO.bio}
-          </p>
-
-          <div className="flex items-center gap-3.5">
-            <a
-              href="#projects"
-              onClick={scrollToProjects}
-              className="inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard !border-sky-500/40 hover:!border-sky-400/70 text-sm font-sans font-medium backdrop-blur-md hover:-translate-y-0.5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_24px_-6px_rgba(56,189,248,0.25)] active:scale-95 transition-all duration-200 group cursor-pointer"
-            >
-              <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 group-hover:brightness-110 transition-all duration-200">
-                Explore Systems
+            {/* Structured Headline: Java Backend & / DevOps Engineer. */}
+            <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-extrabold tracking-tight text-zinc-100 font-sans leading-[1.1] mb-5 sm:mb-6">
+              Java Backend &amp; <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
+                DevOps Engineer.
               </span>
-              <ChevronDown className="w-4 h-4 text-sky-400 animate-bounce group-hover:scale-110 transition-transform duration-200 shrink-0" />
-            </a>
+            </h1>
 
-            <button
-              onClick={handleCopyEmail}
-              className={`inline-flex items-center justify-center gap-2.5 h-11 px-6 text-sm font-sans font-medium rounded-full border transition-all duration-200 backdrop-blur-md hover:-translate-y-0.5 active:scale-95 group cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-sky-500/50 ${
-                copied
-                  ? "bg-sky-500/15 !border-sky-500/50 text-sky-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),0_8px_20px_-6px_rgba(56,189,248,0.25)]"
-                  : "glass-subcard border-white/[0.1] text-zinc-200 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] hover:border-white/20"
-              }`}
-              title="Click to copy email address"
-            >
-              {copied ? (
-                <>
-                  <span className="font-semibold tracking-wide">Copied to Clipboard!</span>
-                  <Check className="w-4 h-4 text-sky-400 animate-in zoom-in-75 duration-150" />
-                </>
-              ) : (
-                <>
-                  <span>Get in touch</span>
-                  <Copy className="w-4 h-4 text-sky-400/90 transition-all duration-200 group-hover:scale-110 group-hover:-translate-y-0.5 group-hover:text-sky-300" />
-                </>
-              )}
-            </button>
-          </div>
-        </div>
+            {/* 100% Real, Human Statement Covering Java, Spring, DevOps, Cloud, AI */}
+            <p className="text-sm sm:text-base md:text-lg text-zinc-400 font-sans max-w-xl leading-relaxed mb-6 sm:mb-8">
+              I build reliable backend systems with Java and Spring, manage cloud infrastructure with modern DevOps, and integrate smart AI capabilities into scalable applications.
+            </p>
 
-        <div className="col-span-5 w-full">
-          <div className="rounded-3xl glass-panel p-6 sm:p-7 relative">
-            <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/80 text-xs font-mono text-zinc-400">
-              <div className="flex items-center gap-2">
-                <User className="w-4 h-4 text-sky-400 shrink-0" />
-                <span className="font-semibold tracking-wider uppercase text-[11px] text-zinc-300">About</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 pb-5 border-b border-zinc-800/80">
-              <div 
-                className="relative group cursor-pointer shrink-0"
-                onClick={() => setIsPhotoOpen(true)}
-                title="Click to view full photo"
+            {/* Primary Action Button: View My Work */}
+            <div>
+              <button
+                type="button"
+                onClick={scrollToProjects}
+                className="group inline-flex items-center justify-center gap-2.5 h-11 px-7 rounded-full glass-subcard !border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_20px_-6px_rgba(56,189,248,0.25)] text-sm font-sans font-medium active:scale-95 transition-transform cursor-pointer outline-none focus:outline-none focus-visible:outline-none select-none"
               >
-                <div className="w-20 h-20 rounded-2xl overflow-hidden border border-sky-500/40 group-hover:border-sky-400/65 p-0.5 bg-gradient-to-tr from-sky-500/25 to-indigo-500/25 shadow-lg shadow-sky-500/10 transition-all group-hover:scale-105 duration-200">
-                  <img
-                    src={avatarUrl}
-                    alt={PERSONAL_INFO.name}
-                    className="w-full h-full object-cover rounded-[14px]"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-black/45 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <Maximize2 className="w-5 h-5 text-white" />
-                </div>
-              </div>
+                <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 pointer-events-none">
+                  View My Work
+                </span>
+                <ArrowRight className="w-4 h-4 text-sky-400 group-hover:translate-x-1 transition-transform shrink-0 pointer-events-none" />
+              </button>
+            </div>
+          </div>
 
-              <div className="flex-1 min-w-0">
-                <h2 className="text-xl font-bold text-zinc-100 tracking-tight truncate font-sans">
-                  {PERSONAL_INFO.name}
-                </h2>
-                
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-sky-400 font-mono font-bold text-xs">|</span>
-                  <p className="text-xs font-sans text-zinc-300 font-medium tracking-normal truncate">
-                    {PERSONAL_INFO.role}
-                  </p>
-                </div>
+          {/* ========================================================
+              RIGHT COLUMN: Pure Icon Symbols (100% Buttons, Zero Boxes) & ECG Status
+              ======================================================== */}
+          <div className="lg:col-span-5 w-full flex flex-col items-center lg:items-end justify-center select-none mt-7 sm:mt-9 lg:mt-0">
+            
+            {/* Pure Icon Symbols Row (Slightly larger, luxurious spacing, 100% button architecture) */}
+            <div className="flex items-center gap-6 sm:gap-7">
+              
+              {/* GitHub */}
+              <button
+                type="button"
+                onClick={() => openLink(PERSONAL_INFO.github)}
+                aria-label="GitHub Profile"
+                title="GitHub Profile"
+                className="text-zinc-400 hover:text-white hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none focus-visible:outline-none"
+              >
+                <FaGithub className="w-8 h-8 sm:w-9 sm:h-9 pointer-events-none" />
+              </button>
 
-                <div className="flex items-center gap-1.5 mt-2.5 text-zinc-400 text-xs font-sans">
-                  <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                  <span>{PERSONAL_INFO.location}</span>
-                </div>
-              </div>
+              {/* LinkedIn */}
+              <button
+                type="button"
+                onClick={() => openLink(PERSONAL_INFO.linkedin)}
+                aria-label="LinkedIn Profile"
+                title="LinkedIn Profile"
+                className="text-zinc-400 hover:text-[#0077b5] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none focus-visible:outline-none"
+              >
+                <FaLinkedin className="w-8 h-8 sm:w-9 sm:h-9 pointer-events-none" />
+              </button>
+
+              {/* X Platform (if present) */}
+              {PERSONAL_INFO.x && (
+                <button
+                  type="button"
+                  onClick={() => openLink(PERSONAL_INFO.x!)}
+                  aria-label="X Profile"
+                  title="X Profile"
+                  className="text-zinc-400 hover:text-white hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none focus-visible:outline-none"
+                >
+                  <FaXTwitter className="w-7 h-7 sm:w-8 sm:h-8 pointer-events-none" />
+                </button>
+              )}
+
+              {/* Copy Email Button */}
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                aria-label="Copy Email address"
+                title={copied ? "Email Copied!" : "Copy Email"}
+                className={`hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none focus-visible:outline-none ${
+                  copied ? "text-emerald-400" : "text-zinc-400 hover:text-sky-400"
+                }`}
+              >
+                {copied ? (
+                  <Check className="w-8 h-8 sm:w-9 sm:h-9 text-emerald-400 animate-in zoom-in-75 duration-200 pointer-events-none" />
+                ) : (
+                  <Mail className="w-8 h-8 sm:w-9 sm:h-9 pointer-events-none" />
+                )}
+              </button>
+
+              {/* Download CV */}
+              <button
+                type="button"
+                onClick={() => openLink("/cv.pdf")}
+                aria-label="Download CV"
+                title="Download CV (PDF)"
+                className="flex flex-col items-center justify-center text-zinc-400 hover:text-indigo-400 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none focus-visible:outline-none"
+              >
+                <FileText className="w-7 h-7 sm:w-8 sm:h-8 pointer-events-none" />
+                <span className="font-mono text-[9px] font-bold tracking-tight text-zinc-400 -mt-0.5 pointer-events-none">CV</span>
+              </button>
+
             </div>
 
-            {/* Static Focus Area Capsules - Clean borderless colorful icons */}
-            <div className="pt-5 space-y-2.5">
-              {PERSONAL_INFO.focusAreas.map((area) => (
-                <div
-                  key={area.id}
-                  className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/65 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+            {/* Hairline Divider Line */}
+            <div className="w-full max-w-[270px] sm:max-w-[310px] h-[1px] bg-gradient-to-r from-transparent via-sky-500/35 to-transparent my-4 sm:my-4.5" />
+
+            {/* ECG Pulse Status Indicator */}
+            <div className="flex items-center gap-3 px-1">
+              <div className="relative w-20 sm:w-24 h-7 flex items-center overflow-hidden">
+                <svg
+                  viewBox="0 0 100 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-full h-full text-sky-400 pointer-events-none"
                 >
-                  <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
-                    {renderFocusIcon(area.id)}
-                    <span>{area.label}</span>
-                  </span>
-                  <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
-                    {area.stack}
-                  </span>
-                </div>
-              ))}
+                  <defs>
+                    <linearGradient id="ecgPulseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.2" />
+                      <stop offset="45%" stopColor="#38bdf8" stopOpacity="0.6" />
+                      <stop offset="70%" stopColor="#22d3ee" stopOpacity="1" />
+                      <stop offset="100%" stopColor="#818cf8" stopOpacity="0.3" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Faint static guide line */}
+                  <path
+                    d="M 0 12 L 20 12 L 25 12 L 28 8 L 32 16 L 35 12 L 40 12 L 44 2 L 49 22 L 53 12 L 58 12 L 62 9 L 66 12 L 100 12"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeOpacity="0.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+
+                  {/* Animated beating ECG wave */}
+                  <path
+                    d="M 0 12 L 20 12 L 25 12 L 28 8 L 32 16 L 35 12 L 40 12 L 44 2 L 49 22 L 53 12 L 58 12 L 62 9 L 66 12 L 100 12"
+                    stroke="url(#ecgPulseGrad)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeDasharray="120"
+                    strokeDashoffset="120"
+                    className="animate-ecg-trace"
+                  />
+                </svg>
+              </div>
+
+              {/* Telemetry Status Text */}
+              <div className="flex flex-col text-left">
+                <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-wider text-sky-300 uppercase">
+                  AVAILABLE FOR WORK
+                </span>
+                <span className="text-[10px] sm:text-[11px] text-zinc-400 font-sans tracking-tight">
+                  Full-time &amp; Engineering Projects
+                </span>
+              </div>
             </div>
 
           </div>
+
         </div>
       </div>
-
-      {/* Full Photo Modal */}
-      {isPhotoOpen && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md cursor-pointer"
-          onClick={() => setIsPhotoOpen(false)}
-        >
-          <div 
-            className="relative max-w-sm w-full rounded-3xl overflow-hidden glass-panel p-2.5 cursor-default animate-panel-switch"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setIsPhotoOpen(false)}
-              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-zinc-950/80 border border-zinc-800 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            <img
-              src={avatarUrl}
-              alt={PERSONAL_INFO.name}
-              className="w-full h-80 object-cover rounded-2xl"
-            />
-            <div className="p-4 text-center">
-              <h3 className="text-zinc-100 font-bold text-lg font-sans">{PERSONAL_INFO.name}</h3>
-              <p className="text-sky-400 text-xs font-mono mt-0.5">{PERSONAL_INFO.role}</p>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

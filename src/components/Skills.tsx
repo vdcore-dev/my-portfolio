@@ -1,445 +1,286 @@
-import { useState, useRef } from "react";
-import { SKILL_CATEGORIES } from "../data/portfolioData";
-import { Server, Database, Layout, Terminal, Cloud, Bot, ChevronDown, Layers } from "lucide-react";
-import type { SkillCategory, SkillItem } from "../types";
+import { useState } from "react";
+import {
+  FaJava,
+  FaAws,
+  FaServer,
+  FaDatabase,
+  FaCloud,
+  FaBrain,
+  FaLaptopCode,
+  FaHtml5,
+  FaCss3Alt,
+} from "react-icons/fa6";
+import {
+  SiSpringboot,
+  SiSpringsecurity,
+  SiApachekafka,
+  SiRabbitmq,
+  SiGraphql,
+  SiOpenapiinitiative,
+  SiApachemaven,
+  SiGradle,
+  SiJunit5,
+  SiPostgresql,
+  SiMongodb,
+  SiRedis,
+  SiHibernate,
+  SiMysql,
+  SiElasticsearch,
+  SiFlyway,
+  SiDocker,
+  SiKubernetes,
+  SiLinux,
+  SiNginx,
+  SiGithubactions,
+  SiSpring,
+  SiLangchain,
+  SiOllama,
+  SiHuggingface,
+  SiPython,
+  SiOpenrouter,
+  SiReact,
+  SiTypescript,
+  SiJavascript,
+  SiTailwindcss,
+  SiVite,
+  SiPostman,
+} from "react-icons/si";
+import { ScrollReveal } from "./ScrollReveal";
+
+interface TechItem {
+  name: string;
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  iconColor: string;
+}
+
+interface SkillCategory {
+  id: string;
+  title: string;
+  headerIcon: React.ComponentType<{ className?: string }>;
+  accentColor: string;
+  accentGlow: string;
+  skills: TechItem[];
+}
+
+const SKILL_CATEGORIES: SkillCategory[] = [
+  {
+    id: "backend",
+    title: "BACKEND",
+    headerIcon: FaServer,
+    accentColor: "text-sky-400",
+    accentGlow: "from-sky-400/80",
+    skills: [
+      { name: "Java", icon: FaJava, iconColor: "#ED8B00" },
+      { name: "Spring Boot", icon: SiSpringboot, iconColor: "#6DB33F" },
+      { name: "Spring Security", icon: SiSpringsecurity, iconColor: "#6DB33F" },
+      { name: "Kafka", icon: SiApachekafka, iconColor: "#E05243" },
+      { name: "RabbitMQ", icon: SiRabbitmq, iconColor: "#FF6600" },
+      { name: "GraphQL", icon: SiGraphql, iconColor: "#E10098" },
+      { name: "REST APIs", icon: SiOpenapiinitiative, iconColor: "#6BA539" },
+      { name: "Maven", icon: SiApachemaven, iconColor: "#C71A36" },
+      { name: "Gradle", icon: SiGradle, iconColor: "#02303A" },
+      { name: "JUnit 5", icon: SiJunit5, iconColor: "#25A162" },
+    ],
+  },
+  {
+    id: "database",
+    title: "DATA & STORAGE",
+    headerIcon: FaDatabase,
+    accentColor: "text-indigo-400",
+    accentGlow: "from-indigo-400/80",
+    skills: [
+      { name: "PostgreSQL", icon: SiPostgresql, iconColor: "#4169E1" },
+      { name: "MongoDB", icon: SiMongodb, iconColor: "#47A248" },
+      { name: "Redis", icon: SiRedis, iconColor: "#DC382D" },
+      { name: "Hibernate", icon: SiHibernate, iconColor: "#59666C" },
+      { name: "MySQL", icon: SiMysql, iconColor: "#4479A1" },
+      { name: "Elasticsearch", icon: SiElasticsearch, iconColor: "#005571" },
+      { name: "Flyway", icon: SiFlyway, iconColor: "#CC0000" },
+    ],
+  },
+  {
+    id: "devops",
+    title: "DEVOPS & CLOUD",
+    headerIcon: FaCloud,
+    accentColor: "text-cyan-400",
+    accentGlow: "from-cyan-400/80",
+    skills: [
+      { name: "Docker", icon: SiDocker, iconColor: "#2496ED" },
+      { name: "Kubernetes", icon: SiKubernetes, iconColor: "#326CE5" },
+      { name: "Linux", icon: SiLinux, iconColor: "#FCC624" },
+      { name: "AWS", icon: FaAws, iconColor: "#FF9900" },
+      { name: "Nginx", icon: SiNginx, iconColor: "#009639" },
+      { name: "GitHub Actions", icon: SiGithubactions, iconColor: "#2088FF" },
+    ],
+  },
+  {
+    id: "ai",
+    title: "AI & AGENTS",
+    headerIcon: FaBrain,
+    accentColor: "text-violet-400",
+    accentGlow: "from-violet-400/80",
+    skills: [
+      { name: "Spring AI", icon: SiSpring, iconColor: "#6DB33F" },
+      { name: "LangChain", icon: SiLangchain, iconColor: "#1C3C3C" },
+      { name: "Ollama", icon: SiOllama, iconColor: "#FFFFFF" },
+      { name: "Hugging Face", icon: SiHuggingface, iconColor: "#FFD21E" },
+      { name: "Python", icon: SiPython, iconColor: "#3776AB" },
+      { name: "OpenRouter", icon: SiOpenrouter, iconColor: "#818CF8" },
+    ],
+  },
+  {
+    id: "web",
+    title: "WEB & TOOLS",
+    headerIcon: FaLaptopCode,
+    accentColor: "text-emerald-400",
+    accentGlow: "from-emerald-400/80",
+    skills: [
+      { name: "React", icon: SiReact, iconColor: "#61DAFB" },
+      { name: "TypeScript", icon: SiTypescript, iconColor: "#3178C6" },
+      { name: "JavaScript", icon: SiJavascript, iconColor: "#F7DF1E" },
+      { name: "HTML5", icon: FaHtml5, iconColor: "#E34F26" },
+      { name: "CSS3", icon: FaCss3Alt, iconColor: "#1572B6" },
+      { name: "Tailwind", icon: SiTailwindcss, iconColor: "#38BDF8" },
+      { name: "Vite", icon: SiVite, iconColor: "#646CFF" },
+      { name: "Postman", icon: SiPostman, iconColor: "#FF6C37" },
+    ],
+  },
+];
 
 export const Skills = () => {
-  const defaultId = SKILL_CATEGORIES[0]?.id ?? "backend";
-  const [activeCategoryId, setActiveCategoryId] = useState<string>(defaultId);
-  const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null);
-  const mobileSkillRefs = useRef<Record<string, HTMLDivElement | null>>({});
-  const initialCardViewportTopRef = useRef<number | null>(null);
+  const [activeSkills, setActiveSkills] = useState<Record<string, string>>({
+    backend: "Java",
+    database: "PostgreSQL",
+    devops: "Docker",
+    ai: "Spring AI",
+    web: "React",
+  });
 
-  const activeCategory: SkillCategory =
-    SKILL_CATEGORIES.find((c) => (c.id ?? c.category) === activeCategoryId) ||
-    SKILL_CATEGORIES[0];
-
-  const totalSkillsCount = SKILL_CATEGORIES.reduce((acc, cat) => acc + cat.skills.length, 0);
-
-  const toggleMobileCategory = (id: string) => {
-    const isCurrentlyOpen = expandedMobileCategory === id;
-    const navbarHeight = 84;
-    const targetComfortableTop = navbarHeight + 12; // 96px
-
-    if (isCurrentlyOpen) {
-      // User is CLOSING the currently open card
-      const cardEl = mobileSkillRefs.current[id];
-      const prevRestTop = initialCardViewportTopRef.current;
-
-      setExpandedMobileCategory(null);
-
-      if (cardEl) {
-        // Return to the initial position on screen where the card was before opening
-        const currentCardDocTop = cardEl.getBoundingClientRect().top + window.scrollY;
-        const restTopClamped =
-          prevRestTop !== null
-            ? Math.max(targetComfortableTop, Math.min(prevRestTop, window.innerHeight - 140))
-            : targetComfortableTop;
-        const targetScrollY = currentCardDocTop - restTopClamped;
-
-        window.scrollTo({
-          top: Math.max(0, targetScrollY),
-          behavior: "smooth",
-        });
-      }
-      initialCardViewportTopRef.current = null;
-    } else {
-      // User is OPENING a new card
-      const cardEl = mobileSkillRefs.current[id];
-      const prevOpenId = expandedMobileCategory;
-      const prevCardEl = prevOpenId ? mobileSkillRefs.current[prevOpenId] : null;
-
-      // Capture the card's current position on the user's screen before opening
-      if (cardEl) {
-        initialCardViewportTopRef.current = cardEl.getBoundingClientRect().top;
-      }
-
-      // Check if previous open card is ABOVE this card in the document
-      let heightLossFromAbove = 0;
-      if (prevCardEl && cardEl) {
-        const isPrevAbove =
-          (cardEl.compareDocumentPosition(prevCardEl) & Node.DOCUMENT_POSITION_PRECEDING) !== 0;
-        if (isPrevAbove) {
-          // When the upper card collapses, this card shifts UP by the height lost from the upper card
-          const prevTotalHeight = prevCardEl.offsetHeight;
-          const estimatedClosedHeight = 92;
-          heightLossFromAbove = Math.max(0, prevTotalHeight - estimatedClosedHeight);
-        }
-      }
-
-      setExpandedMobileCategory(id);
-
-      if (cardEl) {
-        const currentCardDocTop = cardEl.getBoundingClientRect().top + window.scrollY;
-        const finalCardDocTop = currentCardDocTop - heightLossFromAbove;
-        const targetScrollY = finalCardDocTop - targetComfortableTop;
-
-        window.scrollTo({
-          top: Math.max(0, targetScrollY),
-          behavior: "smooth",
-        });
-
-        // Ensure scroll reaches destination once DOM layout updates
-        requestAnimationFrame(() => {
-          window.scrollTo({
-            top: Math.max(0, targetScrollY),
-            behavior: "smooth",
-          });
-        });
-      }
-    }
+  const handleSelectSkill = (categoryId: string, skillName: string) => {
+    setActiveSkills((prev) => ({
+      ...prev,
+      [categoryId]: prev[categoryId] === skillName ? "" : skillName,
+    }));
   };
 
-  const getCategoryVisualConfig = (id?: string) => {
-    switch (id) {
-      case "backend":
-        return {
-          icon: Server,
-          accentColor: "text-sky-400",
-          tagDot: "bg-sky-400 shadow-[0_0_6px_rgba(56,189,248,0.8)]",
-          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
-          highlightCard: "bg-gradient-to-b from-sky-500/[0.08] to-zinc-900/90 border-sky-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
-          highlightCardDesktop: "bg-gradient-to-b from-sky-500/[0.08] to-zinc-900/90 border-sky-500/35 hover:border-sky-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(14,165,233,0.18)]",
-          activeSidebarBorder: "!border-sky-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(56,189,248,0.25)]",
-        };
-      case "devops":
-        return {
-          icon: Cloud,
-          accentColor: "text-cyan-400",
-          tagDot: "bg-cyan-400 shadow-[0_0_6px_rgba(34,211,238,0.8)]",
-          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
-          highlightCard: "bg-gradient-to-b from-cyan-500/[0.08] to-zinc-900/90 border-cyan-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
-          highlightCardDesktop: "bg-gradient-to-b from-cyan-500/[0.08] to-zinc-900/90 border-cyan-500/35 hover:border-cyan-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(34,211,238,0.18)]",
-          activeSidebarBorder: "!border-cyan-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(34,211,238,0.25)]",
-        };
-      case "data":
-        return {
-          icon: Database,
-          accentColor: "text-indigo-400",
-          tagDot: "bg-indigo-400 shadow-[0_0_6px_rgba(129,140,248,0.8)]",
-          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
-          highlightCard: "bg-gradient-to-b from-indigo-500/[0.08] to-zinc-900/90 border-indigo-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
-          highlightCardDesktop: "bg-gradient-to-b from-indigo-500/[0.08] to-zinc-900/90 border-indigo-500/35 hover:border-indigo-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(129,140,248,0.18)]",
-          activeSidebarBorder: "!border-indigo-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(129,140,248,0.25)]",
-        };
-      case "ai":
-        return {
-          icon: Bot,
-          accentColor: "text-violet-400",
-          tagDot: "bg-violet-400 shadow-[0_0_6px_rgba(167,139,250,0.8)]",
-          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
-          highlightCard: "bg-gradient-to-b from-violet-500/[0.08] to-zinc-900/90 border-violet-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
-          highlightCardDesktop: "bg-gradient-to-b from-violet-500/[0.08] to-zinc-900/90 border-violet-500/35 hover:border-violet-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(167,139,250,0.18)]",
-          activeSidebarBorder: "!border-violet-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(167,139,250,0.25)]",
-        };
-      case "frontend":
-      default:
-        return {
-          icon: Layout,
-          accentColor: "text-blue-400",
-          tagDot: "bg-blue-400 shadow-[0_0_6px_rgba(96,165,250,0.8)]",
-          expandedCard: "!border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]",
-          highlightCard: "bg-gradient-to-b from-blue-500/[0.08] to-zinc-900/90 border-blue-500/35 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]",
-          highlightCardDesktop: "bg-gradient-to-b from-blue-500/[0.08] to-zinc-900/90 border-blue-500/35 hover:border-blue-400/55 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_20px_-6px_rgba(96,165,250,0.18)]",
-          activeSidebarBorder: "!border-blue-500/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_8px_20px_-6px_rgba(96,165,250,0.25)]",
-        };
-    }
-  };
+  const renderCategoryCard = (category: SkillCategory, catIdx: number) => {
+    const HeaderIcon = category.headerIcon;
+    const currentSelected = activeSkills[category.id];
+    const activeItem = category.skills.find((s) => s.name === currentSelected);
+    const ActiveIcon = activeItem?.icon;
 
-  const getCategoryIcon = (id?: string, sizeClass = "w-4 h-4") => {
-    switch (id) {
-      case "backend":
-        return <Server className={`${sizeClass} text-sky-400 shrink-0`} />;
-      case "devops":
-        return <Cloud className={`${sizeClass} text-cyan-400 shrink-0`} />;
-      case "data":
-        return <Database className={`${sizeClass} text-indigo-400 shrink-0`} />;
-      case "ai":
-        return <Bot className={`${sizeClass} text-violet-400 shrink-0`} />;
-      case "frontend":
-        return <Layout className={`${sizeClass} text-blue-400 shrink-0`} />;
-      default:
-        return <Terminal className={`${sizeClass} text-sky-400 shrink-0`} />;
-    }
-  };
+    return (
+      <ScrollReveal
+        key={category.id}
+        direction="up"
+        delayMs={catIdx * 60}
+      >
+        <div className="flex flex-col gap-3">
+          {/* Category Header Row: Icon & Title on Left, Dynamic Inspector Capsule on Right */}
+          <div className="flex items-center justify-between gap-3 w-full">
+            <div className="flex items-center gap-2.5 shrink-0">
+              <HeaderIcon className={`w-4 h-4 ${category.accentColor} shrink-0`} />
+              <h3 className="text-sm sm:text-base font-bold text-zinc-100 tracking-tight font-sans uppercase">
+                {category.title}
+              </h3>
+            </div>
 
-  return (
-    <section 
-      id="skills" 
-      className="w-full flex flex-col pt-16 pb-0 lg:py-0 lg:min-h-dvh lg:justify-center lg:pt-32 lg:pb-24 relative scroll-mt-0 touch-pan-y"
-    >
-      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
-        
-        {/* Modern Capsule Header (Hidden on Mobile for Pure Seamless Scroll) */}
-        <div className="hidden lg:flex items-center justify-between gap-3 pb-3 mb-5 lg:pb-4 lg:mb-10 border-b border-zinc-800/80">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.1] text-xs font-mono text-zinc-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]">
-            <span className="font-semibold tracking-wide uppercase text-[11px] text-zinc-200">Technical Stack</span>
+            {/* Modern Dynamic Inspector Capsule in Category Header Line */}
+            {activeItem && ActiveIcon && (
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-xl bg-zinc-900/95 backdrop-blur-xl border border-white/[0.15] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_4px_16px_-4px_rgba(0,0,0,0.6)] shrink-0 animate-in fade-in zoom-in-95 duration-150 select-none">
+                <ActiveIcon
+                  className="w-3.5 h-3.5 shrink-0"
+                  style={{ color: activeItem.iconColor }}
+                />
+                <span className="w-px h-3 bg-zinc-800" aria-hidden="true" />
+                <span className="font-mono text-xs font-bold text-zinc-100 tracking-tight">
+                  {activeItem.name}
+                </span>
+              </div>
+            )}
           </div>
-          <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-400">
-            {totalSkillsCount} Tools & Competencies
-          </span>
-        </div>
 
-        {/* 1. Desktop Interface */}
-        <div className="hidden lg:grid grid-cols-12 gap-7 items-start">
-          {/* Sidebar category navigation buttons */}
-          <div className="col-span-5 flex flex-col gap-2.5">
-            {SKILL_CATEGORIES.map((cat) => {
-              const catKey = cat.id ?? cat.category;
-              const isSelected = catKey === activeCategoryId;
-              const catVisualConfig = getCategoryVisualConfig(cat.id);
+          {/* Stylish Divider Line with subtle accent glow under title */}
+          <div className="w-full h-px bg-gradient-to-r from-zinc-700/60 via-zinc-800/30 to-transparent relative">
+            <div className={`absolute top-0 left-0 w-20 h-px bg-gradient-to-r ${category.accentGlow} to-transparent`} />
+          </div>
+
+          {/* Icon Tiles Grid - Full Apple Frosted Dark Glass */}
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5 pt-1">
+            {category.skills.map((skill) => {
+              const IconComponent = skill.icon;
+              const isActive = currentSelected === skill.name;
 
               return (
                 <button
-                  key={catKey}
-                  onClick={() => setActiveCategoryId(catKey)}
-                  className={`selector-item w-full text-left px-4 py-3.5 rounded-2xl border flex items-center justify-between group cursor-pointer ${
-                    isSelected
-                      ? `selector-item-active ${catVisualConfig.activeSidebarBorder} text-white`
-                      : "selector-item-inactive text-zinc-400"
+                  key={skill.name}
+                  type="button"
+                  onClick={() => handleSelectSkill(category.id, skill.name)}
+                  aria-label={`Select skill: ${skill.name}`}
+                  className={`w-13 h-13 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-all duration-200 cursor-pointer [-webkit-tap-highlight-color:transparent] ${
+                    isActive
+                      ? "bg-zinc-850/90 border border-white/40 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25),0_0_18px_-3px_rgba(255,255,255,0.22)] scale-105 -translate-y-1"
+                      : "bg-zinc-900/40 backdrop-blur-2xl border border-white/[0.12] hover:border-white/[0.25] hover:bg-zinc-850/60 hover:-translate-y-1 hover:scale-105 active:scale-95 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_8px_20px_-6px_rgba(0,0,0,0.5)]"
                   }`}
                 >
-                  <div className="flex items-center gap-3.5 min-w-0 pr-3">
-                    {getCategoryIcon(cat.id, "w-5 h-5")}
-
-                    <div className="min-w-0">
-                      <h3
-                        className={`text-sm font-semibold truncate transition-colors ${
-                          isSelected ? "text-zinc-100" : "text-zinc-300 group-hover:text-white"
-                        }`}
-                      >
-                        {cat.category}
-                      </h3>
-                      <p className="text-[11px] text-zinc-500 truncate mt-0.5 font-mono">
-                        {cat.skills.length} core technologies
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center shrink-0 pl-1">
-                    <span
-                      className={`rounded-full transition-all duration-200 ${
-                        isSelected
-                          ? `w-2 h-2 ${catVisualConfig.tagDot}`
-                          : "w-1.5 h-1.5 bg-zinc-800 group-hover:bg-zinc-600"
-                      }`}
-                    />
-                  </div>
+                  <IconComponent
+                    className="w-6.5 h-6.5 sm:w-8 sm:h-8 transition-transform duration-200 group-hover:scale-110"
+                    style={{ color: skill.iconColor }}
+                  />
                 </button>
               );
             })}
           </div>
-
-          {/* Category showcase display card */}
-          <div className="col-span-7">
-            {(() => {
-              const activeVisualConfig = getCategoryVisualConfig(activeCategory.id);
-              return (
-                <div
-                  key={activeCategoryId}
-                  className="rounded-3xl glass-panel p-6 sm:p-7 relative flex flex-col justify-between min-h-[445px] animate-panel-switch"
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-3 pb-3.5 border-b border-zinc-800/80 mb-3.5">
-                      <div className="flex items-center gap-3 min-w-0">
-                        {getCategoryIcon(activeCategory.id, "w-5 h-5")}
-                        <h3 className="text-lg sm:text-xl font-bold text-zinc-100 tracking-tight font-sans truncate">
-                          {activeCategory.category}
-                        </h3>
-                      </div>
-
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 border border-white/[0.1] text-zinc-300 font-mono text-[11px] shrink-0 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]">
-                        <span className={`w-1.5 h-1.5 rounded-full ${activeVisualConfig.tagDot}`} />
-                        <Layers className="w-3.5 h-3.5 text-zinc-400" />
-                        <span>{String(activeCategory.skills.length).padStart(2, "0")} Tech</span>
-                      </span>
-                    </div>
-
-                    {/* Tagline */}
-                    <p className="text-zinc-300 text-sm font-sans leading-relaxed mb-4 line-clamp-2">
-                      {activeCategory.tagline || ""}
-                    </p>
-                  </div>
-
-                  {/* Fluid, scalable skills grid - Supports 4, 6, 8, 10+ skills cleanly without layout break */}
-                  <div className="grid grid-cols-2 gap-2.5 my-auto">
-                    {activeCategory.skills.map((skill: SkillItem) => (
-                      <div
-                        key={skill.name}
-                        className={`px-4 py-3 rounded-2xl border transition-all duration-200 flex items-center justify-between min-h-[48px] ${
-                          skill.highlight
-                            ? activeVisualConfig.highlightCardDesktop
-                            : "glass-subcard hover:border-white/15"
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5 min-w-0 pr-2">
-                          <span
-                            className={`w-2 h-2 rounded-full shrink-0 ${
-                              skill.highlight
-                                ? activeVisualConfig.tagDot
-                                : "bg-zinc-700"
-                            }`}
-                          />
-                          <span className="font-semibold text-sm text-zinc-100 truncate font-sans">
-                            {skill.name}
-                          </span>
-                        </div>
-
-                        {skill.highlight && (
-                          <span className="px-2 py-0.5 rounded-md bg-white/[0.08] border border-white/[0.12] text-[9px] font-mono font-bold tracking-wider text-zinc-200 uppercase shrink-0 shadow-inner">
-                            CORE
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })()}
-          </div>
         </div>
+      </ScrollReveal>
+    );
+  };
 
-        {/* 2. Mobile Interface - Ultra-Modern 2026 Technical Stack Capsules List */}
-        <div className="flex lg:hidden flex-col">
-          {/* Direct, Modern Section Indicator Pill */}
-          <div className="flex items-center justify-center mb-5">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1 rounded-full bg-zinc-900/90 border border-white/[0.1] text-xs font-mono text-zinc-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.9)] shrink-0" />
-              <span className="font-semibold tracking-wider uppercase text-[11px] text-zinc-100">Skills</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.9)] shrink-0" />
+  return (
+    <section
+      id="skills"
+      className="w-full flex flex-col pt-12 sm:pt-16 pb-16 lg:pb-24 relative scroll-mt-16"
+    >
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
+        
+        {/* ========================================================
+            UNIFIED ARCHITECTURAL SKILLS HEADER
+            (Modern softer-squared badge + flanking gradient wings fading out halfway)
+            ======================================================== */}
+        <ScrollReveal direction="up">
+          <div className="w-full flex items-center justify-center mb-10 sm:mb-14">
+            <div className="flex items-center justify-center gap-3 sm:gap-5 w-full max-w-xl px-2">
+              
+              {/* Left Wing: starts at badge and fades out halfway to the left */}
+              <div 
+                className="flex-1 h-px bg-gradient-to-l from-cyan-400/50 via-zinc-700/50 to-transparent" 
+                aria-hidden="true" 
+              />
+
+              {/* Modern Softer-Squared Chamfered Capsule Badge */}
+              <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
+                <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
+                  SKILLS
+                </span>
+              </div>
+
+              {/* Right Wing: starts at badge and fades out halfway to the right */}
+              <div 
+                className="flex-1 h-px bg-gradient-to-r from-cyan-400/50 via-zinc-700/50 to-transparent" 
+                aria-hidden="true" 
+              />
+
             </div>
           </div>
+        </ScrollReveal>
 
-          <div className="flex flex-col gap-3.5">
-            {SKILL_CATEGORIES.map((cat) => {
-            const catKey = cat.id ?? cat.category;
-            const isExpanded = expandedMobileCategory === catKey;
-            const visualConfig = getCategoryVisualConfig(cat.id);
-            const CategoryIcon = visualConfig.icon;
-
-            return (
-              <div
-                key={catKey}
-                ref={(el) => {
-                  mobileSkillRefs.current[catKey] = el;
-                }}
-                className={`rounded-3xl transition-[border-color,box-shadow] duration-300 overflow-hidden glass-panel p-4 ${
-                  isExpanded
-                    ? visualConfig.expandedCard
-                    : "hover:border-white/20"
-                }`}
-              >
-                {/* Mini Capsule Row (Tappable header) */}
-                <div
-                  onClick={() => toggleMobileCategory(catKey)}
-                  className="flex items-start gap-3.5 cursor-pointer select-none group"
-                >
-                  {/* Left: Clean Frosted Glass Housing with Centered Radiant Icon */}
-                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl shrink-0 border border-white/[0.08] bg-zinc-900/60 backdrop-blur-md flex items-center justify-center shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] transition-transform duration-300 group-hover:scale-105">
-                    <CategoryIcon className={`w-6 h-6 sm:w-7 sm:h-7 ${visualConfig.accentColor} transition-transform duration-300 group-hover:scale-110`} />
-                  </div>
-
-                  {/* Right: Full-width Title & Info + Bottom Actions Bar */}
-                  <div className="flex-1 min-w-0">
-                    {/* Category Title */}
-                    <h3 className="text-sm sm:text-base font-bold text-zinc-100 tracking-tight leading-snug group-hover:text-white transition-colors">
-                      {cat.category}
-                    </h3>
-
-                    {/* Top Core Technologies Preview */}
-                    <div className="mt-1 font-mono text-[11px] text-zinc-400 leading-snug">
-                      <span>
-                        {(cat.previewTech ?? cat.skills.slice(0, 2).map((s) => s.name)).join(" • ")}
-                      </span>
-                    </div>
-
-                    {/* Actions Bar Below Title: Tool count pill & Clean Neutral Expand Toggle */}
-                    <div className="flex items-center gap-2 mt-3 pt-2.5 border-t border-zinc-800/60">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-zinc-300 text-xs font-mono font-medium shadow-inner">
-                        <Layers className="w-3.5 h-3.5 text-zinc-400" />
-                        <span>{String(cat.skills.length).padStart(2, "0")} Tech</span>
-                      </span>
-
-                      {/* Circular Glass Toggle Button - Glowing Accent Arrow When Open */}
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleMobileCategory(catKey);
-                        }}
-                        aria-label={isExpanded ? "Collapse category" : "Expand category"}
-                        className={`ml-auto w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-300 cursor-pointer ${
-                          isExpanded
-                            ? "bg-white/[0.08] border-white/20 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14)]"
-                            : "bg-zinc-900/90 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/60"
-                        }`}
-                      >
-                        <ChevronDown
-                          className={`w-4 h-4 stroke-[2.5] transition-all duration-300 ${
-                            isExpanded
-                              ? `rotate-180 ${visualConfig.accentColor} drop-shadow-[0_0_6px_currentColor]`
-                              : "text-zinc-400"
-                          }`}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Expanded State with Fluid CSS Grid Transition */}
-                <div
-                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                    isExpanded
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0 pointer-events-none"
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <div className="pt-3.5 mt-3.5 border-t border-zinc-800/80">
-                      {cat.tagline && (
-                        <p className="text-xs sm:text-[13px] text-zinc-300 leading-relaxed font-sans mb-3.5">
-                          {cat.tagline}
-                        </p>
-                      )}
-
-                      <div className="grid grid-cols-2 gap-2">
-                        {cat.skills.map((skill: SkillItem) => (
-                          <div
-                            key={skill.name}
-                            className={`px-3 py-2.5 rounded-xl border flex items-center justify-between min-h-[44px] transition-all ${
-                              skill.highlight
-                                ? visualConfig.highlightCard
-                                : "bg-zinc-900/60 border-zinc-800/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]"
-                            }`}
-                          >
-                            <div className="flex items-center gap-2 min-w-0 pr-1.5">
-                              <span
-                                className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                                  skill.highlight
-                                    ? visualConfig.tagDot
-                                    : "bg-zinc-700"
-                                }`}
-                              />
-                              <span className="font-sans text-xs font-semibold text-zinc-100 truncate">
-                                {skill.name}
-                              </span>
-                            </div>
-
-                            {skill.highlight && (
-                              <span className="px-1.5 py-0.5 rounded-md bg-white/[0.08] border border-white/[0.12] text-[8px] font-mono font-bold tracking-wider text-zinc-200 uppercase shrink-0 shadow-inner">
-                                CORE
-                              </span>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-          </div>
+        {/* ========================================================
+            RESPONSIVE CAPABILITY LAYOUT
+            - Mobile & Desktop: Unified spacious flow with elegant breathing room
+            - All categories full width with glowing divider line
+            ======================================================== */}
+        <div className="flex flex-col gap-9 sm:gap-11 lg:gap-12 max-w-4xl mx-auto w-full">
+          {SKILL_CATEGORIES.map((category, idx) => renderCategoryCard(category, idx))}
         </div>
 
       </div>

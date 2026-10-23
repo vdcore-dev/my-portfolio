@@ -2,7 +2,7 @@ import type { PersonalInfo, Project, SkillCategory } from "../types";
 
 export const PERSONAL_INFO: PersonalInfo = {
   name: "Vladimir Dejanovic",
-  role: "Java Backend & DevOps Engineer",
+  role: "Java and DevOps Engineer",
   availability: "Available for Work",
   location: "Remote • Worldwide",
   bio: "Specialized in Java and the Spring Boot ecosystem, automating cloud infrastructure through modern DevOps, and integrating intelligent AI workflows into scalable services.",
@@ -76,117 +76,6 @@ export const PROJECTS: Project[] = [
           engine: "Spring Boot 3.3 (Java 21)",
           latency: "38ms",
           cluster: "eu-central-1"
-        }
-      }
-    }
-  },
-  {
-    id: "payment-gateway",
-    title: "Payment Gateway Simulator",
-    category: "Financial API",
-    description:
-      "High-throughput mock transaction gateway demonstrating idempotent API design, payload encryption, network latency simulation, and audit logging.",
-    tags: ["Spring Boot", "RabbitMQ", "PostgreSQL", "Docker", "REST API"],
-    githubUrl: "https://github.com/vdcore-dev/payment-gateway",
-    specs: {
-      architecture: "Event-Driven Processing",
-      database: "PostgreSQL with Audit Logs",
-      performance: "Idempotent <30ms Responses",
-      security: "HMAC Signatures & Encryption",
-    },
-    architectureSteps: [
-      { step: "01", name: "Signature Verification", tech: "HMAC-SHA256", detail: "Payload tampering validation & replay attack prevention" },
-      { step: "02", name: "Loom Concurrency", tech: "Virtual Threads", detail: "Lightweight concurrency handling 10,000+ IO-bound tx/s" },
-      { step: "03", name: "Immutable Ledger", tech: "Partitioned Postgres", detail: "Append-only encrypted financial audit storage" },
-      { step: "04", name: "Settlement Bus", tech: "RabbitMQ Broker", detail: "ISO-20022 banking message queue integration" },
-    ],
-    mockApi: {
-      method: "POST",
-      endpoint: "/api/v1/payments/process",
-      status: 201,
-      response: {
-        transactionId: "tx_77a9c240f",
-        status: "APPROVED",
-        authorizedAmount: 1500.00,
-        currency: "USD",
-        riskScore: 0.02,
-        settlementRoute: "SWIFT-ISO20022",
-        encryption: "AES-256-GCM",
-        executionTimeMs: 27
-      }
-    }
-  },
-  {
-    id: "task-orchestrator",
-    title: "Distributed Task Scheduler",
-    category: "Distributed Cloud",
-    description:
-      "High-availability asynchronous job execution service with leader election, distributed cron scheduling, and worker pool balancing.",
-    tags: ["Java 21", "Spring Boot", "Redis", "Docker", "Prometheus"],
-    githubUrl: "https://github.com/vdcore-dev/task-scheduler",
-    specs: {
-      architecture: "Leader-Worker Clustered",
-      database: "Redis Sorted Sets (ZSET)",
-      performance: "10,000+ Tasks Dispatched/sec",
-      security: "Internal Service-to-Service mTLS",
-    },
-    architectureSteps: [
-      { step: "01", name: "Leader Election", tech: "Redis Redlock", detail: "Quorum-based consensus preventing split-brain states" },
-      { step: "02", name: "Priority Queue", tech: "Redis ZSET", detail: "Sub-millisecond chronological task index polling" },
-      { step: "03", name: "Worker Fleet", tech: "Dockerized Nodes", detail: "Dynamically scaling thread pools with heartbeat sync" },
-      { step: "04", name: "Telemetry Export", tech: "Prometheus + Micrometer", detail: "Exporting dispatch rates, task drop % and worker latency" },
-    ],
-    mockApi: {
-      method: "GET",
-      endpoint: "/api/v1/cluster/orchestrator/status",
-      status: 200,
-      response: {
-        clusterNode: "orchestrator-node-03",
-        leaderRole: "ACTIVE_PRIMARY",
-        nodesHealthy: 5,
-        activeWorkers: 32,
-        tasksDispatchedPerSec: 10420,
-        queueDepth: 0,
-        uptime: "99.994%"
-      }
-    }
-  },
-  {
-    id: "modern-portfolio",
-    title: "Minimalist Engineering Portfolio",
-    category: "Web Architecture",
-    description:
-      "High-performance developer platform built with React 19, TypeScript, and Tailwind CSS, featuring subtle galaxy mask blending and zero layout shift.",
-    tags: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-    githubUrl: "https://github.com/vdcore-dev/my-portfolio",
-    liveUrl: "https://vdcore.com",
-    specs: {
-      architecture: "Single Page App (SPA)",
-      database: "Static Pre-Compiled Bundles",
-      performance: "100 Lighthouse Performance",
-      security: "Content Security Policy (CSP)",
-    },
-    architectureSteps: [
-      { step: "01", name: "Edge Caching", tech: "Global Edge Network", detail: "Instant SSL termination and static bundle distribution" },
-      { step: "02", name: "Reactive Core", tech: "React 19 + TypeScript", detail: "Strict type safety with zero layout shift architecture" },
-      { step: "03", name: "Hardware GPU Glass", tech: "Tailwind v4 @theme", detail: "Linear-style frosted glass shaders without CPU drain" },
-      { step: "04", name: "Hardened Client", tech: "CSP + Obfuscated Mail", detail: "Strict anti-scraping and runtime security mechanisms" },
-    ],
-    mockApi: {
-      method: "GET",
-      endpoint: "/api/v1/system/health",
-      status: 200,
-      response: {
-        status: "HEALTHY",
-        version: "2.4.0",
-        environment: "production",
-        domain: "vdcore.com",
-        edgeLatency: "9ms",
-        lighthouseScore: {
-          performance: 100,
-          accessibility: 100,
-          bestPractices: 100,
-          seo: 100
         }
       }
     }

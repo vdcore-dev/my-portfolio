@@ -2,13 +2,14 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { Projects } from "./components/Projects";
 import { Skills } from "./components/Skills";
+import { About } from "./components/About";
 import { Footer } from "./components/Footer";
 import { ModernBackground } from "./components/ModernBackground";
 
 // Note: history.scrollRestoration is set inline in index.html (before React mounts).
 export default function App() {
   return (
-    <div className="min-h-svh lg:min-h-screen flex flex-col relative overflow-x-hidden bg-zinc-950">
+    <div className="min-h-svh flex flex-col relative overflow-x-clip bg-zinc-950">
       {/* Continuous Deep Space Galaxy Canvas */}
       <ModernBackground />
 
@@ -18,6 +19,7 @@ export default function App() {
         <Hero />
         <Projects />
         <Skills />
+        <About />
       </main>
 
       <Footer />

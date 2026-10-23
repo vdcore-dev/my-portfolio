@@ -4,6 +4,8 @@ import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { triggerSecureMail, copySecureEmail } from "../utils/security";
 import { sharePortfolio } from "../utils/share";
+import { ScrollReveal } from "./ScrollReveal";
+import { scrollToElement } from "../utils/scroll";
 
 export const Footer = () => {
   const [copied, setCopied] = useState(false);
@@ -29,29 +31,50 @@ export const Footer = () => {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollToElement("home");
   };
 
   return (
     <footer
       id="contact"
-      className="w-full relative overflow-hidden scroll-mt-0 z-10 pt-24 pb-[max(2rem,env(safe-area-inset-bottom))] lg:py-0 lg:min-h-dvh flex flex-col justify-between lg:pt-32 lg:pb-10"
+      className="w-full relative overflow-hidden scroll-mt-16 z-10 pt-12 sm:pt-16 pb-[max(2rem,env(safe-area-inset-bottom))] lg:pt-16 lg:pb-12 flex flex-col justify-between"
     >
       <div className="w-full flex flex-col justify-between flex-1">
-        <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-start lg:justify-between">
+        <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-start">
           
-          {/* Modern Capsule Header - Desktop only */}
-          <div className="hidden lg:flex items-center justify-between gap-3 pb-3 mb-5 lg:pb-4 lg:mb-10 border-b border-zinc-800/80">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.1] text-xs font-mono text-zinc-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)]">
-              <span className="font-semibold tracking-wide uppercase text-[11px] text-zinc-200">Get in Touch</span>
+          {/* ========================================================
+              UNIFIED ARCHITECTURAL CONTACT HEADER
+              (Modern softer-squared badge + flanking gradient wings fading out halfway)
+              ======================================================== */}
+          <ScrollReveal direction="up">
+            <div className="w-full flex items-center justify-center mb-8 sm:mb-12">
+              <div className="flex items-center justify-center gap-3 sm:gap-5 w-full max-w-xl px-2">
+                
+                {/* Left Wing: starts at badge and fades out halfway to the left */}
+                <div 
+                  className="flex-1 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/50 to-transparent" 
+                  aria-hidden="true" 
+                />
+
+                {/* Modern Softer-Squared Chamfered Capsule Badge */}
+                <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
+                  <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
+                    CONTACT
+                  </span>
+                </div>
+
+                {/* Right Wing: starts at badge and fades out halfway to the right */}
+                <div 
+                  className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/50 to-transparent" 
+                  aria-hidden="true" 
+                />
+
+              </div>
             </div>
-            <span className="font-mono text-[11px] px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.1] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] text-zinc-400">
-              Direct Channel
-            </span>
-          </div>
+          </ScrollReveal>
 
           {/* 1. Mobile Interface - Compact, recruiter-focused contact block */}
-          <div className="flex lg:hidden flex-col w-full max-w-sm mx-auto items-center text-center">
+          <ScrollReveal direction="up" className="flex lg:hidden flex-col w-full max-w-sm mx-auto items-center text-center">
 
             {/* Headline + one-line value proposition */}
             <h3 className="text-xl font-bold text-zinc-100 tracking-tight font-sans leading-snug">
@@ -104,7 +127,7 @@ export const Footer = () => {
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label="GitHub Profile"
                 className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/70 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] active:scale-90 transition-all"
               >
@@ -114,7 +137,7 @@ export const Footer = () => {
               <a
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
                 className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/70 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] active:scale-90 transition-all"
               >
@@ -125,7 +148,7 @@ export const Footer = () => {
                 <a
                   href={PERSONAL_INFO.x}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label="X Profile"
                   className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/70 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] active:scale-90 transition-all"
                 >
@@ -168,10 +191,10 @@ export const Footer = () => {
               <span>© 2026 VDCORE. All rights reserved.</span>
             </div>
 
-          </div>
+          </ScrollReveal>
 
           {/* 2. Desktop Interface */}
-          <div className="hidden lg:grid grid-cols-12 gap-8 items-center lg:my-auto">
+          <ScrollReveal direction="up" className="hidden lg:grid grid-cols-12 gap-8 items-center lg:my-auto">
             <div className="col-span-8 flex flex-col items-start">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] font-mono text-[11px] text-zinc-200 tracking-wide mb-5">
                 <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.85)] shrink-0" />
@@ -267,7 +290,7 @@ export const Footer = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
 
@@ -286,7 +309,7 @@ export const Footer = () => {
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
               >
                 <span>GitHub</span>
@@ -296,7 +319,7 @@ export const Footer = () => {
               <a
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
               >
                 <span>LinkedIn</span>
@@ -307,7 +330,7 @@ export const Footer = () => {
                 <a
                   href={PERSONAL_INFO.x}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
                 >
                   <span>X</span>
