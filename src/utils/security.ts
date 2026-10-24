@@ -11,12 +11,13 @@ const getSecureEmail = (): string => {
 /**
  * Triggers native mail client safely without static DOM links.
  */
-export const triggerSecureMail = () => {
+export const triggerSecureMail = (subject?: unknown) => {
   const email = getSecureEmail();
   if (!email) return;
 
+  const validSubject = typeof subject === "string" && subject.trim() ? subject : "Engineering Opportunity";
   const tempLink = document.createElement("a");
-  tempLink.href = `mailto:${email}`;
+  tempLink.href = `mailto:${email}?subject=${encodeURIComponent(validSubject)}`;
   tempLink.rel = "noreferrer noopener";
   tempLink.style.display = "none";
   document.body.appendChild(tempLink);

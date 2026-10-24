@@ -4,17 +4,22 @@ import {
   FaExpand,
   FaXmark,
   FaGraduationCap,
+  FaBriefcase,
   FaCircleCheck,
   FaTerminal,
   FaCode,
-  FaShieldHalved,
   FaGears,
+  FaRocket,
+  FaBuildingUser,
+  FaFileContract,
+  FaLaptopCode,
 } from "react-icons/fa6";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { ScrollReveal } from "./ScrollReveal";
 
 export const About = () => {
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
+  const [leftTab, setLeftTab] = useState<"education" | "engagement">("education");
   const avatarUrl = "/avatar2.jpg";
 
   useEffect(() => {
@@ -37,39 +42,48 @@ export const About = () => {
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
         
         {/* ========================================================
-            UNIFIED ARCHITECTURAL ABOUT HEADER
+            ARCHITECTURAL ABOUT HEADER
+            - Mobile: Centered capsule with flanking gradient wings
+            - Desktop: Left-anchored blueprint style (Space-efficient, no wasted vertical push)
             ======================================================== */}
         <ScrollReveal direction="up">
-          <div className="w-full flex items-center justify-center mb-8 sm:mb-12">
+          {/* Mobile Header: Centered (Untouched) */}
+          <div className="w-full flex lg:hidden items-center justify-center mb-8 sm:mb-10">
             <div className="flex items-center justify-center gap-3 sm:gap-5 w-full max-w-xl px-2">
-              
-              {/* Left Wing */}
               <div 
                 className="flex-1 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/50 to-transparent" 
                 aria-hidden="true" 
               />
-
-              {/* Modern Softer-Squared Chamfered Capsule Badge */}
               <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
                 <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
-                  ABOUT
+                  ABOUT ME
                 </span>
               </div>
-
-              {/* Right Wing */}
               <div 
                 className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/50 to-transparent" 
                 aria-hidden="true" 
               />
-
             </div>
+          </div>
+
+          {/* Desktop Header: Left-aligned blueprint style */}
+          <div className="hidden lg:flex items-center gap-4 mb-6 w-full">
+            <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
+              <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
+                ABOUT ME
+              </span>
+            </div>
+            <div 
+              className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/40 to-transparent" 
+              aria-hidden="true" 
+            />
           </div>
         </ScrollReveal>
 
         {/* 2-Column Responsive Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Column: Profile Card + Education */}
+          {/* Left Column: Profile Card + Interactive Mode Switcher */}
           <div className="lg:col-span-5 w-full">
             <ScrollReveal direction="up">
               <div className="rounded-3xl glass-panel p-6 sm:p-7 relative border border-white/[0.09] shadow-2xl">
@@ -151,39 +165,98 @@ export const About = () => {
                   </div>
                 </div>
 
-                {/* Education & Certification Section - Clean & High-Impact */}
+                {/* Interactive Frosted Glass Mode Switcher (Matching Projects Section Architecture) */}
                 <div className="pt-5 flex flex-col gap-3">
-                  {/* Header with Title and Certified Badge */}
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <FaGraduationCap className="w-4 h-4 text-sky-400 shrink-0" />
-                      <span className="font-mono text-xs font-bold text-zinc-200 tracking-wider uppercase">
-                        Education
-                      </span>
-                    </div>
+                  {/* Switcher Tab Buttons */}
+                  <div className="grid grid-cols-2 p-1 rounded-2xl bg-zinc-950/70 backdrop-blur-2xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] select-none">
+                    <button
+                      type="button"
+                      onClick={() => setLeftTab("education")}
+                      className={`inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl font-mono text-xs font-semibold tracking-tight transition-all duration-200 cursor-pointer ${
+                        leftTab === "education"
+                          ? "bg-zinc-800/90 text-zinc-100 border border-white/[0.14] shadow-[0_2px_8px_rgba(0,0,0,0.5),inset_0_1px_0_0_rgba(255,255,255,0.18)]"
+                          : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 border border-transparent"
+                      }`}
+                    >
+                      <FaGraduationCap className={`w-3.5 h-3.5 ${leftTab === "education" ? "text-sky-400" : "text-zinc-400"}`} />
+                      <span>Education</span>
+                    </button>
 
-                    {/* Green Glowing Certified Badge */}
-                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono font-semibold text-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.2)]">
-                      <FaCircleCheck className="w-3 h-3 text-emerald-400 shrink-0" />
-                      <span className="tracking-wide">CERTIFIED</span>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setLeftTab("engagement")}
+                      className={`inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl font-mono text-xs font-semibold tracking-tight transition-all duration-200 cursor-pointer ${
+                        leftTab === "engagement"
+                          ? "bg-zinc-800/90 text-zinc-100 border border-white/[0.14] shadow-[0_2px_8px_rgba(0,0,0,0.5),inset_0_1px_0_0_rgba(255,255,255,0.18)]"
+                          : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/50 border border-transparent"
+                      }`}
+                    >
+                      <FaBriefcase className={`w-3.5 h-3.5 ${leftTab === "engagement" ? "text-indigo-400" : "text-zinc-400"}`} />
+                      <span>Engagement</span>
+                    </button>
                   </div>
 
-                  {/* Clean Minimalist Education Card in Frosted Dark Glass */}
-                  <div className="p-3.5 sm:p-4 rounded-2xl bg-zinc-900/60 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] flex items-center justify-between gap-3">
-                    <div className="flex flex-col">
-                      <h4 className="text-sm font-bold text-zinc-100 tracking-tight font-sans">
-                        ITAcademy
-                      </h4>
-                      <p className="text-xs font-medium text-sky-400 font-sans mt-0.5">
-                        Java Development
+                  {/* Tab Content Display with Fixed Height & Smooth Fade-in */}
+                  {leftTab === "education" ? (
+                    <div className="h-[178px] p-4 rounded-2xl bg-zinc-900/60 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] flex flex-col justify-between animate-in fade-in zoom-in-98 duration-150">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <h4 className="text-sm font-bold text-zinc-100 tracking-tight font-sans">
+                            ITAcademy
+                          </h4>
+                          <p className="text-xs font-medium text-sky-400 font-sans mt-0.5">
+                            Java Development
+                          </p>
+                        </div>
+                        
+                        {/* Green Glowing Certified Badge */}
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono font-semibold text-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.2)]">
+                          <FaCircleCheck className="w-3 h-3 text-emerald-400 shrink-0" />
+                          <span className="tracking-wide">CERTIFIED</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-1.5 border-t border-zinc-800/70 text-xs font-mono text-zinc-400">
+                        <span>Timeline</span>
+                        <span className="px-2 py-0.5 rounded-md bg-zinc-800/80 border border-white/[0.06] text-[11px] font-semibold text-zinc-200">
+                          2023 – 2025
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-zinc-400 font-sans leading-relaxed">
+                        Comprehensive software engineering curriculum covering OOP, Spring Boot, databases, clean architecture &amp; RESTful APIs.
                       </p>
                     </div>
+                  ) : (
+                    <div className="h-[178px] p-3 rounded-2xl bg-zinc-900/60 backdrop-blur-xl border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] flex flex-col justify-between gap-1.5 animate-in fade-in zoom-in-98 duration-150">
+                      {/* Option 1: Full-time */}
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/45 border border-white/[0.05]">
+                        <div className="flex items-center gap-3">
+                          <FaBuildingUser className="w-4 h-4 text-emerald-400 shrink-0 drop-shadow-[0_0_6px_currentColor]" />
+                          <span className="text-xs font-semibold text-zinc-200 font-sans">Full-Time Roles</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-zinc-400">Long-Term</span>
+                      </div>
 
-                    <div className="px-2.5 py-1 rounded-lg bg-zinc-800/80 border border-white/[0.06] text-[11px] font-mono font-semibold text-zinc-300 shrink-0">
-                      2024 – 2025
+                      {/* Option 2: Contract / B2B */}
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/45 border border-white/[0.05]">
+                        <div className="flex items-center gap-3">
+                          <FaFileContract className="w-4 h-4 text-sky-400 shrink-0 drop-shadow-[0_0_6px_currentColor]" />
+                          <span className="text-xs font-semibold text-zinc-200 font-sans">Contract &amp; B2B</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-zinc-400">Worldwide</span>
+                      </div>
+
+                      {/* Option 3: Freelance */}
+                      <div className="flex items-center justify-between p-2.5 rounded-xl bg-zinc-950/45 border border-white/[0.05]">
+                        <div className="flex items-center gap-3">
+                          <FaLaptopCode className="w-4 h-4 text-indigo-400 shrink-0 drop-shadow-[0_0_6px_currentColor]" />
+                          <span className="text-xs font-semibold text-zinc-200 font-sans">Freelance Projects</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-zinc-400">Modular Scope</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
               </div>
@@ -194,45 +267,50 @@ export const About = () => {
           <div className="lg:col-span-7 flex flex-col gap-6">
             <ScrollReveal direction="up" delayMs={100}>
               <div className="rounded-3xl glass-panel p-6 sm:p-7 border border-white/[0.09] shadow-2xl">
-                {/* Background & Ambition Header with React Icon */}
-                <div className="flex items-center gap-2 pb-3 mb-4 border-b border-zinc-800/80 font-mono text-xs text-zinc-400">
-                  <FaTerminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-                  <span className="tracking-wider uppercase text-zinc-300 font-semibold text-[11px]">
-                    Background &amp; Ambition
+                {/* Engineering Philosophy Header with React Icon */}
+                <div className="flex items-center justify-between pb-3 mb-4 border-b border-zinc-800/80">
+                  <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
+                    <FaTerminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                    <span className="tracking-wider uppercase text-zinc-200 font-semibold text-[11px]">
+                      Engineering Philosophy
+                    </span>
+                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-zinc-900/90 border border-white/[0.08] font-mono text-[10px] text-zinc-400 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+                    MINDSET
                   </span>
                 </div>
 
                 <p className="text-zinc-300 text-sm sm:text-base font-sans leading-relaxed">
-                  I am a self-driven software developer dedicated to building high-performance backend systems and clean cloud architecture. Rather than building superficial features, my focus is centered on API contract design, relational data integrity, containerized workflows, and resilient asynchronous services.
+                  Dedicated to building high-performance backend systems and resilient cloud architecture within the Java &amp; Spring Boot ecosystem. Rather than assembling superficial features, my focus centers on robust API contract design, relational data integrity, containerized workflows, and secure asynchronous services.
                 </p>
 
                 <p className="text-zinc-400 text-xs sm:text-sm font-sans mt-3.5 leading-relaxed">
-                  While entering the professional software industry, I bring uncompromising discipline toward clean code, testability, and continuous learning. I am eager to contribute actively to an agile engineering team where scalability and developer velocity matter.
+                  Backed by formal engineering fundamentals (ITAcademy) and strong personal autonomy, I bring relentless curiosity and discipline to continuous learning. I independently explore cutting-edge tooling, adapt rapidly to modern industry standards, and bring proactive engineering energy to every team and project.
                 </p>
 
-                {/* 3 Pillars with Modern React Icons */}
+                {/* 3 Pillars with Modern React Icons & Frosted Glass Hover Glows */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 pt-5 border-t border-zinc-800/80">
-                  <div className="p-3.5 rounded-2xl bg-zinc-900/50 border border-white/[0.06] hover:border-white/[0.12] transition-colors">
-                    <FaCode className="w-4 h-4 text-sky-400 mb-2" />
+                  <div className="p-3.5 rounded-2xl bg-zinc-900/50 border border-white/[0.06] hover:border-sky-500/40 hover:bg-sky-500/[0.04] transition-all duration-200 group">
+                    <FaCode className="w-4 h-4 text-sky-400 mb-2 group-hover:scale-110 transition-transform" />
                     <h4 className="text-xs font-bold text-zinc-100 font-sans">Clean Code</h4>
                     <p className="text-[11px] text-zinc-400 font-sans mt-1">
                       SOLID principles, modular services &amp; strict typing.
                     </p>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-zinc-900/50 border border-white/[0.06] hover:border-white/[0.12] transition-colors">
-                    <FaShieldHalved className="w-4 h-4 text-emerald-400 mb-2" />
-                    <h4 className="text-xs font-bold text-zinc-100 font-sans">Reliability</h4>
-                    <p className="text-[11px] text-zinc-400 font-sans mt-1">
-                      ACID transactions, graceful error handling &amp; logging.
-                    </p>
-                  </div>
-
-                  <div className="p-3.5 rounded-2xl bg-zinc-900/50 border border-white/[0.06] hover:border-white/[0.12] transition-colors">
-                    <FaGears className="w-4 h-4 text-cyan-400 mb-2" />
+                  <div className="p-3.5 rounded-2xl bg-zinc-900/50 border border-white/[0.06] hover:border-cyan-500/40 hover:bg-cyan-500/[0.04] transition-all duration-200 group">
+                    <FaGears className="w-4 h-4 text-cyan-400 mb-2 group-hover:scale-110 transition-transform" />
                     <h4 className="text-xs font-bold text-zinc-100 font-sans">Modern DevOps</h4>
                     <p className="text-[11px] text-zinc-400 font-sans mt-1">
                       Reproducible container builds with Docker &amp; CI/CD.
+                    </p>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-zinc-900/50 border border-white/[0.06] hover:border-indigo-500/40 hover:bg-indigo-500/[0.04] transition-all duration-200 group">
+                    <FaRocket className="w-4 h-4 text-indigo-400 mb-2 group-hover:scale-110 transition-transform" />
+                    <h4 className="text-xs font-bold text-zinc-100 font-sans">Continuous Growth</h4>
+                    <p className="text-[11px] text-zinc-400 font-sans mt-1">
+                      Self-driven mastery, rapid adaptation &amp; curiosity.
                     </p>
                   </div>
                 </div>

@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { PROJECTS } from "../data/portfolioData";
 import {
-  ArrowUpRight,
-  Code2,
-  ShieldCheck,
-  Database,
-  Zap,
-  Globe,
-  Copy,
-  Check,
-  Activity
-} from "lucide-react";
-import { FaJava, FaLayerGroup, FaDiagramProject } from "react-icons/fa6";
+  FaJava,
+  FaLayerGroup,
+  FaDiagramProject,
+  FaCode,
+  FaShieldHalved,
+  FaDatabase,
+  FaBolt,
+  FaEarthAmericas,
+  FaCopy,
+  FaCheck,
+  FaChartLine,
+  FaArrowUpRightFromSquare,
+  FaGithub,
+} from "react-icons/fa6";
 import {
   SiSpringboot,
   SiPostgresql,
@@ -26,7 +29,6 @@ import {
   SiLinux,
   SiOpenapiinitiative,
 } from "react-icons/si";
-import { GithubIcon } from "./Icons";
 import type { Project } from "../types";
 import { ScrollReveal } from "./ScrollReveal";
 
@@ -44,15 +46,15 @@ const getTechIcon = (tag: string) => {
   if (lower.includes("tailwind")) return { icon: SiTailwindcss, color: "#38BDF8" };
   if (lower.includes("nginx")) return { icon: SiNginx, color: "#009639" };
   if (lower.includes("linux")) return { icon: SiLinux, color: "#FCC624" };
-  return { icon: Code2, color: "#38BDF8" };
+  return { icon: FaCode, color: "#38BDF8" };
 };
 
 const highlightJson = (json: unknown): string => {
   const str = typeof json !== "string" ? JSON.stringify(json, null, 2) : json;
   return str.replace(
-    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
     (match) => {
-      let cls = "text-sky-300";
+      let cls: string;
       if (/^"/.test(match)) {
         if (/:$/.test(match)) {
           cls = "text-zinc-400";
@@ -138,20 +140,18 @@ export const Projects = () => {
       <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10">
         
         {/* ========================================================
-            UNIFIED ARCHITECTURAL PROJECTS HEADER
-            (Modern softer-squared badge + flanking gradient wings fading out halfway)
+            ARCHITECTURAL PROJECTS HEADER
+            - Mobile: Centered capsule with flanking gradient wings
+            - Desktop: Left-anchored blueprint style (Space-efficient, no wasted vertical push)
             ======================================================== */}
         <ScrollReveal direction="up">
-          <div className="w-full flex items-center justify-center mb-8 sm:mb-12">
+          {/* Mobile Header: Centered (Untouched) */}
+          <div className="w-full flex lg:hidden items-center justify-center mb-8 sm:mb-10">
             <div className="flex items-center justify-center gap-3 sm:gap-5 w-full max-w-xl px-2">
-              
-              {/* Left Wing: starts at badge and fades out halfway to the left */}
               <div 
                 className="flex-1 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/50 to-transparent" 
                 aria-hidden="true" 
               />
-
-              {/* Modern Softer-Squared Chamfered Capsule Badge */}
               <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
                 <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
                   PROJECTS
@@ -161,14 +161,28 @@ export const Projects = () => {
                   {PROJECTS.length < 10 ? `0${PROJECTS.length}` : PROJECTS.length}
                 </span>
               </div>
-
-              {/* Right Wing: starts at badge and fades out halfway to the right */}
               <div 
                 className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/50 to-transparent" 
                 aria-hidden="true" 
               />
-
             </div>
+          </div>
+
+          {/* Desktop Header: Left-aligned blueprint style */}
+          <div className="hidden lg:flex items-center gap-4 mb-6 w-full">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
+              <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
+                PROJECTS
+              </span>
+              <span className="w-px h-3.5 bg-zinc-800" aria-hidden="true" />
+              <span className="inline-flex items-center justify-center min-w-[24px] h-[19px] px-1.5 rounded-[5px] bg-sky-500/10 border border-sky-500/25 text-sky-400 font-mono text-[10px] font-bold tabular-nums shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+                {PROJECTS.length < 10 ? `0${PROJECTS.length}` : PROJECTS.length}
+              </span>
+            </div>
+            <div 
+              className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/40 to-transparent" 
+              aria-hidden="true" 
+            />
           </div>
         </ScrollReveal>
 
@@ -308,7 +322,7 @@ export const Projects = () => {
                     <div className="flex flex-col gap-2 my-auto">
                       <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl glass-subcard text-xs">
                         <span className="text-zinc-400 font-sans font-medium flex items-center gap-2.5">
-                          <Code2 className="w-4 h-4 text-sky-400 shrink-0" />
+                          <FaCode className="w-4 h-4 text-sky-400 shrink-0" />
                           <span>Architecture &amp; Pattern</span>
                         </span>
                         <span className="text-zinc-100 font-mono text-xs font-semibold tracking-tight">
@@ -318,7 +332,7 @@ export const Projects = () => {
 
                       <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl glass-subcard text-xs">
                         <span className="text-zinc-400 font-sans font-medium flex items-center gap-2.5">
-                          <Database className="w-4 h-4 text-cyan-400 shrink-0" />
+                          <FaDatabase className="w-4 h-4 text-cyan-400 shrink-0" />
                           <span>Persistence &amp; State</span>
                         </span>
                         <span className="text-zinc-100 font-mono text-xs font-semibold tracking-tight">
@@ -328,7 +342,7 @@ export const Projects = () => {
 
                       <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl glass-subcard text-xs">
                         <span className="text-zinc-400 font-sans font-medium flex items-center gap-2.5">
-                          <Zap className="w-4 h-4 text-indigo-400 shrink-0" />
+                          <FaBolt className="w-4 h-4 text-indigo-400 shrink-0" />
                           <span>Throughput &amp; SLA</span>
                         </span>
                         <span className="text-zinc-100 font-mono text-xs font-semibold tracking-tight">
@@ -338,7 +352,7 @@ export const Projects = () => {
 
                       <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl glass-subcard text-xs">
                         <span className="text-zinc-400 font-sans font-medium flex items-center gap-2.5">
-                          <ShieldCheck className="w-4 h-4 text-violet-400 shrink-0" />
+                          <FaShieldHalved className="w-4 h-4 text-violet-400 shrink-0" />
                           <span>Security &amp; Protocol</span>
                         </span>
                         <span className="text-zinc-100 font-mono text-xs font-semibold tracking-tight">
@@ -400,7 +414,7 @@ export const Projects = () => {
 
                     <div className="p-2.5 rounded-xl bg-zinc-950/80 border border-zinc-800 text-[11px] font-mono text-zinc-400 flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <Activity className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                        <FaChartLine className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                         <span className="truncate">Data Consistency: ACID + Event-Driven Queues</span>
                       </div>
                       <span className="text-emerald-400 font-bold shrink-0 ml-2">Active</span>
@@ -430,12 +444,12 @@ export const Projects = () => {
                         >
                           {copiedId === activeProject.id ? (
                             <>
-                              <Check className="w-3.5 h-3.5 text-emerald-400" />
+                              <FaCheck className="w-3.5 h-3.5 text-emerald-400" />
                               <span className="text-emerald-400 font-semibold">Copied!</span>
                             </>
                           ) : (
                             <>
-                              <Copy className="w-3.5 h-3.5 text-sky-400" />
+                              <FaCopy className="w-3.5 h-3.5 text-sky-400" />
                               <span>Copy Schema</span>
                             </>
                           )}
@@ -471,7 +485,7 @@ export const Projects = () => {
                     onClick={() => window.open(activeProject.githubUrl, "_blank", "noopener,noreferrer")}
                     className="group/code inline-flex items-center justify-center gap-2.5 h-11 px-6 rounded-full glass-subcard border-white/[0.1] text-zinc-200 hover:text-white text-sm font-sans font-medium transition-all duration-200 hover:-translate-y-0.5 active:scale-95 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] cursor-pointer"
                   >
-                    <GithubIcon className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/code:scale-110 group-hover/code:-translate-y-0.5" />
+                    <FaGithub className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/code:scale-110 group-hover/code:-translate-y-0.5" />
                     <span>Source Code</span>
                   </button>
                 )}
@@ -485,8 +499,8 @@ export const Projects = () => {
                     <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 group-hover/demo:brightness-110 transition-all duration-200">
                       Live Preview
                     </span>
-                    <Globe className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:rotate-12 shrink-0" />
-                    <ArrowUpRight className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5 shrink-0" />
+                    <FaEarthAmericas className="w-4 h-4 text-sky-400 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:rotate-12 shrink-0" />
+                    <FaArrowUpRightFromSquare className="w-3.5 h-3.5 text-sky-400 transition-transform duration-200 group-hover/demo:scale-110 group-hover/demo:translate-x-0.5 group-hover/demo:-translate-y-0.5 shrink-0" />
                   </button>
                 )}
               </div>
@@ -625,12 +639,12 @@ export const Projects = () => {
                             >
                               {copiedId === project.id ? (
                                 <>
-                                  <Check className="w-3 h-3 text-emerald-400" />
+                                  <FaCheck className="w-3 h-3 text-emerald-400" />
                                   <span className="text-emerald-400 font-semibold">Copied!</span>
                                 </>
                               ) : (
                                 <>
-                                  <Copy className="w-3 h-3 text-sky-400" />
+                                  <FaCopy className="w-3 h-3 text-sky-400" />
                                   <span>Copy</span>
                                 </>
                               )}
@@ -657,7 +671,7 @@ export const Projects = () => {
                           aria-label={`View ${project.title} source code on GitHub`}
                           className="flex-1 inline-flex items-center justify-center gap-2 h-10 px-4 rounded-full glass-subcard border-white/[0.1] text-zinc-200 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] active:scale-95 transition-all text-xs font-sans font-medium cursor-pointer [-webkit-tap-highlight-color:transparent]"
                         >
-                          <GithubIcon className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                          <FaGithub className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                           <span>Source Code</span>
                         </button>
                       )}
@@ -672,7 +686,7 @@ export const Projects = () => {
                           <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
                             Live Preview
                           </span>
-                          <ArrowUpRight className="w-3.5 h-3.5 text-sky-400 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          <FaArrowUpRightFromSquare className="w-3.5 h-3.5 text-sky-400 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                         </button>
                       )}
                     </div>

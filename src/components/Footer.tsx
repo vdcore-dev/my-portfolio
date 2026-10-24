@@ -4,15 +4,18 @@ import {
   FaCopy,
   FaCheck,
   FaShareNodes,
-  FaArrowUpRightFromSquare,
   FaTerminal,
   FaChevronUp,
   FaCircleInfo,
   FaEarthAmericas,
   FaRegClock,
   FaCircleCheck,
+  FaHandshake,
+  FaBolt,
+  FaGithub,
+  FaLinkedin,
+  FaXTwitter,
 } from "react-icons/fa6";
-import { GithubIcon, LinkedinIcon, XIcon } from "./Icons";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { triggerSecureMail, copySecureEmail } from "../utils/security";
 import { sharePortfolio } from "../utils/share";
@@ -49,38 +52,47 @@ export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="w-full relative overflow-hidden scroll-mt-16 z-10 pt-12 sm:pt-16 pb-[max(2rem,env(safe-area-inset-bottom))] lg:pt-16 lg:pb-12 flex flex-col justify-between"
+      className="w-full relative overflow-hidden scroll-mt-16 z-10 pt-12 sm:pt-16 pb-[max(2rem,env(safe-area-inset-bottom))] lg:pt-16 lg:pb-8 lg:h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4rem)] flex flex-col justify-between"
     >
       <div className="w-full flex flex-col justify-between flex-1">
-        <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-start">
+        <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-between">
           
           {/* ========================================================
-              UNIFIED ARCHITECTURAL CONTACT HEADER
+              ARCHITECTURAL CONTACT HEADER
+              - Mobile: Centered capsule with flanking gradient wings
+              - Desktop: Left-anchored blueprint style (Space-efficient, no wasted vertical push)
               ======================================================== */}
-          <ScrollReveal direction="up">
-            <div className="w-full flex items-center justify-center mb-8 sm:mb-12">
+          <ScrollReveal direction="up" className="shrink-0">
+            {/* Mobile Header: Centered (Untouched) */}
+            <div className="w-full flex lg:hidden items-center justify-center mb-8 sm:mb-10">
               <div className="flex items-center justify-center gap-3 sm:gap-5 w-full max-w-xl px-2">
-                
-                {/* Left Wing */}
                 <div 
                   className="flex-1 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/50 to-transparent" 
                   aria-hidden="true" 
                 />
-
-                {/* Modern Softer-Squared Chamfered Capsule Badge */}
                 <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
                   <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
                     CONTACT
                   </span>
                 </div>
-
-                {/* Right Wing */}
                 <div 
                   className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/50 to-transparent" 
                   aria-hidden="true" 
                 />
-
               </div>
+            </div>
+
+            {/* Desktop Header: Left-aligned blueprint style */}
+            <div className="hidden lg:flex items-center gap-4 mb-6 w-full">
+              <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
+                <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
+                  CONTACT
+                </span>
+              </div>
+              <div 
+                className="flex-1 h-px bg-gradient-to-r from-sky-400/50 via-zinc-700/40 to-transparent" 
+                aria-hidden="true" 
+              />
             </div>
           </ScrollReveal>
 
@@ -142,7 +154,7 @@ export const Footer = () => {
                 aria-label="GitHub Profile"
                 className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/70 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] active:scale-90 transition-all"
               >
-                <GithubIcon className="w-4 h-4" />
+                <FaGithub className="w-4 h-4" />
               </a>
 
               <a
@@ -152,7 +164,7 @@ export const Footer = () => {
                 aria-label="LinkedIn Profile"
                 className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/70 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] active:scale-90 transition-all"
               >
-                <LinkedinIcon className="w-4 h-4" />
+                <FaLinkedin className="w-4 h-4" />
               </a>
 
               {PERSONAL_INFO.x && (
@@ -163,7 +175,7 @@ export const Footer = () => {
                   aria-label="X Profile"
                   className="w-9 h-9 rounded-full flex items-center justify-center text-zinc-400 hover:text-white hover:bg-zinc-800/70 hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] active:scale-90 transition-all"
                 >
-                  <XIcon className="w-3.5 h-3.5" />
+                  <FaXTwitter className="w-3.5 h-3.5" />
                 </a>
               )}
 
@@ -205,21 +217,21 @@ export const Footer = () => {
           </ScrollReveal>
 
           {/* 2. Desktop Interface */}
-          <ScrollReveal direction="up" className="hidden lg:grid grid-cols-12 gap-8 items-center lg:my-auto">
+          <ScrollReveal direction="up" className="hidden lg:grid grid-cols-12 gap-8 items-center w-full my-auto py-4">
             <div className="col-span-8 flex flex-col items-start">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800/90 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] font-mono text-[11px] text-zinc-200 tracking-wide mb-5">
-                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.85)] shrink-0" />
-                <span>Open for Backend &amp; Cloud Opportunities</span>
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] font-mono text-[11px] text-zinc-200 tracking-wide mb-3.5">
+                <FaHandshake className="w-4 h-4 text-sky-400 shrink-0 drop-shadow-[0_0_8px_rgba(56,189,248,0.7)]" />
+                <span>OPEN FOR ROLES &amp; CONTRACTS</span>
               </div>
 
-              <h3 className="text-4xl lg:text-5xl font-extrabold text-zinc-100 tracking-tight leading-[1.12] mb-4 font-sans">
+              <h3 className="text-3xl lg:text-4xl font-extrabold text-zinc-100 tracking-tight leading-[1.15] mb-2.5 font-sans">
                 Let’s engineer your next <br />
                 <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 mt-1">
                   core system.
                 </span>
               </h3>
 
-              <p className="text-zinc-400 text-sm sm:text-base max-w-xl font-sans mb-8 leading-relaxed">
+              <p className="text-zinc-400 text-sm max-w-xl font-sans mb-6 leading-relaxed">
                 Available for backend engineering roles, high-throughput APIs, and distributed cloud services.
               </p>
 
@@ -261,16 +273,16 @@ export const Footer = () => {
             </div>
 
             {/* Availability Box with Glass Bezel & High-Tech Telemetry Pulse */}
-            <div className="col-span-4 rounded-3xl glass-panel p-6 sm:p-7 border border-white/[0.09] shadow-2xl">
-              <div className="flex items-center pb-4 mb-4 border-b border-zinc-800/80 font-mono text-xs text-zinc-400">
+            <div className="col-span-4 rounded-3xl glass-panel p-5 sm:p-6 border border-white/[0.09] shadow-2xl">
+              <div className="flex items-center pb-3 mb-3 border-b border-zinc-800/80 font-mono text-xs text-zinc-400">
                 <div className="flex items-center gap-2">
                   <FaCircleInfo className="w-3.5 h-3.5 text-sky-400 shrink-0" />
                   <span className="tracking-wider uppercase text-zinc-300 font-semibold text-[11px]">Availability</span>
                 </div>
               </div>
 
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     <FaEarthAmericas className="w-4 h-4 text-emerald-400 shrink-0" />
                     <span>Location</span>
@@ -280,17 +292,27 @@ export const Footer = () => {
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+                <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     <FaRegClock className="w-4 h-4 text-cyan-400 shrink-0" />
                     <span>Schedule</span>
                   </span>
                   <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
-                    Flexible
+                    Flexible • US &amp; EU Overlap
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between px-3.5 py-3 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+                <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+                  <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
+                    <FaBolt className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>Response</span>
+                  </span>
+                  <span className="text-zinc-200 font-mono text-[11px] font-medium tracking-tight">
+                    &lt; 24h Fast Reply
+                  </span>
+                </div>
+
+                <div className="flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-zinc-900/60 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
                   <span className="text-zinc-300 font-sans text-xs font-medium flex items-center gap-2.5">
                     <FaCircleCheck className="w-4 h-4 text-sky-400 shrink-0" />
                     <span>Status</span>
@@ -332,38 +354,38 @@ export const Footer = () => {
             </div>
           </ScrollReveal>
 
-        </div>
-
-        {/* Baseline Footer Bar - Desktop only */}
-        <div 
-          className="hidden lg:block w-full max-w-6xl mx-auto px-4 sm:px-6 relative z-10 pt-10 shrink-0"
-          style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
-        >
-          <div className="flex pt-6 border-t border-zinc-900/80 items-center justify-between text-xs font-mono text-zinc-500">
+          {/* Baseline Footer Bar - Desktop only */}
+          <div 
+            className="hidden lg:block w-full pt-4 shrink-0"
+            style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+          >
+          <div className="flex pt-4 border-t border-zinc-900/80 items-center justify-between text-xs font-mono text-zinc-500">
             <div className="flex items-center gap-2">
               <FaTerminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
-              <span>© 2026 VDCore. All rights reserved.</span>
+              <span>© 2026 VDCORE. All rights reserved.</span>
             </div>
 
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
+                aria-label="GitHub Profile"
+                title="GitHub"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/60 border border-white/[0.08] hover:border-sky-500/40 hover:bg-zinc-800/80 text-zinc-400 hover:text-sky-400 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(56,189,248,0.25)] active:scale-90"
               >
-                <span>GitHub</span>
-                <FaArrowUpRightFromSquare className="w-3 h-3 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <FaGithub className="w-4 h-4" />
               </a>
 
               <a
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
+                aria-label="LinkedIn Profile"
+                title="LinkedIn"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/60 border border-white/[0.08] hover:border-sky-500/40 hover:bg-zinc-800/80 text-zinc-400 hover:text-sky-400 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(56,189,248,0.25)] active:scale-90"
               >
-                <span>LinkedIn</span>
-                <FaArrowUpRightFromSquare className="w-3 h-3 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <FaLinkedin className="w-4 h-4" />
               </a>
 
               {PERSONAL_INFO.x && (
@@ -371,44 +393,48 @@ export const Footer = () => {
                   href={PERSONAL_INFO.x}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-1 hover:text-sky-400 transition-colors"
+                  aria-label="X Profile"
+                  title="X"
+                  className="w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/60 border border-white/[0.08] hover:border-sky-500/40 hover:bg-zinc-800/80 text-zinc-400 hover:text-sky-400 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(56,189,248,0.25)] active:scale-90"
                 >
-                  <span>X</span>
-                  <FaArrowUpRightFromSquare className="w-3 h-3 text-zinc-600 group-hover:text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  <FaXTwitter className="w-3.5 h-3.5" />
                 </a>
               )}
 
               <button
                 onClick={handleShare}
                 type="button"
-                className="group flex items-center gap-1.5 hover:text-sky-400 transition-colors cursor-pointer"
+                aria-label="Share portfolio"
+                title={shared ? "Link Copied!" : "Share portfolio"}
+                className={`w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-200 hover:-translate-y-0.5 active:scale-90 cursor-pointer ${
+                  shared
+                    ? "bg-sky-500/20 border-sky-500/40 text-sky-300 shadow-[0_0_12px_rgba(56,189,248,0.3)]"
+                    : "bg-zinc-900/60 border-white/[0.08] text-zinc-400 hover:text-sky-400 hover:border-sky-500/40 hover:bg-zinc-800/80 hover:shadow-[0_0_12px_rgba(56,189,248,0.25)]"
+                }`}
               >
                 {shared ? (
-                  <>
-                    <FaCheck className="w-3 h-3 text-sky-400" />
-                    <span className="text-sky-400">Copied!</span>
-                  </>
+                  <FaCheck className="w-3.5 h-3.5 text-sky-400" />
                 ) : (
-                  <>
-                    <FaShareNodes className="w-3 h-3 text-zinc-500 group-hover:text-sky-400 transition-colors" />
-                    <span className="group-hover:text-zinc-200">Share</span>
-                  </>
+                  <FaShareNodes className="w-3.5 h-3.5" />
                 )}
               </button>
+
+              <div className="w-px h-4 bg-zinc-800/80 mx-1" />
 
               <button
                 onClick={scrollToTop}
                 type="button"
-                aria-label="Back to top"
-                className="flex items-center gap-1.5 text-zinc-400 hover:text-sky-400 transition-colors active:scale-95 cursor-pointer group"
+                aria-label="Scroll to top"
+                title="Back to top"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-zinc-900/60 border border-white/[0.08] hover:border-sky-500/40 hover:bg-zinc-800/80 text-zinc-400 hover:text-sky-400 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_0_12px_rgba(56,189,248,0.25)] active:scale-90 cursor-pointer"
               >
-                <span className="group-hover:text-zinc-200">Top</span>
-                <FaChevronUp className="w-3 h-3 text-sky-400 animate-bounce" />
+                <FaChevronUp className="w-3.5 h-3.5 text-sky-400 animate-bounce" />
               </button>
             </div>
           </div>
         </div>
       </div>
-    </footer>
+    </div>
+  </footer>
   );
 };

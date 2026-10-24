@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Home, FileText, ArrowUpRight, X } from "lucide-react";
+import { FileText, ArrowUpRight, X } from "lucide-react";
 import { scrollToElement } from "../utils/scroll";
 
 const NAV_LINKS = [
@@ -14,22 +14,22 @@ const NAV_LINKS = [
     name: "Skills",
     href: "#skills",
     id: "skills",
-    color: "bg-cyan-400",
-    shadow: "shadow-[0_0_12px_rgba(34,211,238,0.9)]",
+    color: "bg-sky-400",
+    shadow: "shadow-[0_0_12px_rgba(56,189,248,0.9)]",
   },
   {
     name: "About",
     href: "#about",
     id: "about",
-    color: "bg-emerald-400",
-    shadow: "shadow-[0_0_12px_rgba(52,211,153,0.9)]",
+    color: "bg-sky-400",
+    shadow: "shadow-[0_0_12px_rgba(56,189,248,0.9)]",
   },
   {
     name: "Contact",
     href: "#contact",
     id: "contact",
-    color: "bg-indigo-400",
-    shadow: "shadow-[0_0_12px_rgba(129,140,248,0.9)]",
+    color: "bg-sky-400",
+    shadow: "shadow-[0_0_12px_rgba(56,189,248,0.9)]",
   },
 ];
 
@@ -159,7 +159,7 @@ export const Navbar = () => {
     <>
       {/* Top Ambient Vignette / Edge Fade Mask */}
       <div
-        className="fixed top-0 left-0 right-0 h-16 sm:h-20 pointer-events-none z-30 bg-gradient-to-b from-zinc-950 via-zinc-950/60 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
+        className="fixed top-0 left-0 right-0 h-24 sm:h-28 pointer-events-none z-30 bg-gradient-to-b from-zinc-950 via-zinc-950/80 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)]"
         aria-hidden="true"
       />
 
@@ -175,47 +175,30 @@ export const Navbar = () => {
                 : "bg-zinc-900/50 border-white/[0.1] backdrop-blur-2xl shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.12),0_12px_28px_-8px_rgba(0,0,0,0.55)]"
             }`}
           >
-            {/* Desktop Brand Wordmark */}
-            <div className="flex items-center h-8 pl-2 pr-1 font-sans select-none cursor-default">
-              <span className="font-extrabold text-[14px] tracking-[0.14em] text-zinc-100 leading-none">
+            {/* Desktop Brand Wordmark (Direct Home Anchor) */}
+            <a
+              href="#"
+              onClick={scrollToTop}
+              title="VDCORE - Home"
+              aria-label="VDCORE Home"
+              className="flex items-center h-8 pl-3 pr-2.5 rounded-full font-sans select-none cursor-pointer group/brand transition-all duration-200 hover:bg-white/[0.06]"
+            >
+              <span className={`font-extrabold text-[14px] tracking-[0.14em] leading-none transition-colors duration-200 ${
+                activeSection === "" ? "text-white" : "text-zinc-300 group-hover/brand:text-white"
+              }`}>
                 VDCORE
               </span>
-              <span className="w-[5px] h-[5px] rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.95)] ml-1 translate-y-[3.5px] shrink-0" />
-            </div>
+              <span className={`w-[5px] h-[5px] rounded-full ml-1.5 translate-y-[3px] shrink-0 transition-all duration-200 ${
+                activeSection === ""
+                  ? "bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,1)] scale-110"
+                  : "bg-sky-400/80 shadow-[0_0_6px_rgba(56,189,248,0.7)] group-hover/brand:bg-sky-400 group-hover/brand:shadow-[0_0_10px_rgba(56,189,248,1)] group-hover/brand:scale-125"
+              }`} />
+            </a>
 
             <div className="w-px h-4 bg-zinc-800/80 shrink-0" />
 
             {/* Desktop Nav Links */}
-            <div className="flex items-center gap-1 text-[13px] font-medium font-sans">
-              {/* Home Icon Capsule */}
-              <a
-                href="#"
-                title="Home"
-                aria-label="Home"
-                onClick={scrollToTop}
-                className={`group/home relative h-8 px-3 rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer select-none ${
-                  activeSection === ""
-                    ? "text-sky-400"
-                    : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.04]"
-                }`}
-              >
-                <span
-                  className={`absolute inset-0 rounded-full transition-all duration-200 ease-out -z-10 ${
-                    activeSection === ""
-                      ? "bg-zinc-800/90 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] opacity-100 scale-100"
-                      : "opacity-0 scale-95"
-                  }`}
-                />
-                <Home
-                  className={`w-[16px] h-[16px] transition-transform duration-200 group-hover/home:scale-110 ${
-                    activeSection === ""
-                      ? "text-sky-400 drop-shadow-[0_0_6px_rgba(56,189,248,0.5)]"
-                      : ""
-                  }`}
-                  strokeWidth={2.2}
-                />
-              </a>
-
+            <div className="flex items-center gap-1 text-[13px] font-medium font-sans tracking-wide">
               {NAV_LINKS.map((link) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -225,20 +208,20 @@ export const Navbar = () => {
                     onClick={(e) => scrollTo(e, link.id)}
                     className={`relative h-8 px-3.5 rounded-full flex items-center justify-center transition-colors duration-200 cursor-pointer select-none ${
                       isActive
-                        ? "text-zinc-100"
-                        : "text-zinc-400 hover:text-zinc-100 hover:bg-white/[0.04]"
+                        ? "text-white font-semibold"
+                        : "text-zinc-400 hover:text-white hover:bg-white/[0.08]"
                     }`}
                   >
                     <span
                       className={`absolute inset-0 rounded-full transition-all duration-200 ease-out -z-10 ${
                         isActive
-                          ? "bg-zinc-800/90 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] opacity-100 scale-100"
+                          ? "bg-zinc-800/90 border border-white/[0.14] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.14),0_4px_12px_-2px_rgba(0,0,0,0.5)] opacity-100 scale-100"
                           : "opacity-0 scale-95"
                       }`}
                     />
                     <span>{link.name}</span>
                     <span
-                      className={`absolute bottom-0 left-0 right-0 mx-auto w-4 h-[1.5px] rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.95)] transition-all duration-200 ease-out ${
+                      className={`absolute bottom-0 left-0 right-0 mx-auto w-4 h-[1.5px] rounded-full ${link.color} ${link.shadow} transition-all duration-200 ease-out ${
                         isActive ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"
                       }`}
                     />
