@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { PROJECTS } from "../data/portfolioData";
 import {
-  FaJava,
   FaLayerGroup,
   FaDiagramProject,
   FaCode,
@@ -15,37 +14,52 @@ import {
   FaArrowUpRightFromSquare,
   FaGithub,
 } from "react-icons/fa6";
-import {
-  SiSpringboot,
-  SiPostgresql,
-  SiRedis,
-  SiDocker,
-  SiReact,
-  SiTypescript,
-  SiApachekafka,
-  SiRabbitmq,
-  SiTailwindcss,
-  SiNginx,
-  SiLinux,
-  SiOpenapiinitiative,
-} from "react-icons/si";
+import { SiOpenapiinitiative } from "react-icons/si";
 import type { Project } from "../types";
 import { ScrollReveal } from "./ScrollReveal";
+import { KafkaIcon, RabbitMQIcon, MongoDBIcon } from "./TechCustomIcons";
 
-const getTechIcon = (tag: string) => {
+// Authentic Original Vector SVG Assets from devicon
+import javaSvg from "devicon/icons/java/java-original.svg";
+import springSvg from "devicon/icons/spring/spring-original.svg";
+import postgresqlSvg from "devicon/icons/postgresql/postgresql-original.svg";
+import redisSvg from "devicon/icons/redis/redis-original.svg";
+import dockerSvg from "devicon/icons/docker/docker-original.svg";
+import reactSvg from "devicon/icons/react/react-original.svg";
+import nextjsSvg from "devicon/icons/nextjs/nextjs-original.svg";
+import typescriptSvg from "devicon/icons/typescript/typescript-original.svg";
+import javascriptSvg from "devicon/icons/javascript/javascript-original.svg";
+import tailwindSvg from "devicon/icons/tailwindcss/tailwindcss-original.svg";
+import nginxSvg from "devicon/icons/nginx/nginx-original.svg";
+import linuxSvg from "devicon/icons/linux/linux-original.svg";
+import kubernetesSvg from "devicon/icons/kubernetes/kubernetes-original.svg";
+import mysqlSvg from "devicon/icons/mysql/mysql-original.svg";
+
+interface TechBadge {
+  icon?: React.ComponentType<{ className?: string; style?: React.CSSProperties }>;
+  iconSrc?: string;
+  color?: string;
+}
+
+const getTechIcon = (tag: string): TechBadge => {
   const lower = tag.toLowerCase().trim();
-  if (lower.includes("java") && !lower.includes("script")) return { icon: FaJava, color: "#ED8B00" };
-  if (lower.includes("spring")) return { icon: SiSpringboot, color: "#6DB33F" };
-  if (lower.includes("postgres")) return { icon: SiPostgresql, color: "#4169E1" };
-  if (lower.includes("redis")) return { icon: SiRedis, color: "#DC382D" };
-  if (lower.includes("docker")) return { icon: SiDocker, color: "#2496ED" };
-  if (lower.includes("react")) return { icon: SiReact, color: "#61DAFB" };
-  if (lower.includes("type")) return { icon: SiTypescript, color: "#3178C6" };
-  if (lower.includes("kafka")) return { icon: SiApachekafka, color: "#E05243" };
-  if (lower.includes("rabbit")) return { icon: SiRabbitmq, color: "#FF6600" };
-  if (lower.includes("tailwind")) return { icon: SiTailwindcss, color: "#38BDF8" };
-  if (lower.includes("nginx")) return { icon: SiNginx, color: "#009639" };
-  if (lower.includes("linux")) return { icon: SiLinux, color: "#FCC624" };
+  if (lower.includes("java") && !lower.includes("script")) return { iconSrc: javaSvg };
+  if (lower.includes("spring")) return { iconSrc: springSvg };
+  if (lower.includes("postgres")) return { iconSrc: postgresqlSvg };
+  if (lower.includes("mongo")) return { icon: MongoDBIcon };
+  if (lower.includes("mysql")) return { iconSrc: mysqlSvg };
+  if (lower.includes("redis")) return { iconSrc: redisSvg };
+  if (lower.includes("docker")) return { iconSrc: dockerSvg };
+  if (lower.includes("kuber")) return { iconSrc: kubernetesSvg };
+  if (lower.includes("react")) return { iconSrc: reactSvg };
+  if (lower.includes("next")) return { iconSrc: nextjsSvg };
+  if (lower.includes("type")) return { iconSrc: typescriptSvg };
+  if (lower.includes("java") && lower.includes("script")) return { iconSrc: javascriptSvg };
+  if (lower.includes("kafka")) return { icon: KafkaIcon };
+  if (lower.includes("rabbit")) return { icon: RabbitMQIcon };
+  if (lower.includes("tailwind")) return { iconSrc: tailwindSvg };
+  if (lower.includes("nginx")) return { iconSrc: nginxSvg };
+  if (lower.includes("linux")) return { iconSrc: linuxSvg };
   return { icon: FaCode, color: "#38BDF8" };
 };
 
@@ -168,8 +182,12 @@ export const Projects = () => {
             </div>
           </div>
 
-          {/* Desktop Header: Left-aligned blueprint style */}
+          {/* Desktop Header: Architectural blueprint style */}
           <div className="hidden lg:flex items-center gap-4 mb-6 w-full">
+            <div 
+              className="w-32 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/40 to-transparent" 
+              aria-hidden="true" 
+            />
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
               <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
                 PROJECTS
@@ -361,17 +379,20 @@ export const Projects = () => {
                       </div>
                     </div>
 
-                    {/* Authentic Colored React Tech Badges */}
+                    {/* Authentic Colored Tech Badges with Real Brand SVGs */}
                     <div className="flex flex-wrap gap-2">
                       {activeProject.tags.map((tag) => {
                         const tech = getTechIcon(tag);
-                        const IconComp = tech.icon;
                         return (
                           <span
                             key={tag}
                             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-950/70 border border-white/[0.08] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] text-zinc-200 font-mono text-xs font-medium hover:border-white/[0.15] transition-colors"
                           >
-                            <IconComp className="w-3.5 h-3.5 shrink-0" style={{ color: tech.color }} />
+                            {tech.iconSrc ? (
+                              <img src={tech.iconSrc} alt={tag} className="w-3.5 h-3.5 object-contain shrink-0" loading="lazy" />
+                            ) : tech.icon ? (
+                              <tech.icon className="w-3.5 h-3.5 shrink-0" style={{ color: tech.color }} />
+                            ) : null}
                             <span>{tag}</span>
                           </span>
                         );
@@ -576,17 +597,20 @@ export const Projects = () => {
                     <div className="h-[135px] overflow-hidden flex flex-col justify-between">
                       {currentTab === "stack" && (
                         <div className="flex flex-col justify-center h-full py-1">
-                          {/* Tech Stack Badges with Authentic Colored React Icons */}
+                          {/* Tech Stack Badges with Authentic Colored Brand SVGs */}
                           <div className="flex flex-wrap gap-1.5">
                             {project.tags.map((tag) => {
                               const tech = getTechIcon(tag);
-                              const IconComp = tech.icon;
                               return (
                                 <span
                                   key={tag}
                                   className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-950/80 border border-white/[0.08] text-[11px] font-mono text-zinc-200 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
                                 >
-                                  <IconComp className="w-3.5 h-3.5 shrink-0" style={{ color: tech.color }} />
+                                  {tech.iconSrc ? (
+                                    <img src={tech.iconSrc} alt={tag} className="w-3.5 h-3.5 object-contain shrink-0" loading="lazy" />
+                                  ) : tech.icon ? (
+                                    <tech.icon className="w-3.5 h-3.5 shrink-0" style={{ color: tech.color }} />
+                                  ) : null}
                                   <span>{tag}</span>
                                 </span>
                               );

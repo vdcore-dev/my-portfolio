@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
   FaArrowRight,
+  FaArrowDown,
   FaEnvelope,
   FaCheck,
-  FaFileLines,
   FaGithub,
   FaLinkedin,
   FaXTwitter,
 } from "react-icons/fa6";
+import { TbFileCv } from "react-icons/tb";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { copySecureEmail } from "../utils/security";
 import { scrollToElement } from "../utils/scroll";
@@ -17,32 +18,20 @@ const TYPED_TEXT = "Hi, I'm Vladimir";
 export const Hero = () => {
   const [copied, setCopied] = useState(false);
   const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Smooth, continuous typewriter loop (gentle pace, pause when complete, then repeat)
+  // Types out "Hi, I'm Vladimir" once on page load/reload, then keeps the cursor blinking calmly
   useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
+    if (displayedText.length < TYPED_TEXT.length) {
+      const timeout = setTimeout(
+        () => {
+          setDisplayedText(TYPED_TEXT.slice(0, displayedText.length + 1));
+        },
+        displayedText.length === 0 ? 300 : 95
+      );
 
-    if (!isDeleting && displayedText === TYPED_TEXT) {
-      // Pause at full text for 2.8s before gently backspacing
-      timeout = setTimeout(() => setIsDeleting(true), 2800);
-    } else if (isDeleting && displayedText === "") {
-      // Pause for 0.8s before typing again
-      timeout = setTimeout(() => setIsDeleting(false), 800);
-    } else {
-      // Gentle typing speed (115ms), slightly faster backspace (55ms)
-      const speed = isDeleting ? 55 : 115;
-      timeout = setTimeout(() => {
-        setDisplayedText((prev) =>
-          isDeleting
-            ? TYPED_TEXT.substring(0, prev.length - 1)
-            : TYPED_TEXT.substring(0, prev.length + 1)
-        );
-      }, speed);
+      return () => clearTimeout(timeout);
     }
-
-    return () => clearTimeout(timeout);
-  }, [displayedText, isDeleting]);
+  }, [displayedText]);
 
   const scrollToProjects = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -75,6 +64,16 @@ export const Hero = () => {
         aria-hidden="true"
       />
 
+      {/* Mobile Celestial Ambient Glow (Inside Hero Section Only - Feathers into deep obsidian) */}
+      <div
+        className="block lg:hidden absolute top-0 inset-x-0 w-full h-[520px] pointer-events-none -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 130% 65% at 50% 12%, rgba(37, 99, 235, 0.11) 0%, rgba(14, 165, 233, 0.06) 35%, rgba(99, 102, 241, 0.02) 60%, transparent 80%)",
+        }}
+        aria-hidden="true"
+      />
+
       {/* MAIN HERO CONTAINER */}
       <div className="max-w-6xl mx-auto w-full z-10 my-0 sm:my-auto pt-3 sm:pt-0">
         
@@ -84,7 +83,7 @@ export const Hero = () => {
         <div className="lg:hidden w-full">
           <div className="grid grid-cols-1 gap-8 sm:gap-10 items-center w-full">
             <div className="flex flex-col items-start text-left">
-              {/* Terminal Greeting with looping typewriter */}
+              {/* Terminal Greeting: types once on load, cursor keeps blinking */}
               <p className="hero-animate-1 font-mono text-base sm:text-xl font-medium text-zinc-300 tracking-tight mb-2.5 sm:mb-3.5 flex items-center gap-2 h-7 select-none">
                 <span className="text-sky-400 font-bold tracking-normal drop-shadow-[0_0_8px_rgba(56,189,248,0.7)]">&gt;_</span>
                 <span>{displayedText}</span>
@@ -93,7 +92,7 @@ export const Hero = () => {
 
               {/* Headline with original 2 lines */}
               <h1 className="hero-animate-2 text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-100 font-sans leading-[1.1] mb-5 sm:mb-6">
-                Java Backend &amp; <br />
+                Backend &amp; <br />
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
                   DevOps Engineer.
                 </span>
@@ -181,10 +180,9 @@ export const Hero = () => {
                 onClick={() => openLink("/cv.pdf")}
                 aria-label="Download CV"
                 title="Download CV (PDF)"
-                className="flex flex-col items-center justify-center text-zinc-400 hover:text-indigo-400 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none"
+                className="text-zinc-400 hover:text-indigo-400 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none"
               >
-                <FaFileLines className="w-7 h-7 sm:w-8 sm:h-8 pointer-events-none" />
-                <span className="font-mono text-[9px] font-bold tracking-tight text-zinc-400 -mt-0.5 pointer-events-none">CV</span>
+                <TbFileCv className="w-8 h-8 sm:w-9 sm:h-9 pointer-events-none" />
               </button>
             </div>
 
@@ -224,8 +222,7 @@ export const Hero = () => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeDasharray="120"
-                    strokeDashoffset="120"
+                    pathLength="100"
                     className="animate-ecg-trace"
                   />
                 </svg>
@@ -248,7 +245,7 @@ export const Hero = () => {
             DESKTOP VIEW (CENTERED KEYNOTE COMPOSITION IN ONE SINGLE LINE)
             ======================================================== */}
         <div className="hidden lg:flex flex-col items-center text-center w-full max-w-5xl mx-auto">
-          {/* Terminal Greeting with looping typewriter */}
+          {/* Terminal Greeting: types once on load, cursor keeps blinking */}
           <p className="hero-animate-1 font-mono text-xl font-medium text-zinc-300 tracking-tight mb-4 flex items-center justify-center gap-2 h-7 select-none">
             <span className="text-sky-400 font-bold tracking-normal drop-shadow-[0_0_8px_rgba(56,189,248,0.7)]">&gt;_</span>
             <span>{displayedText}</span>
@@ -257,7 +254,7 @@ export const Hero = () => {
 
           {/* Headline: Centered in ONE SINGLE LINE */}
           <h1 className="hero-animate-2 text-4xl lg:text-[46px] xl:text-[54px] font-extrabold tracking-tight text-zinc-100 font-sans leading-[1.15] mb-6 text-center whitespace-nowrap">
-            <span>Java Backend &amp; </span>
+            <span>Backend &amp; </span>
             <span className="relative inline-block bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400">
               DevOps Engineer.
               {/* Softened, silky typography aura */}
@@ -284,23 +281,23 @@ export const Hero = () => {
               <span className="font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-sky-400 to-indigo-400 pointer-events-none">
                 View My Work
               </span>
-              <FaArrowRight className="w-3.5 h-3.5 text-sky-400 group-hover:translate-x-1 transition-transform shrink-0 pointer-events-none" />
+              <FaArrowDown className="w-3.5 h-3.5 text-sky-400 animate-bounce shrink-0 pointer-events-none" />
             </button>
 
             {/* Vertical Glass Divider */}
             <div className="w-px h-8 bg-white/[0.12] mx-1" />
 
-            {/* Frosted Platform Buttons */}
-            <div className="flex items-center gap-2.5">
+            {/* Platform Links: Clean, direct icons identical to mobile style */}
+            <div className="flex items-center gap-4 px-2 py-1">
               {/* GitHub */}
               <button
                 type="button"
                 onClick={() => openLink(PERSONAL_INFO.github)}
                 aria-label="GitHub Profile"
                 title="GitHub Profile"
-                className="w-11 h-11 rounded-full flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.12] border border-white/[0.09] hover:border-sky-500/40 text-zinc-300 hover:text-white hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer outline-none focus:outline-none shadow-sm"
+                className="text-zinc-400 hover:text-white hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none"
               >
-                <FaGithub className="w-[18px] h-[18px] pointer-events-none" />
+                <FaGithub className="w-7 h-7 pointer-events-none" />
               </button>
 
               {/* LinkedIn */}
@@ -309,9 +306,9 @@ export const Hero = () => {
                 onClick={() => openLink(PERSONAL_INFO.linkedin)}
                 aria-label="LinkedIn Profile"
                 title="LinkedIn Profile"
-                className="w-11 h-11 rounded-full flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.12] border border-white/[0.09] hover:border-[#0077b5]/50 text-zinc-300 hover:text-[#0077b5] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer outline-none focus:outline-none shadow-sm"
+                className="text-zinc-400 hover:text-[#0077b5] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none"
               >
-                <FaLinkedin className="w-[18px] h-[18px] pointer-events-none" />
+                <FaLinkedin className="w-7 h-7 pointer-events-none" />
               </button>
 
               {/* X Platform */}
@@ -321,9 +318,9 @@ export const Hero = () => {
                   onClick={() => openLink(PERSONAL_INFO.x!)}
                   aria-label="X Profile"
                   title="X Profile"
-                  className="w-11 h-11 rounded-full flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.12] border border-white/[0.09] hover:border-white/40 text-zinc-300 hover:text-white hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer outline-none focus:outline-none shadow-sm"
+                  className="text-zinc-400 hover:text-white hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none"
                 >
-                  <FaXTwitter className="w-4 h-4 pointer-events-none" />
+                  <FaXTwitter className="w-6 h-6 pointer-events-none" />
                 </button>
               )}
 
@@ -333,16 +330,14 @@ export const Hero = () => {
                 onClick={handleCopyEmail}
                 aria-label="Copy Email address"
                 title={copied ? "Email Copied!" : "Copy Email"}
-                className={`w-11 h-11 rounded-full flex items-center justify-center bg-white/[0.04] hover:bg-white/[0.12] border border-white/[0.09] hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer outline-none focus:outline-none shadow-sm ${
-                  copied
-                    ? "border-emerald-500/50 text-emerald-400"
-                    : "hover:border-sky-500/40 text-zinc-300 hover:text-sky-400"
+                className={`hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none ${
+                  copied ? "text-emerald-400" : "text-zinc-400 hover:text-sky-400"
                 }`}
               >
                 {copied ? (
-                  <FaCheck className="w-4 h-4 text-emerald-400 animate-in zoom-in-75 duration-200 pointer-events-none" />
+                  <FaCheck className="w-7 h-7 text-emerald-400 animate-in zoom-in-75 duration-200 pointer-events-none" />
                 ) : (
-                  <FaEnvelope className="w-4 h-4 pointer-events-none" />
+                  <FaEnvelope className="w-7 h-7 pointer-events-none" />
                 )}
               </button>
 
@@ -352,10 +347,9 @@ export const Hero = () => {
                 onClick={() => openLink("/cv.pdf")}
                 aria-label="Download CV"
                 title="Download CV (PDF)"
-                className="w-11 h-11 rounded-full flex flex-col items-center justify-center bg-white/[0.04] hover:bg-white/[0.12] border border-white/[0.09] hover:border-indigo-500/40 text-zinc-300 hover:text-indigo-400 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer outline-none focus:outline-none shadow-sm"
+                className="text-zinc-400 hover:text-indigo-400 hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer p-0 bg-transparent border-0 outline-none focus:outline-none"
               >
-                <FaFileLines className="w-4 h-4 pointer-events-none" />
-                <span className="font-mono text-[7px] font-bold tracking-tight -mt-0.5 pointer-events-none">CV</span>
+                <TbFileCv className="w-7 h-7 pointer-events-none" />
               </button>
             </div>
 
@@ -395,8 +389,7 @@ export const Hero = () => {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeDasharray="120"
-                    strokeDashoffset="120"
+                    pathLength="100"
                     className="animate-ecg-trace"
                   />
                 </svg>

@@ -48,7 +48,7 @@ export const ModernBackground = () => {
 
     const onMouseMove = (e: MouseEvent) => {
       mouse.targetX = e.clientX;
-      mouse.targetY = e.clientY;
+      mouse.targetY = e.clientY + window.scrollY;
       mouse.active = true;
     };
 
@@ -94,7 +94,7 @@ export const ModernBackground = () => {
     const mouseRadius = 180;
 
     const render = () => {
-      if (document.hidden) {
+      if (document.hidden || window.scrollY > window.innerHeight) {
         animationFrameId = requestAnimationFrame(render);
         return;
       }
@@ -187,15 +187,19 @@ export const ModernBackground = () => {
   }, []);
 
   return (
-    <div
-      className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-zinc-950 select-none w-full h-full"
-      aria-hidden="true"
-    >
+    <div className="pointer-events-none z-0 select-none" aria-hidden="true">
       {/* =========================================================
-          1. DESKTOP BACKGROUND (Interactive Neural / Distributed Mesh + Obsidian Horizon)
+          1. DESKTOP HERO CANVAS (Scrolls naturally with Hero, fades at bottom)
+          - Projects, Skills, About stay pure obsidian black like mobile
           ========================================================= */}
-      <div className="hidden lg:block w-full h-full">
-        {/* Subtle Celestial Ambient Dusk (Non-intrusive, deep dark) */}
+      <div
+        className="hidden lg:block absolute top-0 inset-x-0 h-[100svh] min-h-[720px] pointer-events-none overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
+        }}
+      >
+        {/* Subtle Celestial Ambient Dusk in Hero */}
         <div
           className="absolute top-0 inset-x-0 w-full h-[650px] pointer-events-none opacity-40"
           style={{
@@ -204,62 +208,17 @@ export const ModernBackground = () => {
           }}
         />
 
-        {/* Interactive Neural / Distributed Constellation Canvas (PC Only) */}
+        {/* Interactive Neural / Distributed Constellation Canvas (Hero Only) */}
         <canvas
           ref={canvasRef}
           className="absolute inset-0 w-full h-full pointer-events-none opacity-90"
         />
-
-        {/* Midnight Horizon Glow (Behind Contact & Footer) */}
-        <div
-          className="absolute bottom-0 inset-x-0 w-full h-[580px] pointer-events-none opacity-45"
-          style={{
-            background:
-              "radial-gradient(ellipse 130% 65% at 50% 120%, rgba(79, 70, 229, 0.08) 0%, rgba(37, 99, 235, 0.03) 45%, transparent 80%)",
-          }}
-        />
-
-        {/* Deep Peripheral Cosmic Vignette */}
-        <div
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 95% 90% at 50% 50%, transparent 55%, rgba(9, 9, 11, 0.70) 100%)",
-          }}
-        />
       </div>
 
       {/* =========================================================
-          2. MOBILE BACKGROUND (STRICTLY 100% UNTOUCHED)
+          2. MOBILE BACKGROUND (Pure Deep Obsidian Black - Zero Fixed Fog, Untouched)
           ========================================================= */}
-      <div className="block lg:hidden w-full h-full">
-        {/* Mobile Atmospheric Celestial Mist */}
-        <div
-          className="absolute top-0 inset-x-0 w-full h-[650px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 140% 75% at 50% 18%, rgba(37, 99, 235, 0.13) 0%, rgba(14, 165, 233, 0.08) 35%, rgba(79, 70, 229, 0.03) 65%, transparent 85%)",
-          }}
-        />
-
-        {/* Mobile Soft Ambient Body Fog */}
-        <div
-          className="absolute top-[25%] inset-x-0 w-full h-[1000px] pointer-events-none blur-[30px]"
-          style={{
-            background:
-              "radial-gradient(ellipse 130% 60% at 50% 50%, rgba(37, 99, 235, 0.05) 0%, rgba(99, 102, 241, 0.025) 45%, transparent 80%)",
-          }}
-        />
-
-        {/* Mobile Midnight Horizon Glow */}
-        <div
-          className="absolute bottom-0 inset-x-0 w-full h-[580px] pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 140% 75% at 50% 120%, rgba(79, 70, 229, 0.10) 0%, rgba(37, 99, 235, 0.04) 45%, transparent 85%)",
-          }}
-        />
-
+      <div className="block lg:hidden fixed inset-0 pointer-events-none w-full h-full">
         {/* Mobile Peripheral Cosmic Vignette */}
         <div
           className="absolute inset-0 w-full h-full pointer-events-none"

@@ -54,6 +54,17 @@ svg {
   user-select: none;
 }
 
+/* Utterly hide scrollbars while preserving full touch/swipe momentum scrolling */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 /* ========================================================
    APPLE-GRADE TRANSLUCENT FROSTED GLASS SURFACES
    ======================================================== */
@@ -127,29 +138,31 @@ svg {
   animation: panelFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* ========================================================
+   HIGH-PRECISION TELEMETRY PULSE (Continuous, fluid sweep)
+   ======================================================== */
 @keyframes ecgTrace {
   0% {
-    stroke-dashoffset: 120;
-    opacity: 0.3;
+    stroke-dashoffset: 35;
+    opacity: 0;
   }
-  20% {
+  12% {
     opacity: 1;
   }
-  65% {
-    stroke-dashoffset: 0;
+  88% {
     opacity: 1;
-  }
-  85% {
-    opacity: 0.4;
   }
   100% {
-    stroke-dashoffset: -120;
-    opacity: 0.3;
+    stroke-dashoffset: -100;
+    opacity: 0;
   }
 }
 
 .animate-ecg-trace {
-  animation: ecgTrace 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  stroke-dasharray: 35 100;
+  stroke-dashoffset: 35;
+  animation: ecgTrace 2.2s linear infinite;
+  will-change: stroke-dashoffset, opacity;
 }
 
 /* ========================================================

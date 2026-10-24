@@ -54,6 +54,25 @@ export const Footer = () => {
       id="contact"
       className="w-full relative overflow-hidden scroll-mt-16 z-10 pt-12 sm:pt-16 pb-[max(2rem,env(safe-area-inset-bottom))] lg:pt-16 lg:pb-8 lg:h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4rem)] flex flex-col justify-between"
     >
+      {/* Mobile Horizon Ambient Glow (Subtle, Softened Horizon Glow Beneath Social Icons) */}
+      <div
+        className="block lg:hidden absolute bottom-0 inset-x-0 w-full h-[440px] pointer-events-none -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 135% 70% at 50% 100%, rgba(56, 189, 248, 0.07) 0%, rgba(99, 102, 241, 0.035) 40%, rgba(14, 165, 233, 0.01) 65%, transparent 80%)",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Desktop Horizon Ambient Glow (Deep, High-End Celestial Twilight Behind Contact & Footer) */}
+      <div
+        className="hidden lg:block absolute bottom-0 inset-x-0 w-full h-[520px] pointer-events-none -z-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 130% 65% at 50% 115%, rgba(56, 189, 248, 0.08) 0%, rgba(99, 102, 241, 0.04) 45%, rgba(37, 99, 235, 0.015) 70%, transparent 85%)",
+        }}
+        aria-hidden="true"
+      />
       <div className="w-full flex flex-col justify-between flex-1">
         <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 relative z-10 flex flex-col flex-1 justify-between">
           
@@ -82,8 +101,12 @@ export const Footer = () => {
               </div>
             </div>
 
-            {/* Desktop Header: Left-aligned blueprint style */}
+            {/* Desktop Header: Architectural blueprint style */}
             <div className="hidden lg:flex items-center gap-4 mb-6 w-full">
+              <div 
+                className="w-32 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/40 to-transparent" 
+                aria-hidden="true" 
+              />
               <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
                 <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
                   CONTACT
@@ -341,8 +364,7 @@ export const Footer = () => {
                           strokeWidth="2.8"
                           strokeLinecap="round"
                           strokeLinejoin="round"
-                          strokeDasharray="120"
-                          strokeDashoffset="120"
+                          pathLength="100"
                           className="animate-ecg-trace"
                         />
                       </svg>

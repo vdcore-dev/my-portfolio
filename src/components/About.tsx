@@ -6,7 +6,6 @@ import {
   FaGraduationCap,
   FaBriefcase,
   FaCircleCheck,
-  FaTerminal,
   FaCode,
   FaGears,
   FaRocket,
@@ -14,6 +13,7 @@ import {
   FaFileContract,
   FaLaptopCode,
 } from "react-icons/fa6";
+import { LuBrainCircuit } from "react-icons/lu";
 import { PERSONAL_INFO } from "../data/portfolioData";
 import { ScrollReveal } from "./ScrollReveal";
 
@@ -66,8 +66,12 @@ export const About = () => {
             </div>
           </div>
 
-          {/* Desktop Header: Left-aligned blueprint style */}
+          {/* Desktop Header: Architectural blueprint style */}
           <div className="hidden lg:flex items-center gap-4 mb-6 w-full">
+            <div 
+              className="w-32 h-px bg-gradient-to-l from-sky-400/50 via-zinc-700/40 to-transparent" 
+              aria-hidden="true" 
+            />
             <div className="inline-flex items-center px-4 py-1.5 rounded-lg bg-zinc-900/95 border border-white/[0.12] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12),0_4px_16px_-4px_rgba(0,0,0,0.6)] select-none shrink-0">
               <span className="font-mono text-xs font-bold tracking-[0.18em] text-zinc-100 uppercase">
                 ABOUT ME
@@ -136,8 +140,7 @@ export const About = () => {
                             strokeWidth="2.4"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeDasharray="120"
-                            strokeDashoffset="120"
+                            pathLength="100"
                             className="animate-ecg-trace"
                           />
                         </svg>
@@ -270,7 +273,7 @@ export const About = () => {
                 {/* Engineering Philosophy Header with React Icon */}
                 <div className="flex items-center justify-between pb-3 mb-4 border-b border-zinc-800/80">
                   <div className="flex items-center gap-2 font-mono text-xs text-zinc-400">
-                    <FaTerminal className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                    <LuBrainCircuit className="w-4 h-4 text-sky-400 shrink-0" />
                     <span className="tracking-wider uppercase text-zinc-200 font-semibold text-[11px]">
                       Engineering Philosophy
                     </span>

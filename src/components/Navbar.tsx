@@ -159,7 +159,7 @@ export const Navbar = () => {
     <>
       {/* Top Ambient Vignette / Edge Fade Mask */}
       <div
-        className="fixed top-0 left-0 right-0 h-24 sm:h-28 pointer-events-none z-30 bg-gradient-to-b from-zinc-950 via-zinc-950/80 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_45%,transparent_100%)]"
+        className="fixed top-0 left-0 right-0 h-24 sm:h-28 pointer-events-none z-30 bg-gradient-to-b from-zinc-950 via-zinc-950/75 to-transparent backdrop-blur-md [mask-image:linear-gradient(to_bottom,black_35%,transparent_100%)]"
         aria-hidden="true"
       />
 
